@@ -17,8 +17,5 @@ namespace Services.Input
         return axis;
       }
     }
-
-    private static Vector2 UnityInputAxis() => 
-      new Vector2(UnityEngine.Input.GetAxis(HorizontalAxisName), UnityEngine.Input.GetAxis(VerticalAxisName));
   }
 }

@@ -5,9 +5,9 @@ namespace Architecture.Scripts.Logic.Camera
   public class CameraMover : MonoBehaviour
   {
     [SerializeField] private Transform _followTarget;
-    [SerializeField] private float _distance = 10f;
-    [SerializeField] private float _rotationAngleX = 45f;
-    [SerializeField] private float FollowingOffsetY = 2.9f;
+    [SerializeField] private float _distance = 6f;
+    [SerializeField] private float _rotationAngleX = 35f;
+    [SerializeField] private float FollowingOffsetY = 2f;
 
 
     private void LateUpdate()

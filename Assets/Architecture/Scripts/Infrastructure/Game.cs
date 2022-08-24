@@ -18,7 +18,7 @@ namespace Infrastructure
       if (Application.isEditor)
         InputService = new DefaultInputService();
       else
-        InputService = new MobileInputService();
+        InputService = new TouchInputService();
     }
   }
 }
