@@ -22,9 +22,10 @@ namespace Architecture.Scripts.Logic.Camera
       transform.localRotation = rotation;
     }
 
-    public void SetFollowTarget(GameObject target) => 
-      _followTarget = target.transform;
 
+    public void Follow(GameObject target) => 
+      _followTarget = target.transform;
+    
     private Vector3 GetFollowingPos()
     {
       Vector3 followingPos = _followTarget.localPosition;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Architecture.Scripts.Logic.Screens;
 
 namespace Infrastructure
 {
@@ -8,12 +9,13 @@ namespace Infrastructure
     private readonly Dictionary<Type, IExitableState> _states;
     private IExitableState _currentState;
 
-    public GameStateMachine(SceneLoader sceneLoader)
+    public GameStateMachine(SceneLoader sceneLoader, LoadingScreen loadingScreen)
     {
       _states = new Dictionary<Type, IExitableState>
       {
         [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
-        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader)
+        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingScreen),
+        [typeof(GameLoopState)] = new GameLoopState(this)
       };
     }
     

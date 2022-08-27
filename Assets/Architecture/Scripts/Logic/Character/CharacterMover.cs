@@ -11,18 +11,11 @@ namespace Logic.Character
     [SerializeField] private float _movementSpeed = 8f;
 
     private IInputService _inputService;
-    private Camera _mainCamera;
 
 
     private void Awake()
     {
       _inputService = Game.InputService;
-    }
-
-    private void Start()
-    {
-      _mainCamera = Camera.main;
-      _mainCamera.GetComponent<CameraMover>().SetFollowTarget(gameObject); 
     }
 
     private void Update()
@@ -31,7 +24,7 @@ namespace Logic.Character
 
       if (_inputService.AxisDirection.sqrMagnitude > Constants.Epsilon)
       {
-        movementDirection = _mainCamera.transform.TransformDirection(_inputService.AxisDirection);
+        movementDirection = Camera.main.transform.TransformDirection(_inputService.AxisDirection);
         movementDirection.y = 0f;
         movementDirection.Normalize();
 
