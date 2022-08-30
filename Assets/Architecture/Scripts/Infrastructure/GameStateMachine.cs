@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Architecture.Scripts.Logic.Screens;
+using Infrastructure.Factories;
+using Infrastructure.Services;
 using Infrastructure.States;
 
 namespace Infrastructure
@@ -10,12 +12,12 @@ namespace Infrastructure
     private readonly Dictionary<Type, IStateBase> _states;
     private IStateBase _currentState;
 
-    public GameStateMachine(SceneLoader sceneLoader, LoadingScreen loadingScreen)
+    public GameStateMachine(SceneLoader sceneLoader, LoadingScreen loadingScreen, AllServices services)
     {
       _states = new Dictionary<Type, IStateBase>
       {
-        [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
-        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingScreen),
+        [typeof(BootstrapState)] = new  BootstrapState(this, sceneLoader, services),
+        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingScreen, services.Single<IGameFactory>()),
         [typeof(GameLoopState)] = new GameLoopState(this)
       };
     }

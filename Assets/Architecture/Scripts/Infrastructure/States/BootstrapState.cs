@@ -1,4 +1,7 @@
-﻿using Services.Input;
+﻿using Infrastructure.AssetManagement;
+using Infrastructure.Factories;
+using Infrastructure.Services;
+using Services.Input;
 using UnityEngine;
 
 namespace Infrastructure.States
@@ -9,18 +12,20 @@ namespace Infrastructure.States
     
     private readonly GameStateMachine _stateMachine;
     private readonly SceneLoader _sceneLoader;
+    private readonly AllServices _services;
 
-    public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader)
+    public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader, AllServices services)
     {
       _stateMachine = stateMachine;
       _sceneLoader = sceneLoader;
+      _services = services;
+      
+      RegisterServices();
     }
     
 
     public void Enter()
     {
-      RegisterServices();
-      
       _sceneLoader.Load(InitSceneName, onLoaded: EnterLoadLevel);
     }
 
@@ -31,13 +36,15 @@ namespace Infrastructure.States
 
     private void RegisterServices()
     {
-      Game.InputService = RegisterInputService();
+      _services.RegisterSingle<IInputService>(InputService());
+      _services.RegisterSingle<IAssets>(new AssetProvider());
+      _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>()));
     }
 
     private void EnterLoadLevel() => 
       _stateMachine.Enter<LoadLevelState, string>("Level_1");
 
-    private static IInputService RegisterInputService()
+    private static IInputService InputService()
     {
       if (Application.isEditor)
         return new StandaloneInputService();

@@ -1,5 +1,6 @@
 using Architecture.Scripts.Logic.Camera;
 using Infrastructure;
+using Infrastructure.Services;
 using Services.Input;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ namespace Logic.Character
 
     private void Awake()
     {
-      _inputService = Game.InputService;
+      _inputService = AllServices.Container.Single<IInputService>();
     }
 
     private void Update()

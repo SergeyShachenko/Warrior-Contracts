@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Infrastructure.Services;
+using UnityEngine;
 
 namespace Infrastructure.Factories
 {
-  public interface IGameFactory
+  public interface IGameFactory : IService
   {
     GameObject CreateHero(GameObject at);
     void CreateHUD();
