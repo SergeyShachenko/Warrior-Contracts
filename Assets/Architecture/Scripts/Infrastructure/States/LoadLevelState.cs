@@ -2,9 +2,9 @@
 using Architecture.Scripts.Logic.Screens;
 using UnityEngine;
 
-namespace Infrastructure
+namespace Infrastructure.States
 {
-  public class LoadLevelState : IPayloadedState<string>
+  public class LoadLevelState : IPayloadState<string>
   {
     private const string CharacterPrefPath = "Prefabs/Characters/Warriors/Heroes/Warrior_Hero_Sword";
     private const string HUDPrefPath = "Prefabs/UI/HUD/HUD";

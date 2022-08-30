@@ -1,6 +1,6 @@
-﻿namespace Infrastructure
+﻿namespace Infrastructure.States
 {
-  public class GameLoopState : IState
+  public class GameLoopState : IDefaultState
   {
     public GameLoopState(GameStateMachine stateMachine)
     {

@@ -1,9 +1,9 @@
 ﻿using Services.Input;
 using UnityEngine;
 
-namespace Infrastructure
+namespace Infrastructure.States
 {
-  public class BootstrapState : IState
+  public class BootstrapState : IDefaultState
   {
     private const string InitSceneName = "Initial";
     
