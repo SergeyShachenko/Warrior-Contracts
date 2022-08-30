@@ -2,7 +2,7 @@
 
 namespace Services.Input
 {
-  public class DefaultInputService : InputService
+  public class StandaloneInputService : InputService
   {
     public override Vector2 AxisDirection
     {

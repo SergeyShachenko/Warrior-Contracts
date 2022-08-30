@@ -40,7 +40,7 @@ namespace Infrastructure.States
     private static IInputService RegisterInputService()
     {
       if (Application.isEditor)
-        return new DefaultInputService();
+        return new StandaloneInputService();
       else
         return new TouchInputService();
     }
