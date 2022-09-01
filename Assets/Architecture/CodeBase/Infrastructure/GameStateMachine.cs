@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Infrastructure.States;
 using CodeBase.Logic.Screens;
 
@@ -16,9 +17,17 @@ namespace CodeBase.Infrastructure
     {
       _states = new Dictionary<Type, IStateBase>
       {
-        [typeof(BootstrapState)] = new  BootstrapState(this, sceneLoader, services),
-        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingScreen, services.Single<IGameFactory>()),
-        [typeof(GameLoopState)] = new GameLoopState(this)
+        [typeof(BootstrapState)] = new BootstrapState(
+          this, sceneLoader, services),
+        
+        [typeof(LoadLevelState)] = new LoadLevelState(
+          this, sceneLoader, loadingScreen, services.Single<IGameFactory>()),
+        
+        [typeof(LoadProgressState)] = new LoadProgressState(
+          this, services.Single<IPersistentProgressService>(), services.Single<ISaveLoadService>()),
+        
+        [typeof(GameLoopState)] = new GameLoopState(
+          this)
       };
     }
     

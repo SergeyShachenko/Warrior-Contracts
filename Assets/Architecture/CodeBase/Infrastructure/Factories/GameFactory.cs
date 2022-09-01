@@ -15,9 +15,9 @@ namespace CodeBase.Infrastructure.Factories
     
     
     public GameObject CreateHero(GameObject at) => 
-      _assets.Instantiate(path: AssetPath.CharacterPrefPath, position: at.transform.position);
+      _assets.Instantiate(path: AssetPath.Character, position: at.transform.position);
 
     public void CreateHUD() => 
-      _assets.Instantiate(AssetPath.HUDPrefPath);
+      _assets.Instantiate(AssetPath.HUD);
   }
 }

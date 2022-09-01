@@ -1,10 +1,14 @@
+using CodeBase.Data;
 using CodeBase.Infrastructure.Services.Input;
 using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.Services.PersistentProgress;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CodeBase.Logic.Character
 {
-  public class CharacterMover : MonoBehaviour
+  public class CharacterMover : MonoBehaviour,
+    ISaveProgress
   {
     [SerializeField] private CharacterController _characterController;
     [SerializeField] private float _movementSpeed = 8f;
@@ -32,8 +36,34 @@ namespace CodeBase.Logic.Character
 
       movementDirection += Physics.gravity;
       
-      
       _characterController.Move(movementDirection * _movementSpeed * Time.deltaTime);
     }
+
+    public void SaveProgress(PlayerProgress progress)
+    { 
+      progress.WorldData.LevelPosition = 
+        new LevelPosition(CurrentLevelName(), transform.position.ConvertToVector3Data()); 
+    }
+
+    public void ReadProgress(PlayerProgress progress)
+    {
+      if (CurrentLevelName() == progress.WorldData.LevelPosition.LevelName)
+      {
+        Vector3Data savedPos = progress.WorldData.LevelPosition.Position;
+        
+        if (savedPos != null) 
+          Warp(to: savedPos);
+      }
+    }
+
+    private void Warp(Vector3Data to)
+    {
+      _characterController.enabled = false;
+      transform.position = to.ConvertToVector3();
+      _characterController.enabled = true;
+    }
+
+    private static string CurrentLevelName() => 
+      SceneManager.GetActiveScene().name;
   }
 }
