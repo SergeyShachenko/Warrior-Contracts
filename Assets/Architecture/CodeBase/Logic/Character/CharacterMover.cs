@@ -42,7 +42,7 @@ namespace CodeBase.Logic.Character
     public void SaveProgress(PlayerProgress progress)
     { 
       progress.WorldData.LevelPosition = 
-        new LevelPosition(CurrentLevelName(), transform.position.ConvertToVector3Data()); 
+        new LevelPosition(CurrentLevelName(), transform.position.ToVector3Data()); 
     }
 
     public void ReadProgress(PlayerProgress progress)
@@ -59,7 +59,7 @@ namespace CodeBase.Logic.Character
     private void Warp(Vector3Data to)
     {
       _characterController.enabled = false;
-      transform.position = to.ConvertToVector3();
+      transform.position = to.ToVector3().AddY(_characterController.height);
       _characterController.enabled = true;
     }
 

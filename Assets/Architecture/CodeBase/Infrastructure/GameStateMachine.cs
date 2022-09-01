@@ -17,17 +17,10 @@ namespace CodeBase.Infrastructure
     {
       _states = new Dictionary<Type, IStateBase>
       {
-        [typeof(BootstrapState)] = new BootstrapState(
-          this, sceneLoader, services),
-        
-        [typeof(LoadLevelState)] = new LoadLevelState(
-          this, sceneLoader, loadingScreen, services.Single<IGameFactory>()),
-        
-        [typeof(LoadProgressState)] = new LoadProgressState(
-          this, services.Single<IPersistentProgressService>(), services.Single<ISaveLoadService>()),
-        
-        [typeof(GameLoopState)] = new GameLoopState(
-          this)
+        [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
+        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingScreen, services.Single<IGameFactory>(), services.Single<IPersistentProgressService>()),
+        [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentProgressService>(), services.Single<ISaveLoadService>()),
+        [typeof(GameLoopState)] = new GameLoopState(this)
       };
     }
     

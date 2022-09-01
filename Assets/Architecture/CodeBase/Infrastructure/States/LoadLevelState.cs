@@ -1,5 +1,5 @@
 ﻿using CodeBase.Infrastructure.Factories;
-using CodeBase.Infrastructure.States;
+using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Logic.Camera;
 using CodeBase.Logic.Screens;
 using UnityEngine;
@@ -14,23 +14,27 @@ namespace CodeBase.Infrastructure.States
     private readonly SceneLoader _sceneLoader;
     private readonly LoadingScreen _loadingScreen;
     private readonly IGameFactory _gameFactory;
+    private readonly IPersistentProgressService _progressService;
 
     public LoadLevelState(
       GameStateMachine stateMachine, 
       SceneLoader sceneLoader,
       LoadingScreen loadingScreen,
-      IGameFactory gameFactory)
+      IGameFactory gameFactory,
+      IPersistentProgressService progressService)
     {
       _stateMachine = stateMachine;
       _sceneLoader = sceneLoader;
       _loadingScreen = loadingScreen;
       _gameFactory = gameFactory;
+      _progressService = progressService;
     }
 
     
     public void Enter(string sceneName)
     {
       _loadingScreen.Show();
+      _gameFactory.CleanUp();
       _sceneLoader.Load(sceneName, OnLoaded);
     }
 
@@ -39,15 +43,28 @@ namespace CodeBase.Infrastructure.States
 
     private void OnLoaded()
     {
-      _gameFactory.CreateHUD();
-      
-      GameObject hero = _gameFactory.CreateHero(GameObject.FindWithTag(SpawnPointNameTag));
-      SetCameraFollow(hero);
+      InitGameWorld();
+      InformProgressReaders();
       
       _stateMachine.Enter<GameLoopState>();
     }
 
-    private void SetCameraFollow(GameObject target) =>
+    private void InitGameWorld()
+    {
+      _gameFactory.CreateHUD();
+
+      GameObject hero = _gameFactory.CreateHero(GameObject.FindWithTag(SpawnPointNameTag));
+
+      CameraFollow(hero);
+    }
+
+    private void InformProgressReaders()
+    {
+      foreach (IReadProgress progressReader in _gameFactory.ProgressReaders)
+        progressReader.ReadProgress(_progressService.Progress);
+    }
+
+    private void CameraFollow(GameObject target) =>
       Camera.main.GetComponent<CameraMover>().Follow(target);
   }
 }

@@ -9,7 +9,7 @@ namespace CodeBase.Infrastructure.States
 {
   public class BootstrapState : IDefaultState
   {
-    private const string InitSceneName = "Initial";
+    private const string InitSceneName = "BootScene";
     
     private readonly GameStateMachine _stateMachine;
     private readonly SceneLoader _sceneLoader;
@@ -40,8 +40,8 @@ namespace CodeBase.Infrastructure.States
       _services.RegisterSingle<IInputService>(InputService());
       _services.RegisterSingle<IAssets>(new AssetProvider());
       _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
-      _services.RegisterSingle<ISaveLoadService>(new SaveLoadService());
       _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>()));
+      _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentProgressService>(), _services.Single<IGameFactory>()));
     }
 
     private void EnterLoadLevel() => 
