@@ -89,13 +89,13 @@ ModelImporter:
     second: Warrior_Hero_Sword|Death
   - first:
       74: 5574654997497934683
-    second: Warrior_Hero_Sword|GetDamage
+    second: Warrior_Hero_Sword|Hit
   - first:
       74: 4028144641070516892
     second: Warrior_Hero_Sword|Idle
   - first:
       74: -944372869934347126
-    second: Warrior_Hero_Sword|Idle_Atantion
+    second: Warrior_Hero_Sword|Idle_Alert
   - first:
       74: -7740999422591082442
     second: Warrior_Hero_Sword|Run
@@ -207,7 +207,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Warrior_Hero_Sword|GetDamage
+      name: Warrior_Hero_Sword|Hit
       takeName: Skelet|Hit
       internalID: 0
       firstFrame: 0
@@ -265,7 +265,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Warrior_Hero_Sword|Idle_Atantion
+      name: Warrior_Hero_Sword|Idle_Alert
       takeName: Skelet|Idle_Atantion
       internalID: 0
       firstFrame: 0

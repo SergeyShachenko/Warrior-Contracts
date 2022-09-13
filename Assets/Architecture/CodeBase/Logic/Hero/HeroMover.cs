@@ -5,9 +5,9 @@ using CodeBase.Infrastructure.Services.PersistentProgress;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace CodeBase.Logic.Character
+namespace CodeBase.Logic.Hero
 {
-  public class CharacterMover : MonoBehaviour,
+  public class HeroMover : MonoBehaviour,
     ISaveProgress
   {
     [SerializeField] private CharacterController _characterController;

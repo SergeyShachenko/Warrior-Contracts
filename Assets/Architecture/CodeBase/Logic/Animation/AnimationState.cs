@@ -1,6 +1,6 @@
 namespace CodeBase.Logic.Animation
 {
-  public enum AnimatorState
+  public enum AnimationState
   {
     Unknown,
     Idle,

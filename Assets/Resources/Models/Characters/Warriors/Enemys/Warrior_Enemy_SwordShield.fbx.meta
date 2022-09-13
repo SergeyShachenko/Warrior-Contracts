@@ -89,13 +89,13 @@ ModelImporter:
     second: Warrior_Enemy_SwordShield|Death
   - first:
       74: 4817134315002857874
-    second: Warrior_Enemy_SwordShield|GetDamage
+    second: Warrior_Enemy_SwordShield|Hit
   - first:
       74: -8340838471904447797
     second: Warrior_Enemy_SwordShield|Idle
   - first:
       74: -5383685571048335904
-    second: Warrior_Enemy_SwordShield|Idle_Atantion
+    second: Warrior_Enemy_SwordShield|Idle_Alert
   - first:
       74: -7899709987763316467
     second: Warrior_Enemy_SwordShield|Run
@@ -207,7 +207,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Warrior_Enemy_SwordShield|GetDamage
+      name: Warrior_Enemy_SwordShield|Hit
       takeName: Skelet|Hit
       internalID: 0
       firstFrame: 0
@@ -265,7 +265,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Warrior_Enemy_SwordShield|Idle_Atantion
+      name: Warrior_Enemy_SwordShield|Idle_Alert
       takeName: Skelet|Idle_Atantion
       internalID: 0
       firstFrame: 0

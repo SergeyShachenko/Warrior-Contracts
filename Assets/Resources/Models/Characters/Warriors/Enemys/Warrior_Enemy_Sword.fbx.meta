@@ -89,13 +89,13 @@ ModelImporter:
     second: Warrior_Enemy_Sword|Death
   - first:
       74: -3406310812050412033
-    second: Warrior_Enemy_Sword|GetDamage
+    second: Warrior_Enemy_Sword|Hit
   - first:
       74: 5548255566348171241
     second: Warrior_Enemy_Sword|Idle
   - first:
       74: 1032374255513830172
-    second: Warrior_Enemy_Sword|Idle_Atantion
+    second: Warrior_Enemy_Sword|Idle_Alert
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -204,7 +204,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Warrior_Enemy_Sword|GetDamage
+      name: Warrior_Enemy_Sword|Hit
       takeName: Skelet|Hit
       internalID: 0
       firstFrame: 0
@@ -262,7 +262,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Warrior_Enemy_Sword|Idle_Atantion
+      name: Warrior_Enemy_Sword|Idle_Alert
       takeName: Skelet|Idle_Atantion
       internalID: 0
       firstFrame: 0

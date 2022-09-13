@@ -95,7 +95,10 @@ ModelImporter:
     second: Warrior_Enemy_Boss_SwordShield|Idle
   - first:
       74: 8286969157451611190
-    second: Warrior_Enemy_Boss_SwordShield|Idle_Atantion
+    second: Warrior_Enemy_Boss_SwordShield|Idle_Alert
+  - first:
+      74: 5857269506954725516
+    second: Warrior_Enemy_Boss_SwordShield|Hit
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -204,7 +207,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Warrior_Enemy_Boss_SwordShield|GetDamage
+      name: Warrior_Enemy_Boss_SwordShield|Hit
       takeName: Skelet|Hit
       internalID: 0
       firstFrame: 0
@@ -262,7 +265,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Warrior_Enemy_Boss_SwordShield|Idle_Atantion
+      name: Warrior_Enemy_Boss_SwordShield|Idle_Alert
       takeName: Skelet|Idle_Atantion
       internalID: 0
       firstFrame: 0
