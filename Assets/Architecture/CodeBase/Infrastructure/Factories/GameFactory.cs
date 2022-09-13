@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace CodeBase.Infrastructure.Factories
   {
     public List<ISaveProgress> ProgressSavers { get; } = new List<ISaveProgress>();
     public List<IReadProgress> ProgressReaders { get; } = new List<IReadProgress>();
+    public GameObject Hero { get; private set; }
+    public event Action HeroCreate;
 
     private readonly IAssets _assets;
 
@@ -18,8 +21,13 @@ namespace CodeBase.Infrastructure.Factories
     }
     
     
-    public GameObject CreateHero(GameObject at) => 
-      InstantiateRegistered(AssetPath.Character, at.transform.position);
+    public GameObject CreateHero(GameObject at)
+    {
+      Hero = InstantiateRegistered(AssetPath.Character, at.transform.position);
+      HeroCreate?.Invoke();
+      
+      return Hero;
+    }
 
     public void CreateHUD() => 
       InstantiateRegistered(AssetPath.HUD);

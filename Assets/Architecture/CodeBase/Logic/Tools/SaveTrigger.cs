@@ -1,12 +1,11 @@
-﻿using System;
-using CodeBase.Infrastructure.Services;
+﻿using CodeBase.Infrastructure.Services;
 using UnityEngine;
 
-namespace CodeBase.Logic
+namespace CodeBase.Logic.Tools
 {
   public class SaveTrigger : MonoBehaviour
   {
-    [SerializeField] private BoxCollider _collider;
+    [SerializeField] private CapsuleCollider _collider;
     
     private ISaveLoadService _saveLoadService;
 
@@ -22,13 +21,13 @@ namespace CodeBase.Logic
       gameObject.SetActive(false);
     }
 
-    private void OnDrawGizmos()
-    {
-      if (_collider == null) return;
-
-      
-      Gizmos.color = new Color32(30, 200, 30, 130);
-      Gizmos.DrawCube(transform.position + _collider.center, _collider.size);
-    }
+    // private void OnDrawGizmos()
+    // {
+    //   if (_collider == null) return;
+    //
+    //   
+    //   Gizmos.color = new Color32(30, 200, 30, 130);
+    //   Gizmos.DrawCube(transform.position + _collider.center, _collider.size);
+    // }
   }
 }

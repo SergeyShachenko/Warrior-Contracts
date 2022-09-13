@@ -12,7 +12,7 @@ namespace CodeBase.Logic.Enemy
 
     public Animator Animator => _animator;
     
-    public event Action<AnimationState> OnStateEnter, OnStateExit;
+    public event Action<AnimationState> StateEnter, StateExit;
 
     [SerializeField] private Animator _animator;
 
@@ -49,11 +49,11 @@ namespace CodeBase.Logic.Enemy
     public void EnteredState(int stateHash)
     {
       State = StateFor(stateHash);
-      OnStateEnter?.Invoke(State);
+      StateEnter?.Invoke(State);
     }
 
     public void ExitedState(int stateHash) =>
-      OnStateExit?.Invoke(StateFor(stateHash));
+      StateExit?.Invoke(StateFor(stateHash));
 
     private AnimationState StateFor(int stateHash)
     {

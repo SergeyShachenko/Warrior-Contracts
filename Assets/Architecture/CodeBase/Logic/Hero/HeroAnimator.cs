@@ -13,7 +13,7 @@ namespace CodeBase.Logic.Hero
     public Animator Animator => _animator;
     public CharacterController CharacterController => _characterController;
     
-    public event Action<AnimationState> OnStateEnter, OnStateExit;
+    public event Action<AnimationState> StateEnter, StateExit;
 
     [SerializeField] private CharacterController _characterController;
     [SerializeField] private Animator _animator;
@@ -53,11 +53,11 @@ namespace CodeBase.Logic.Hero
     public void EnteredState(int stateHash)
     {
       State = StateFor(stateHash);
-      OnStateEnter?.Invoke(State);
+      StateEnter?.Invoke(State);
     }
 
     public void ExitedState(int stateHash) =>
-      OnStateExit?.Invoke(StateFor(stateHash));
+      StateExit?.Invoke(StateFor(stateHash));
     
     private AnimationState StateFor(int stateHash)
     {
