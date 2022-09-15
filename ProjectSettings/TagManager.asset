@@ -35,8 +35,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - Aggro
+  - AttackZone
+  - AggressiveZone
   - Player
   m_SortingLayers:
   - name: Default

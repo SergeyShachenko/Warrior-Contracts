@@ -5,8 +5,9 @@ namespace CodeBase.Logic.AI
 {
   public class MoveToHeroAI : FollowAIBase
   {
-    private const float MinDistanceToPlayer = 1;
+    [SerializeField] private float _minDistanceToHero = 2f;
     
+    [Header("Links")]
     [SerializeField] private NavMeshAgent _agent;
     
     
@@ -18,6 +19,6 @@ namespace CodeBase.Logic.AI
     
 
     private bool HeroIsFar() => 
-      Vector3.Distance(_agent.transform.position, p_hero.transform.position) >= MinDistanceToPlayer;
+      Vector3.Distance(_agent.transform.position, p_hero.transform.position) >= _minDistanceToHero;
   }
 }

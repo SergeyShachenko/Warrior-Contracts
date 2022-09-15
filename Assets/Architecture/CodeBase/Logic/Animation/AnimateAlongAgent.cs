@@ -4,8 +4,6 @@ using UnityEngine.AI;
 
 namespace CodeBase.Logic.Animation
 {
-  [RequireComponent(typeof(NavMeshAgent))]
-  [RequireComponent(typeof(EnemyAnimator))]
   public class AnimateAlongAgent : MonoBehaviour
   {
     private const float MinAgentSpeed = 0.1f;

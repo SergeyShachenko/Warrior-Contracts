@@ -13,6 +13,7 @@ namespace CodeBase.Logic.Enemy
     public Animator Animator => _animator;
     
     public event Action<AnimationState> StateEnter, StateExit;
+    public event Action Attack, AttackEnd;
 
     [SerializeField] private Animator _animator;
 
@@ -72,5 +73,11 @@ namespace CodeBase.Logic.Enemy
 
       return state;
     }
+
+    private void OnAttack() => 
+      Attack?.Invoke();
+
+    private void OnAttackEnd() => 
+      AttackEnd?.Invoke();
   }
 }

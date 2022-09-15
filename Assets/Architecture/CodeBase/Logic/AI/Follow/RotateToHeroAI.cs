@@ -20,7 +20,7 @@ namespace CodeBase.Logic.AI
     {
       UpdateLookAt();
 
-      transform.rotation = SmoothedRotation(currentRotation: transform.rotation, targetRotation: _lookAt);
+      transform.rotation = SmoothRotation(currentRotation: transform.rotation, targetRotation: _lookAt);
     }
 
     private void UpdateLookAt()
@@ -32,7 +32,7 @@ namespace CodeBase.Logic.AI
       _lookAt = new Vector3(lookDirection.x, currentPos.y, lookDirection.z);
     }
 
-    private Quaternion SmoothedRotation(Quaternion currentRotation, Vector3 targetRotation) =>
+    private Quaternion SmoothRotation(Quaternion currentRotation, Vector3 targetRotation) =>
       Quaternion.Lerp(currentRotation, Quaternion.LookRotation(targetRotation), _rotateSpeed * Time.deltaTime);
   }
 }
