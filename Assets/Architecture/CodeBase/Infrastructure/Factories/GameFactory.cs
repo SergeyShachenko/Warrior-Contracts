@@ -9,7 +9,7 @@ namespace CodeBase.Infrastructure.Factories
   public class GameFactory : IGameFactory
   {
     public List<ISaveProgress> ProgressSavers { get; } = new List<ISaveProgress>();
-    public List<IReadProgress> ProgressReaders { get; } = new List<IReadProgress>();
+    public List<ILoadProgress> ProgressReaders { get; } = new List<ILoadProgress>();
     public GameObject Hero { get; private set; }
     public event Action HeroCreate;
 
@@ -29,7 +29,7 @@ namespace CodeBase.Infrastructure.Factories
       return Hero;
     }
 
-    public void CreateHUD() => 
+    public GameObject CreateHUD() => 
       InstantiateRegistered(AssetPath.HUD);
 
     public void CleanUp()
@@ -54,11 +54,11 @@ namespace CodeBase.Infrastructure.Factories
 
     private void RegisterProgressWatchers(GameObject gameObject)
     {
-      foreach (IReadProgress progressReader in gameObject.GetComponentsInChildren<IReadProgress>())
+      foreach (ILoadProgress progressReader in gameObject.GetComponentsInChildren<ILoadProgress>())
         RegisterProgressWatcher(progressReader);
     }
 
-    private void RegisterProgressWatcher(IReadProgress progressReader)
+    private void RegisterProgressWatcher(ILoadProgress progressReader)
     {
       if (progressReader is ISaveProgress progressWriter) 
         ProgressSavers.Add(progressWriter);

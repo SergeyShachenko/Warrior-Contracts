@@ -1,5 +1,4 @@
-﻿using System;
-using CodeBase.Logic.Tools;
+﻿using CodeBase.Logic.Tools;
 using UnityEngine;
 
 namespace CodeBase.Logic.AI
@@ -19,14 +18,10 @@ namespace CodeBase.Logic.AI
     }
 
     
-    private void OnObserverTriggerEnter(Collider obj)
-    {
+    private void OnObserverTriggerEnter(Collider obj) => 
       _attackAI.IsActive = true;
-    }
 
-    private void OnObserverTriggerExit(Collider obj)
-    {
+    private void OnObserverTriggerExit(Collider obj) => 
       _attackAI.IsActive = false;
-    }
   }
 }

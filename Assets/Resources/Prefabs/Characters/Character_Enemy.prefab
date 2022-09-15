@@ -146,9 +146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 432a554e08644419aca36f8a9c3ecbae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 10
+  _attackDistance: 2
+  _hitRadius: 0.5
   _attackCooldown: 1
-  _hitRadius: 3
-  _attackDistance: 3
   _enemyAnimator: {fileID: 0}
 --- !u!114 &5584230646085573549
 MonoBehaviour:

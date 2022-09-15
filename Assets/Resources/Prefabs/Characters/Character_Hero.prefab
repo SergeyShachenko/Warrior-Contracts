@@ -122,6 +122,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 31
       objectReference: {fileID: 0}
+    - target: {fileID: 6587324899803289488, guid: 720c02cef404a384682abf5b81113c28,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 720c02cef404a384682abf5b81113c28, type: 3}
 --- !u!1 &7608888775603707239 stripped
@@ -206,3 +211,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterController: {fileID: 7133066523359769848}
   _animator: {fileID: 0}
+--- !u!114 &4636685007634680680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7608888775603707239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 650ef84a2be147b0b77f0495e1d39bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _heroAnimator: {fileID: 9175954982453163138}

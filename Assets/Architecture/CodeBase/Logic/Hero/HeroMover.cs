@@ -45,7 +45,7 @@ namespace CodeBase.Logic.Hero
         new LevelPosition(CurrentLevelName(), transform.position.ToVector3Data()); 
     }
 
-    public void ReadProgress(PlayerProgress progress)
+    public void LoadProgress(PlayerProgress progress)
     {
       if (CurrentLevelName() == progress.WorldData.LevelPosition.LevelName)
       {

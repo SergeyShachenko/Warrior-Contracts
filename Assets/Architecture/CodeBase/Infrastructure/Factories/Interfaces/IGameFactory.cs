@@ -9,13 +9,13 @@ namespace CodeBase.Infrastructure.Factories
   public interface IGameFactory : IService
   {
     List<ISaveProgress> ProgressSavers { get; }
-    List<IReadProgress> ProgressReaders { get; }
+    List<ILoadProgress> ProgressReaders { get; }
     GameObject Hero { get; }
 
     event Action HeroCreate;
 
     GameObject CreateHero(GameObject at);
-    void CreateHUD();
+    GameObject CreateHUD();
     void CleanUp();
   }
 }

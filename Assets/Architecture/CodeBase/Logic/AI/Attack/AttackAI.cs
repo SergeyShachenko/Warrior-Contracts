@@ -2,6 +2,7 @@
 using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Logic.Enemy;
+using CodeBase.Logic.Hero;
 using CodeBase.Tools;
 using UnityEngine;
 
@@ -13,10 +14,10 @@ namespace CodeBase.Logic.AI
 
     private const float HitDebugDuration = 1f;
 
+    [SerializeField] private float _damage = 10f;
+    [SerializeField] private float _attackDistance = 2f;
+    [SerializeField] private float _hitRadius = 0.5f;
     [SerializeField] private float _attackCooldown = 1f;
-    [SerializeField] private float _hitRadius = 3f;
-    [SerializeField] private float _attackDistance = 3f;
-
 
     [Header("Links")]
     [SerializeField] private EnemyAnimator _enemyAnimator;
@@ -71,6 +72,7 @@ namespace CodeBase.Logic.AI
       if (Hit(out Collider hit))
       {
         PhysicsDebug.DrawSphere(GetHitPoint(), _hitRadius, HitDebugDuration);
+        hit.transform.GetComponent<HeroHealth>().TakeDamage(_damage);
       }
     }
 

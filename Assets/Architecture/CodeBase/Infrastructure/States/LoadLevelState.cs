@@ -1,7 +1,9 @@
 ﻿using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Logic.Camera;
+using CodeBase.Logic.Hero;
 using CodeBase.Logic.Screens;
+using CodeBase.UI.HUD.Character;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
@@ -51,17 +53,22 @@ namespace CodeBase.Infrastructure.States
 
     private void InitGameWorld()
     {
-      _gameFactory.CreateHUD();
-
       GameObject hero = _gameFactory.CreateHero(GameObject.FindWithTag(SpawnPointNameTag));
+      InitHUD(hero);
 
       CameraFollow(hero);
     }
 
+    private void InitHUD(GameObject hero)
+    {
+      GameObject hud = _gameFactory.CreateHUD();
+      hud.GetComponentInChildren<ActorHUD>().Construct(hero.GetComponent<HeroHealth>());
+    }
+
     private void InformProgressReaders()
     {
-      foreach (IReadProgress progressReader in _gameFactory.ProgressReaders)
-        progressReader.ReadProgress(_progressService.Progress);
+      foreach (ILoadProgress progressReader in _gameFactory.ProgressReaders)
+        progressReader.LoadProgress(_progressService.Progress);
     }
 
     private void CameraFollow(GameObject target) =>
