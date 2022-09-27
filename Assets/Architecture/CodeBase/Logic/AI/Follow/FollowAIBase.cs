@@ -1,5 +1,6 @@
 ﻿using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.Services;
+using CodeBase.Logic.Hero;
 using UnityEngine;
 
 namespace CodeBase.Logic.AI
@@ -8,8 +9,9 @@ namespace CodeBase.Logic.AI
   {
     protected GameObject p_hero;
     protected IGameFactory p_gameFactory;
-    
-    
+    protected HeroDeath p_heroDeath;
+
+
     private void Start()
     {
       p_gameFactory = AllServices.Container.Single<IGameFactory>();
@@ -24,9 +26,12 @@ namespace CodeBase.Logic.AI
     protected bool HeroIsCreated() => 
       p_hero != null;
 
-    private void LinkHero() => 
+    private void LinkHero()
+    {
       p_hero = p_gameFactory.Hero;
-    
+      p_heroDeath = p_hero.GetComponent<HeroDeath>();
+    }
+
     private void OnHeroCreate() => 
       LinkHero();
   }

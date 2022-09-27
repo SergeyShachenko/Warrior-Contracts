@@ -10,8 +10,12 @@ namespace CodeBase.Logic.Hero
   public class HeroMover : MonoBehaviour,
     ISaveProgress
   {
-    [SerializeField] private CharacterController _characterController;
+    public bool IsActive { get; set; }
+
     [SerializeField] private float _movementSpeed = 8f;
+
+    [Header("Links")]
+    [SerializeField] private CharacterController _characterController;
 
     private IInputService _inputService;
 
@@ -19,13 +23,14 @@ namespace CodeBase.Logic.Hero
     private void Awake()
     {
       _inputService = AllServices.Container.Single<IInputService>();
+      IsActive = true;
     }
 
     private void Update()
     {
       Vector3 movementDirection = Vector3.zero;
 
-      if (_inputService.AxisDirection.sqrMagnitude > Constants.Epsilon)
+      if (IsActive && _inputService.AxisDirection.sqrMagnitude > Constants.Epsilon)
       {
         movementDirection = UnityEngine.Camera.main.transform.TransformDirection(_inputService.AxisDirection);
         movementDirection.y = 0f;
@@ -35,14 +40,14 @@ namespace CodeBase.Logic.Hero
       }
 
       movementDirection += Physics.gravity;
-      
+
       _characterController.Move(movementDirection * _movementSpeed * Time.deltaTime);
     }
+    
 
     public void SaveProgress(PlayerProgress progress)
     { 
-      progress.WorldData.LevelPosition = 
-        new LevelPosition(CurrentLevelName(), transform.position.ToVector3Data()); 
+      progress.WorldData.LevelPosition = new LevelPosition(CurrentLevelName(), transform.position.ToVector3Data()); 
     }
 
     public void LoadProgress(PlayerProgress progress)

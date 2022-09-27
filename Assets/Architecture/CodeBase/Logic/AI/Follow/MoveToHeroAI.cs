@@ -13,7 +13,7 @@ namespace CodeBase.Logic.AI
     
     private void Update()
     {
-      if (HeroIsCreated() && HeroIsFar())
+      if (HeroIsCreated() && HeroIsFar() && p_heroDeath.IsDead == false)
         _agent.destination = p_hero.transform.position;
     }
     

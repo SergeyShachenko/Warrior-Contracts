@@ -197,6 +197,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterController: {fileID: 7133066523359769848}
   _movementSpeed: 8
+--- !u!114 &4636685007634680680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7608888775603707239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 650ef84a2be147b0b77f0495e1d39bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _heroAnimator: {fileID: 9175954982453163138}
 --- !u!114 &9175954982453163138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,7 +224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterController: {fileID: 7133066523359769848}
   _animator: {fileID: 0}
---- !u!114 &4636685007634680680
+--- !u!114 &6109054017918777386
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -220,7 +233,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7608888775603707239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 650ef84a2be147b0b77f0495e1d39bfa, type: 3}
+  m_Script: {fileID: 11500000, guid: ecf4deee69a84700957251ff22a5634f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _heroHealth: {fileID: 4636685007634680680}
+  _heroMover: {fileID: 814385029465273519}
   _heroAnimator: {fileID: 9175954982453163138}
+  _deathFX: {fileID: 0}

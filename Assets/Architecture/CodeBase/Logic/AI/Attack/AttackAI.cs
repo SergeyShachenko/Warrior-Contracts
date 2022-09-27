@@ -23,6 +23,7 @@ namespace CodeBase.Logic.AI
     [SerializeField] private EnemyAnimator _enemyAnimator;
 
     private IGameFactory _gameFactory;
+    private HeroDeath _heroDeath;
     private GameObject _hero;
     private Collider[] _hits = new Collider[1];
     private float _attackCooldownCounter;
@@ -64,8 +65,11 @@ namespace CodeBase.Logic.AI
       _isAttack = true;
     }
 
-    private void OnHeroCreate() => 
+    private void OnHeroCreate()
+    {
       _hero = _gameFactory.Hero;
+      _heroDeath = _hero.GetComponent<HeroDeath>();
+    }
 
     private void OnAttack()
     {
@@ -99,6 +103,6 @@ namespace CodeBase.Logic.AI
     }
 
     private bool CanAttack() => 
-      IsActive && _isAttack == false && _attackCooldownCounter <= 0;
+      IsActive && _isAttack == false && _heroDeath.IsDead == false && _attackCooldownCounter <= 0;
   }
 }
