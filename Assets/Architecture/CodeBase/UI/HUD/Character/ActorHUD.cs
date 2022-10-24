@@ -1,4 +1,4 @@
-﻿using CodeBase.Logic.Hero;
+﻿using CodeBase.Logic;
 using UnityEngine;
 
 namespace CodeBase.UI.HUD.Character
@@ -7,22 +7,22 @@ namespace CodeBase.UI.HUD.Character
   {
     [SerializeField] private HPBar _hpBar;
 
-    private HeroHealth _heroHealth;
+    private IHealth _health;
     
-    public void Construct(HeroHealth heroHealth)
+    public void Construct(IHealth heroHealth)
     {
-      _heroHealth = heroHealth;
-      _heroHealth.HealthChanged += OnHealthChanged;
+      _health = heroHealth;
+      _health.HealthChanged += OnHealthChanged;
     }
 
 
     private void OnDestroy() => 
-      _heroHealth.HealthChanged -= OnHealthChanged;
+      _health.HealthChanged -= OnHealthChanged;
 
 
     private void OnHealthChanged()
     {
-      _hpBar.SetProgress(_heroHealth.Current, _heroHealth.Max);
+      _hpBar.SetProgress(_health.Current, _health.Max);
     }
   }
 }

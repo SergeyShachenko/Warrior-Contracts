@@ -3,12 +3,13 @@ using CodeBase.Data;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using UnityEngine;
 
-namespace CodeBase.Logic.Hero
+namespace CodeBase.Logic.Characters.Hero
 {
   public class HeroHealth : MonoBehaviour,
+    IHealth,
     ISaveProgress
   {
-    public Action HealthChanged;
+    public event Action HealthChanged;
     
     public float Current
     {
@@ -36,6 +37,7 @@ namespace CodeBase.Logic.Hero
       }
     }
 
+    [Header("Links")]
     [SerializeField] private HeroAnimator _heroAnimator;
     
     private HeroState _heroState;

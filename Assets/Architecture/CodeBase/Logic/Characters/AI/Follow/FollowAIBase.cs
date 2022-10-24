@@ -1,9 +1,9 @@
 ﻿using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.Services;
-using CodeBase.Logic.Hero;
+using CodeBase.Logic.Characters.Hero;
 using UnityEngine;
 
-namespace CodeBase.Logic.AI
+namespace CodeBase.Logic.Characters
 {
   public abstract class FollowAIBase : MonoBehaviour
   {

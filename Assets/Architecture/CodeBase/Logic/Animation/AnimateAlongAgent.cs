@@ -1,4 +1,4 @@
-﻿using CodeBase.Logic.Enemy;
+﻿using CodeBase.Logic.Characters.Enemy;
 using UnityEngine;
 using UnityEngine.AI;
 

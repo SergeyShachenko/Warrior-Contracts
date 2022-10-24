@@ -5,12 +5,16 @@ using CodeBase.Infrastructure.Services.PersistentProgress;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace CodeBase.Logic.Hero
+namespace CodeBase.Logic.Characters.Hero
 {
   public class HeroMover : MonoBehaviour,
     ISaveProgress
   {
-    public bool IsActive { get; set; }
+    public bool IsActive
+    {
+      get => enabled;
+      set => enabled = value;
+    }
 
     [SerializeField] private float _movementSpeed = 8f;
 
@@ -30,7 +34,7 @@ namespace CodeBase.Logic.Hero
     {
       Vector3 movementDirection = Vector3.zero;
 
-      if (IsActive && _inputService.AxisDirection.sqrMagnitude > Constants.Epsilon)
+      if (_inputService.AxisDirection.sqrMagnitude > Constants.Epsilon)
       {
         movementDirection = UnityEngine.Camera.main.transform.TransformDirection(_inputService.AxisDirection);
         movementDirection.y = 0f;

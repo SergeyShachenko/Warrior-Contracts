@@ -2,7 +2,7 @@
 using CodeBase.Logic.Tools;
 using UnityEngine;
 
-namespace CodeBase.Logic.AI
+namespace CodeBase.Logic.Characters
 {
   public class AggressiveAI : MonoBehaviour
   {

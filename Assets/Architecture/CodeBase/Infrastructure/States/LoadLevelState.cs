@@ -1,7 +1,7 @@
 ﻿using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Logic.Camera;
-using CodeBase.Logic.Hero;
+using CodeBase.Logic.Characters.Hero;
 using CodeBase.Logic.Screens;
 using CodeBase.UI.HUD.Character;
 using UnityEngine;

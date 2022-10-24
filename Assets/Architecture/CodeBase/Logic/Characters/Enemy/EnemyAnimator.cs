@@ -3,17 +3,17 @@ using CodeBase.Logic.Animation;
 using UnityEngine;
 using AnimationState = CodeBase.Logic.Animation.AnimationState;
 
-namespace CodeBase.Logic.Enemy
+namespace CodeBase.Logic.Characters.Enemy
 {
   public class EnemyAnimator : MonoBehaviour,
     IAnimationStateReader
   {
+    public event Action Attack, AttackEnd;
+    public event Action<AnimationState> StateEnter, StateExit;
+    
     public AnimationState State { get; private set; }
 
     public Animator Animator => _animator;
-    
-    public event Action<AnimationState> StateEnter, StateExit;
-    public event Action Attack, AttackEnd;
 
     [SerializeField] private Animator _animator;
 

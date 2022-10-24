@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-namespace CodeBase.Logic.AI
+namespace CodeBase.Logic.Characters
 {
   public class MoveToHeroAI : FollowAIBase
   {

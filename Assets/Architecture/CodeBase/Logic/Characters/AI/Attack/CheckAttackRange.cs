@@ -1,7 +1,7 @@
 ﻿using CodeBase.Logic.Tools;
 using UnityEngine;
 
-namespace CodeBase.Logic.AI
+namespace CodeBase.Logic.Characters
 {
   [RequireComponent(typeof(AttackAI))]
   public class CheckAttackRange : MonoBehaviour

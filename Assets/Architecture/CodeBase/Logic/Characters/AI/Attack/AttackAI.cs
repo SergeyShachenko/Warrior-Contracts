@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.Services;
-using CodeBase.Logic.Enemy;
-using CodeBase.Logic.Hero;
+using CodeBase.Logic.Characters.Enemy;
+using CodeBase.Logic.Characters.Hero;
 using CodeBase.Tools;
 using UnityEngine;
 
-namespace CodeBase.Logic.AI
+namespace CodeBase.Logic.Characters
 {
   public class AttackAI : MonoBehaviour
   {
@@ -76,7 +76,7 @@ namespace CodeBase.Logic.AI
       if (Hit(out Collider hit))
       {
         PhysicsDebug.DrawSphere(GetHitPoint(), _hitRadius, HitDebugDuration);
-        hit.transform.GetComponent<HeroHealth>().TakeDamage(_damage);
+        hit.transform.GetComponent<IHealth>().TakeDamage(_damage);
       }
     }
 

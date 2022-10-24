@@ -74,6 +74,52 @@ MonoBehaviour:
   _cooldown: 3
   _triggerObserver: {fileID: 6979062767443312144}
   _followAI: {fileID: 1335724224293745893}
+--- !u!1 &3323760541984017311
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4646641376464501880}
+  - component: {fileID: 8596808672666383198}
+  m_Layer: 28
+  m_Name: Hit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4646641376464501880
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3323760541984017311}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7228941384168490453}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &8596808672666383198
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3323760541984017311}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.7
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.48, z: 0}
 --- !u!1 &5457471293364337596
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,6 +278,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6217657056009094656, guid: 720c02cef404a384682abf5b81113c28,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.19245279
+      objectReference: {fileID: 0}
+    - target: {fileID: 6217657056009094656, guid: 720c02cef404a384682abf5b81113c28,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.2114539
+      objectReference: {fileID: 0}
+    - target: {fileID: 6217657056009094656, guid: 720c02cef404a384682abf5b81113c28,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 720c02cef404a384682abf5b81113c28, type: 3}
 --- !u!1 &7172305639507753576 stripped
@@ -280,6 +341,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minDistanceToHero: 2.8
   _agent: {fileID: 7943332399470105259}
+--- !u!114 &4262951391017968553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7301921890016143688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67ba0efe3029470392cb2d3b38501090, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyHealth: {fileID: 6560787361428165024}
+  _enemyAnimator: {fileID: 0}
+--- !u!114 &6560787361428165024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7301921890016143688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e9c2ae0aba642398bc12f04eebaa813, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _max: 4
+  _current: 4
+  _enemyAnimator: {fileID: 0}
 --- !u!195 &7943332399470105259
 NavMeshAgent:
   m_ObjectHideFlags: 0

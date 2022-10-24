@@ -11,7 +11,7 @@ namespace CodeBase.Infrastructure.Services.Input
     private const string AttackButtonName = "Attack";
 
 
-    public bool IsAttackButtonUp() => 
+    public bool GetAttackButtonUp() => 
       SimpleInput.GetButtonUp(AttackButtonName);
 
     protected static Vector2 SimpleInputAxis() => 

@@ -223,6 +223,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Warrior_Enemy_Sword
       objectReference: {fileID: 0}
+    - target: {fileID: 7987901006066334026, guid: 48c66c7874a9f414185223a38095a1ad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48c66c7874a9f414185223a38095a1ad, type: 3}
 --- !u!4 &104213986 stripped
@@ -694,6 +699,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Warrior_Enemy_Sword (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7987901006066334026, guid: 48c66c7874a9f414185223a38095a1ad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48c66c7874a9f414185223a38095a1ad, type: 3}
@@ -1353,7 +1363,7 @@ PrefabInstance:
     - target: {fileID: 7706286182782414232, guid: 58b06098fe7a45e42ae9a45f718a6d44,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.02
+      value: 16.15
       objectReference: {fileID: 0}
     - target: {fileID: 7706286182782414232, guid: 58b06098fe7a45e42ae9a45f718a6d44,
         type: 3}

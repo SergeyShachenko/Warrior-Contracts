@@ -3,18 +3,19 @@ using CodeBase.Logic.Animation;
 using UnityEngine;
 using AnimationState = CodeBase.Logic.Animation.AnimationState;
 
-namespace CodeBase.Logic.Hero
+namespace CodeBase.Logic.Characters.Hero
 {
   public class HeroAnimator : MonoBehaviour, 
     IAnimationStateReader
   {
-    public AnimationState State { get; private set; }
+    public event Action Attack, AttackEnd;
+    public event Action<AnimationState> StateEnter, StateExit;
     
+    public AnimationState State { get; private set; }
     public Animator Animator => _animator;
     public CharacterController CharacterController => _characterController;
-    
-    public event Action<AnimationState> StateEnter, StateExit;
 
+    [Header("Links")]
     [SerializeField] private CharacterController _characterController;
     [SerializeField] private Animator _animator;
 
@@ -76,5 +77,11 @@ namespace CodeBase.Logic.Hero
       
       return state;
     }
+    
+    private void OnAttack() => 
+      Attack?.Invoke();
+
+    private void OnAttackEnd() => 
+      AttackEnd?.Invoke();
   }
 }

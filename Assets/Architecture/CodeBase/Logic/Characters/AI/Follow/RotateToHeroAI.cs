@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CodeBase.Logic.AI
+namespace CodeBase.Logic.Characters
 {
   public class RotateToHeroAI : FollowAIBase
   {

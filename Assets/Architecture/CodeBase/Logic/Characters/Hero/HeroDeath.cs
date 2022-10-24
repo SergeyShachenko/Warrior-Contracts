@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CodeBase.Logic.Hero
+namespace CodeBase.Logic.Characters.Hero
 {
   public class HeroDeath : MonoBehaviour
   {
@@ -9,6 +9,7 @@ namespace CodeBase.Logic.Hero
     [Header("Links")]
     [SerializeField] private HeroHealth _heroHealth;
     [SerializeField] private HeroMover _heroMover;
+    [SerializeField] private HeroAttack _heroAttack;
     [SerializeField] private HeroAnimator _heroAnimator;
 
 
@@ -37,8 +38,11 @@ namespace CodeBase.Logic.Hero
 
     private void Die()
     {
-      IsDead = true;
+      UnsubscribeToEvents();
       
+      IsDead = true;
+
+      _heroAttack.IsActive = false;
       _heroMover.IsActive = false;
       _heroAnimator.PlayDeath();
     }
