@@ -13,12 +13,12 @@ namespace CodeBase.Logic.Characters
     
     private void Update()
     {
-      if (HeroIsCreated() && HeroIsFar() && p_heroDeath.IsDead == false)
-        _agent.destination = p_hero.transform.position;
+      if (HeroIsCreated() && HeroIsFar() && p_HeroDeath.IsDead == false && p_EnemyDeath.IsDead == false)
+        _agent.destination = p_Hero.transform.position;
     }
     
 
     private bool HeroIsFar() => 
-      Vector3.Distance(_agent.transform.position, p_hero.transform.position) >= _minDistanceToHero;
+      Vector3.Distance(_agent.transform.position, p_Hero.transform.position) >= _minDistanceToHero;
   }
 }

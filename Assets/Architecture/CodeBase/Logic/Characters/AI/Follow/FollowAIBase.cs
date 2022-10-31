@@ -1,5 +1,6 @@
 ﻿using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.Services;
+using CodeBase.Logic.Characters.Enemy;
 using CodeBase.Logic.Characters.Hero;
 using UnityEngine;
 
@@ -7,29 +8,32 @@ namespace CodeBase.Logic.Characters
 {
   public abstract class FollowAIBase : MonoBehaviour
   {
-    protected GameObject p_hero;
-    protected IGameFactory p_gameFactory;
-    protected HeroDeath p_heroDeath;
+    [Header("Links")]
+    [SerializeField] protected EnemyDeath p_EnemyDeath;
+    
+    protected GameObject p_Hero;
+    protected IGameFactory p_GameFactory;
+    protected HeroDeath p_HeroDeath;
 
 
     private void Start()
     {
-      p_gameFactory = AllServices.Container.Single<IGameFactory>();
+      p_GameFactory = AllServices.Container.Single<IGameFactory>();
 
-      if (p_gameFactory.Hero != null)
+      if (p_GameFactory.Hero != null)
         LinkHero();
       else
-        p_gameFactory.HeroCreate += OnHeroCreate;
+        p_GameFactory.HeroCreate += OnHeroCreate;
     }
 
     
     protected bool HeroIsCreated() => 
-      p_hero != null;
+      p_Hero != null;
 
     private void LinkHero()
     {
-      p_hero = p_gameFactory.Hero;
-      p_heroDeath = p_hero.GetComponent<HeroDeath>();
+      p_Hero = p_GameFactory.Hero;
+      p_HeroDeath = p_Hero.GetComponent<HeroDeath>();
     }
 
     private void OnHeroCreate() => 

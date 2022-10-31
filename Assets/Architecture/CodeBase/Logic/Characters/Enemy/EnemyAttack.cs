@@ -1,14 +1,13 @@
 ﻿using System.Linq;
 using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.Services;
-using CodeBase.Logic.Characters.Enemy;
 using CodeBase.Logic.Characters.Hero;
 using CodeBase.Tools;
 using UnityEngine;
 
-namespace CodeBase.Logic.Characters
+namespace CodeBase.Logic.Characters.Enemy
 {
-  public class AttackAI : MonoBehaviour
+  public class EnemyAttack : MonoBehaviour
   {
     public bool IsActive { get; set; }
 
@@ -19,7 +18,8 @@ namespace CodeBase.Logic.Characters
     [SerializeField] private float _hitRadius = 0.5f;
     [SerializeField] private float _attackCooldown = 1f;
 
-    [Header("Links")]
+    [Header("Links")] 
+    [SerializeField] private EnemyDeath _enemyDeath;
     [SerializeField] private EnemyAnimator _enemyAnimator;
 
     private IGameFactory _gameFactory;
@@ -103,6 +103,6 @@ namespace CodeBase.Logic.Characters
     }
 
     private bool CanAttack() => 
-      IsActive && _isAttack == false && _heroDeath.IsDead == false && _attackCooldownCounter <= 0;
+      IsActive && _isAttack == false && _heroDeath.IsDead == false && _enemyDeath.IsDead == false && _attackCooldownCounter <= 0;
   }
 }

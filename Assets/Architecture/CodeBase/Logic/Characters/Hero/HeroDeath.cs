@@ -2,7 +2,8 @@
 
 namespace CodeBase.Logic.Characters.Hero
 {
-  public class HeroDeath : MonoBehaviour
+  public class HeroDeath : MonoBehaviour,
+    IDeath
   {
     public bool IsDead { get; private set; }
 

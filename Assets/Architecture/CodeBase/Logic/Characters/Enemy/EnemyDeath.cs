@@ -4,10 +4,13 @@ using UnityEngine;
 
 namespace CodeBase.Logic.Characters.Enemy
 {
-  public class EnemyDeath : MonoBehaviour
+  public class EnemyDeath : MonoBehaviour,
+    IDeath
   {
     public event Action Happened;
     
+    public bool IsDead { get; private set; }
+
     [Header("Links")]
     [SerializeField] private EnemyHealth _enemyHealth;
     [SerializeField] private EnemyAnimator _enemyAnimator;
@@ -22,16 +25,18 @@ namespace CodeBase.Logic.Characters.Enemy
     
     private void OnHealthChanged()
     {
-      if (_enemyHealth.Current <= 0) 
+      if (IsDead == false && _enemyHealth.Current <= 0) 
         Die();
     }
 
     private void Die()
     {
-      _enemyHealth.HealthChanged -= OnHealthChanged;
+      IsDead = true;
       
       _enemyAnimator.PlayDeath();
       StartCoroutine(DestroyBody());
+      
+      _enemyHealth.HealthChanged -= OnHealthChanged;
       
       Happened?.Invoke();
     }

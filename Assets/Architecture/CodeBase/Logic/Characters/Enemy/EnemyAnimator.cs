@@ -12,7 +12,7 @@ namespace CodeBase.Logic.Characters.Enemy
     public event Action<AnimationState> StateEnter, StateExit;
     
     public AnimationState State { get; private set; }
-
+   
     public Animator Animator => _animator;
 
     [SerializeField] private Animator _animator;

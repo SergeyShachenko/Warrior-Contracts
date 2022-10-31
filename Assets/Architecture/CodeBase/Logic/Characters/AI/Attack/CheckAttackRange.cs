@@ -1,13 +1,14 @@
-﻿using CodeBase.Logic.Tools;
+﻿using CodeBase.Logic.Characters.Enemy;
+using CodeBase.Logic.Tools;
 using UnityEngine;
 
 namespace CodeBase.Logic.Characters
 {
-  [RequireComponent(typeof(AttackAI))]
+  [RequireComponent(typeof(EnemyAttack))]
   public class CheckAttackRange : MonoBehaviour
   {
     [Header("Links")]
-    [SerializeField] private AttackAI _attackAI;
+    [SerializeField] private EnemyAttack _enemyAttack;
     [SerializeField] private TriggerObserver _triggerObserver;
 
 
@@ -19,9 +20,9 @@ namespace CodeBase.Logic.Characters
 
     
     private void OnObserverTriggerEnter(Collider obj) => 
-      _attackAI.IsActive = true;
+      _enemyAttack.IsActive = true;
 
     private void OnObserverTriggerExit(Collider obj) => 
-      _attackAI.IsActive = false;
+      _enemyAttack.IsActive = false;
   }
 }

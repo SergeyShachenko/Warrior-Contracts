@@ -9,15 +9,18 @@ namespace CodeBase.UI.HUD.Character
 
     private IHealth _health;
     
-    public void Construct(IHealth heroHealth)
+    public void Construct(IHealth health)
     {
-      _health = heroHealth;
+      _health = health;
       _health.HealthChanged += OnHealthChanged;
     }
 
 
-    private void OnDestroy() => 
-      _health.HealthChanged -= OnHealthChanged;
+    private void OnDestroy()
+    {
+      if (_health != null)
+        _health.HealthChanged -= OnHealthChanged;
+    }
 
 
     private void OnHealthChanged()

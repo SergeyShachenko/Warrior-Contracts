@@ -365,6 +365,18 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 8996846376639032548, guid: 499d0c2532713b644a2114b89eb475f5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 499d0c2532713b644a2114b89eb475f5, type: 3}
+--- !u!114 &3505508416791262123 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6159589149811669928, guid: 499d0c2532713b644a2114b89eb475f5,
+    type: 3}
+  m_PrefabInstance: {fileID: 7340111922481842179}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7987901006066334026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67ba0efe3029470392cb2d3b38501090, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &3749908911708075779 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5897193983419727616, guid: 499d0c2532713b644a2114b89eb475f5,
@@ -389,6 +401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32ef9e26b9ec4e8db02b5d6146b76fb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  p_EnemyDeath: {fileID: 3505508416791262123}
   _rotateSpeed: 4
 --- !u!1001 &9149383220009736994
 PrefabInstance:

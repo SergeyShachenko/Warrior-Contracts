@@ -15,8 +15,8 @@ namespace CodeBase.Logic.Characters.Enemy
      
     [Header("Links")]
     [SerializeField] private EnemyAnimator _enemyAnimator;
-
     
+
     public void TakeDamage(float damage)
     {
       if (_current <= 0) return;
