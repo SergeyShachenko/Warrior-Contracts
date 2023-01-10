@@ -8,8 +8,8 @@ namespace CodeBase.Infrastructure.Factories
 {
   public class GameFactory : IGameFactory
   {
-    public List<ISaveProgress> ProgressSavers { get; } = new();
-    public List<ILoadProgress> ProgressLoaders { get; } = new();
+    public List<ISaverProgress> ProgressSavers { get; } = new();
+    public List<ILoaderProgress> ProgressLoaders { get; } = new();
     public GameObject Hero { get; private set; }
     public event Action HeroCreate;
 
@@ -38,9 +38,9 @@ namespace CodeBase.Infrastructure.Factories
       ProgressLoaders.Clear();
     }
     
-    public void Register(ILoadProgress progressLoader)
+    public void Register(ILoaderProgress progressLoader)
     {
-      if(progressLoader is ISaveProgress progressSaver)
+      if(progressLoader is ISaverProgress progressSaver)
         ProgressSavers.Add(progressSaver);
       
       ProgressLoaders.Add(progressLoader);
@@ -62,13 +62,13 @@ namespace CodeBase.Infrastructure.Factories
 
     private void RegisterProgressWatchers(GameObject gameObject)
     {
-      foreach (ILoadProgress progressLoader in gameObject.GetComponentsInChildren<ILoadProgress>())
+      foreach (ILoaderProgress progressLoader in gameObject.GetComponentsInChildren<ILoaderProgress>())
         RegisterProgressWatcher(progressLoader);
     }
 
-    private void RegisterProgressWatcher(ILoadProgress progressLoader)
+    private void RegisterProgressWatcher(ILoaderProgress progressLoader)
     {
-      if (progressLoader is ISaveProgress progressSaver) 
+      if (progressLoader is ISaverProgress progressSaver) 
         ProgressSavers.Add(progressSaver);
 
       ProgressLoaders.Add(progressLoader);

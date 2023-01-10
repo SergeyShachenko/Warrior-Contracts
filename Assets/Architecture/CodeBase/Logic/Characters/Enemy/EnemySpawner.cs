@@ -6,12 +6,12 @@ using UnityEngine;
 namespace CodeBase.Logic.Characters.Enemy
 {
   public class EnemySpawner : MonoBehaviour, 
-    ISaveProgress
+    ISaverProgress
   {
     public string ID => _uniqueID.ID;
     [field: SerializeField] public bool IsCleared { get; set; }
 
-    [SerializeField] private EnemyTypeID _enemyTypeID;
+    [SerializeField] private WarriorType _warriorType;
     
     [Header("Links")]
     [SerializeField] private UniqueID _uniqueID;

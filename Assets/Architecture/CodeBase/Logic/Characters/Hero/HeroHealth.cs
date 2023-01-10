@@ -7,7 +7,7 @@ namespace CodeBase.Logic.Characters.Hero
 {
   public class HeroHealth : MonoBehaviour,
     IHealth,
-    ISaveProgress
+    ISaverProgress
   {
     public event Action HealthChanged;
     

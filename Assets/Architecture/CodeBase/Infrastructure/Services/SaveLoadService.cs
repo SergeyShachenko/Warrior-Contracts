@@ -21,7 +21,7 @@ namespace CodeBase.Infrastructure.Services
 
     public void SaveProgress()
     {
-      foreach (ISaveProgress progressSaver in _gameFactory.ProgressSavers)
+      foreach (ISaverProgress progressSaver in _gameFactory.ProgressSavers)
         progressSaver.SaveProgress(_progressService.Progress);
 
       PlayerPrefs.SetString(ProgressKey, _progressService.Progress.ToJson());

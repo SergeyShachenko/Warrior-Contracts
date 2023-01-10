@@ -7,7 +7,7 @@ using UnityEngine;
 namespace CodeBase.Logic.Characters.Hero
 {
   public class HeroAttack : MonoBehaviour,
-    ILoadProgress
+    ILoaderProgress
   {
     public bool IsActive
     {
@@ -53,7 +53,7 @@ namespace CodeBase.Logic.Characters.Hero
     private Vector3 StartPoint() =>
       new Vector3(transform.position.x, _characterController.center.y/2, transform.position.z);
     
-    void ILoadProgress.LoadProgress(PlayerProgress progress) => 
+    void ILoaderProgress.LoadProgress(PlayerProgress progress) => 
       _heroStats = progress.HeroStats;
   }
 }

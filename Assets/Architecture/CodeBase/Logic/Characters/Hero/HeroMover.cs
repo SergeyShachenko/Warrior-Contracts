@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 namespace CodeBase.Logic.Characters.Hero
 {
   public class HeroMover : MonoBehaviour,
-    ISaveProgress
+    ISaverProgress
   {
     public bool IsActive
     {

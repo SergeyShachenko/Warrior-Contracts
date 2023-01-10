@@ -79,7 +79,7 @@ namespace CodeBase.Infrastructure.States
 
     private void InformProgressReaders()
     {
-      foreach (ILoadProgress progressReader in _gameFactory.ProgressLoaders)
+      foreach (ILoaderProgress progressReader in _gameFactory.ProgressLoaders)
         progressReader.LoadProgress(_progressService.Progress);
     }
 

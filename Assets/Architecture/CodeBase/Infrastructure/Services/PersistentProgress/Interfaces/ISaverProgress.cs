@@ -2,7 +2,7 @@
 
 namespace CodeBase.Infrastructure.Services.PersistentProgress
 {
-  public interface ISaveProgress : ILoadProgress
+  public interface ISaverProgress : ILoaderProgress
   {
     void SaveProgress(PlayerProgress progress);
   }
