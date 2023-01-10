@@ -8,8 +8,8 @@ namespace CodeBase.Infrastructure.Factories
 {
   public class GameFactory : IGameFactory
   {
-    public List<ISaveProgress> ProgressSavers { get; } = new List<ISaveProgress>();
-    public List<ILoadProgress> ProgressReaders { get; } = new List<ILoadProgress>();
+    public List<ISaveProgress> ProgressSavers { get; } = new();
+    public List<ILoadProgress> ProgressLoaders { get; } = new();
     public GameObject Hero { get; private set; }
     public event Action HeroCreate;
 
@@ -35,7 +35,15 @@ namespace CodeBase.Infrastructure.Factories
     public void CleanUp()
     {
       ProgressSavers.Clear();
-      ProgressReaders.Clear();
+      ProgressLoaders.Clear();
+    }
+    
+    public void Register(ILoadProgress progressLoader)
+    {
+      if(progressLoader is ISaveProgress progressSaver)
+        ProgressSavers.Add(progressSaver);
+      
+      ProgressLoaders.Add(progressLoader);
     }
 
     private GameObject InstantiateRegistered(string prefabPath, Vector3 at)
@@ -54,16 +62,16 @@ namespace CodeBase.Infrastructure.Factories
 
     private void RegisterProgressWatchers(GameObject gameObject)
     {
-      foreach (ILoadProgress progressReader in gameObject.GetComponentsInChildren<ILoadProgress>())
-        RegisterProgressWatcher(progressReader);
+      foreach (ILoadProgress progressLoader in gameObject.GetComponentsInChildren<ILoadProgress>())
+        RegisterProgressWatcher(progressLoader);
     }
 
-    private void RegisterProgressWatcher(ILoadProgress progressReader)
+    private void RegisterProgressWatcher(ILoadProgress progressLoader)
     {
-      if (progressReader is ISaveProgress progressWriter) 
-        ProgressSavers.Add(progressWriter);
+      if (progressLoader is ISaveProgress progressSaver) 
+        ProgressSavers.Add(progressSaver);
 
-      ProgressReaders.Add(progressReader);
+      ProgressLoaders.Add(progressLoader);
     }
   }
 }

@@ -9,7 +9,7 @@ namespace CodeBase.Infrastructure.Factories
   public interface IGameFactory : IService
   {
     List<ISaveProgress> ProgressSavers { get; }
-    List<ILoadProgress> ProgressReaders { get; }
+    List<ILoadProgress> ProgressLoaders { get; }
     GameObject Hero { get; }
 
     event Action HeroCreate;
@@ -17,5 +17,6 @@ namespace CodeBase.Infrastructure.Factories
     GameObject CreateHero(GameObject at);
     GameObject CreateHUD();
     void CleanUp();
+    void Register(ILoadProgress progressLoader);
   }
 }
