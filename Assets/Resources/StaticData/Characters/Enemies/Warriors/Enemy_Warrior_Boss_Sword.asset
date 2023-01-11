@@ -19,4 +19,4 @@ MonoBehaviour:
   AttackCooldown: 1
   HitRadius: 0.5
   Speed: 4
-  Prefab: {fileID: 7987901006066334026, guid: 48c66c7874a9f414185223a38095a1ad, type: 3}
+  Prefab: {fileID: 7987901006066334026, guid: 6608706d76859fb4597b5dd0e537c940, type: 3}

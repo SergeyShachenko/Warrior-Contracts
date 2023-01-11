@@ -15,7 +15,7 @@ PrefabInstance:
     - target: {fileID: 396369836091184924, guid: 720c02cef404a384682abf5b81113c28,
         type: 3}
       propertyPath: m_Name
-      value: Character_Hero
+      value: Character_Player
       objectReference: {fileID: 0}
     - target: {fileID: 396369836091184924, guid: 720c02cef404a384682abf5b81113c28,
         type: 3}
@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterController: {fileID: 7133066523359769848}
-  _heroAnimator: {fileID: 0}
+  _playerAnimator: {fileID: 0}
 --- !u!114 &814385029465273519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,7 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 650ef84a2be147b0b77f0495e1d39bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _heroAnimator: {fileID: 0}
+  _playerAnimator: {fileID: 0}
 --- !u!114 &6109054017918777386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,7 +252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecf4deee69a84700957251ff22a5634f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _heroHealth: {fileID: 4636685007634680680}
-  _heroMover: {fileID: 814385029465273519}
-  _heroAttack: {fileID: 2619408312334822}
-  _heroAnimator: {fileID: 0}
+  _playerHealth: {fileID: 4636685007634680680}
+  _playerMover: {fileID: 814385029465273519}
+  _playerAttack: {fileID: 2619408312334822}
+  _playerAnimator: {fileID: 0}

@@ -12,7 +12,7 @@ namespace CodeBase.Logic.Characters
     [SerializeField] private TriggerObserver _triggerObserver;
     [SerializeField] private FollowAIBase _followAI;
     
-    private Coroutine _setMoveToHeroOperation;
+    private Coroutine _setMoveToPlayerOperation;
     private bool _hasTargetForAggressive;
 
 
@@ -32,10 +32,10 @@ namespace CodeBase.Logic.Characters
 
       _hasTargetForAggressive = true;
       
-      if (_setMoveToHeroOperation != null)
+      if (_setMoveToPlayerOperation != null)
       {
-        StopCoroutine(_setMoveToHeroOperation);
-        _setMoveToHeroOperation = null;
+        StopCoroutine(_setMoveToPlayerOperation);
+        _setMoveToPlayerOperation = null;
       }
       
       _followAI.enabled = true;
@@ -46,10 +46,10 @@ namespace CodeBase.Logic.Characters
       if (_hasTargetForAggressive == false) return;
 
       _hasTargetForAggressive = false;
-      _setMoveToHeroOperation = StartCoroutine(SetMoveToHeroAfterCooldown(isActive: false));
+      _setMoveToPlayerOperation = StartCoroutine(SetMoveToPlayerAfterCooldown(isActive: false));
     }
 
-    private IEnumerator SetMoveToHeroAfterCooldown(bool isActive)
+    private IEnumerator SetMoveToPlayerAfterCooldown(bool isActive)
     {
       yield return new WaitForSeconds(_cooldown);
       

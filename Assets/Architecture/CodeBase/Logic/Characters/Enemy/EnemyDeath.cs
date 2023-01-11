@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace CodeBase.Logic.Characters.Enemy
+namespace CodeBase.Logic.Characters
 {
   public class EnemyDeath : MonoBehaviour,
     IDeath

@@ -5,11 +5,11 @@ namespace CodeBase.Data
   [Serializable]
   public class WorldData
   {
-    public LevelPosition LevelPosition;
+    public LevelPositionData LevelPos;
 
     public WorldData(string startLevelName)
     {
-      LevelPosition = new LevelPosition(startLevelName);
+      LevelPos = new LevelPositionData(startLevelName);
     }
   }
 }

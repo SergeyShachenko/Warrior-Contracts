@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 06b4eb2765640564aa9bc5a3dff0f374
+guid: 53b88c2fb8eb4a649941170a8d601286
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
@@ -80,36 +80,51 @@ ModelImporter:
     second: Warrior|Idle_Atantion
   - first:
       74: 1981903378297085226
-    second: Warrior|Run
+    second: Warrior_Hero_SwordShield|Run
   - first:
-      74: -3185510722534495455
-    second: Warrior_Hero_Sword|Attack
+      74: 1249301231439446037
+    second: Warrior_Hero_SwordShield|Attack
   - first:
-      74: 364672126945503505
-    second: Warrior_Hero_Sword|Death
+      74: -5719249120846690660
+    second: Warrior_Hero_SwordShield|Death
   - first:
-      74: 5574654997497934683
-    second: Warrior_Hero_Sword|Hit
+      74: 1935987771656036030
+    second: Warrior_Hero_SwordShield|Hit
   - first:
-      74: 4028144641070516892
-    second: Warrior_Hero_Sword|Idle
+      74: 8130164656489555950
+    second: Warrior_Hero_SwordShield|Idle
   - first:
-      74: -944372869934347126
-    second: Warrior_Hero_Sword|Idle_Alert
+      74: -26298294441694351
+    second: Warrior_Hero_SwordShield|Idle_Alert
   - first:
-      74: -7740999422591082442
-    second: Warrior_Hero_Sword|Run
+      74: 241010453135548349
+    second: Warrior_Player_SwordShield|Attack
+  - first:
+      74: 4951226074365313018
+    second: Warrior_Player_SwordShield|Death
+  - first:
+      74: -4115439858039022137
+    second: Warrior_Player_SwordShield|Hit
+  - first:
+      74: -3211103184445801039
+    second: Warrior_Player_SwordShield|Idle
+  - first:
+      74: 6054304912427836855
+    second: Warrior_Player_SwordShield|Idle_Alert
+  - first:
+      74: -178181755107242694
+    second: Warrior_Player_SwordShield|Run
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Foots
-    second: {fileID: 2100000, guid: 2aa263ee3f5c99a4abdf14baa7fd5c91, type: 2}
+    second: {fileID: 2100000, guid: 79c33679a98aeff4d8134efe456803f1, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Legs
-    second: {fileID: 2100000, guid: 5cc204b1c0534d74f964855c0cdf46ec, type: 2}
+    second: {fileID: 2100000, guid: ab26d242fa5fd0945a696dd2d039ab63, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -119,7 +134,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Top
-    second: {fileID: 2100000, guid: baaf06bb6d695bb489d84bed34c31de6, type: 2}
+    second: {fileID: 2100000, guid: e246278c30591bd4995c45ac3c86927c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -149,7 +164,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Warrior_Hero_Sword|Attack
+      name: Warrior_Player_SwordShield|Attack
       takeName: Skelet|Attack_Sword+Shield
       internalID: 0
       firstFrame: 0
@@ -173,14 +188,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.41078654
+      - time: 0.39472646
         functionName: OnAttack
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.52297795
+      - time: 0.5304574
         functionName: OnAttackEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -192,7 +207,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Warrior_Hero_Sword|Death
+      name: Warrior_Player_SwordShield|Death
       takeName: Skelet|Death
       internalID: 0
       firstFrame: 0
@@ -221,7 +236,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Warrior_Hero_Sword|Hit
+      name: Warrior_Player_SwordShield|Hit
       takeName: Skelet|Hit
       internalID: 0
       firstFrame: 0
@@ -250,7 +265,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Warrior_Hero_Sword|Idle
+      name: Warrior_Player_SwordShield|Idle
       takeName: Skelet|Idle
       internalID: 0
       firstFrame: 0
@@ -279,7 +294,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Warrior_Hero_Sword|Idle_Alert
+      name: Warrior_Player_SwordShield|Idle_Alert
       takeName: Skelet|Idle_Atantion
       internalID: 0
       firstFrame: 0
@@ -308,7 +323,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Warrior_Hero_Sword|Run
+      name: Warrior_Player_SwordShield|Run
       takeName: Skelet|Run_Sword+Shield
       internalID: 0
       firstFrame: 0

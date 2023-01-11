@@ -1,9 +1,8 @@
 ﻿using System.Linq;
-using CodeBase.Logic.Characters.Hero;
 using CodeBase.Tools;
 using UnityEngine;
 
-namespace CodeBase.Logic.Characters.Enemy
+namespace CodeBase.Logic.Characters
 {
   public class EnemyAttack : MonoBehaviour
   {
@@ -41,17 +40,17 @@ namespace CodeBase.Logic.Characters.Enemy
     [SerializeField] private EnemyDeath _enemyDeath;
     [SerializeField] private EnemyAnimator _enemyAnimator;
     
-    private HeroDeath _heroDeath;
-    private GameObject _hero;
+    private PlayerDeath _playerDeath;
+    private GameObject _player;
     private Collider[] _hits = new Collider[1];
     private float _attackCooldownCounter;
     private bool _isAttack;
     private int _layerMask;
 
-    public void Construct(GameObject hero)
+    public void Construct(GameObject player)
     {
-      _hero = hero;
-      _heroDeath = _hero.GetComponent<HeroDeath>();
+      _player = player;
+      _playerDeath = _player.GetComponent<PlayerDeath>();
     }
     
     
@@ -80,7 +79,7 @@ namespace CodeBase.Logic.Characters.Enemy
 
     private void StartAttack()
     {
-      transform.LookAt(_hero.transform);
+      transform.LookAt(_player.transform);
       _enemyAnimator.PlayAttack();
 
       _isAttack = true;
@@ -118,6 +117,6 @@ namespace CodeBase.Logic.Characters.Enemy
     }
 
     private bool CanAttack() => 
-      IsActive && _isAttack == false && _heroDeath.IsDead == false && _enemyDeath.IsDead == false && _attackCooldownCounter <= 0;
+      IsActive && _isAttack == false && _playerDeath.IsDead == false && _enemyDeath.IsDead == false && _attackCooldownCounter <= 0;
   }
 }

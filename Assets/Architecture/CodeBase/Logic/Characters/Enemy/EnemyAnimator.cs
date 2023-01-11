@@ -3,7 +3,7 @@ using CodeBase.Logic.Animation;
 using UnityEngine;
 using AnimationState = CodeBase.Logic.Animation.AnimationState;
 
-namespace CodeBase.Logic.Characters.Enemy
+namespace CodeBase.Logic.Characters
 {
   public class EnemyAnimator : MonoBehaviour,
     IAnimationStateReader

@@ -1,5 +1,4 @@
-﻿using System;
-using CodeBase.Logic.Characters.Hero;
+﻿using CodeBase.Logic.Characters;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,19 +8,19 @@ namespace CodeBase.UI.HUD
   {
     [SerializeField] private Button _button;
     
-    private HeroAnimator _heroAnimator;
+    private PlayerAnimator _playerAnimator;
 
 
     private void Awake()
     {
-      _heroAnimator = FindObjectOfType<HeroAnimator>();
+      _playerAnimator = FindObjectOfType<PlayerAnimator>();
       _button.onClick.AddListener(OnClick);
     }
 
     
     private void OnClick()
     {
-      _heroAnimator.PlayAttack();
+      _playerAnimator.PlayAttack();
     }
   }
 }

@@ -5,7 +5,7 @@ using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.StaticData;
 using UnityEngine;
 
-namespace CodeBase.Logic.Characters.Enemy
+namespace CodeBase.Logic.Characters
 {
   public class EnemySpawner : MonoBehaviour, 
     ISaverProgress
@@ -43,18 +43,18 @@ namespace CodeBase.Logic.Characters.Enemy
       IsCleared = true;
     }
 
-    public void LoadProgress(PlayerProgress progress)
+    public void LoadProgress(PlayerProgressData progressData)
     {
-      if (progress.KillData.ClearedSpawners.Contains(ID)) 
+      if (progressData.Kill.ClearedSpawners.Contains(ID)) 
         IsCleared = true;
       else
         Spawn();
     }
 
-    public void SaveProgress(PlayerProgress progress)
+    public void SaveProgress(PlayerProgressData progressData)
     {
       if (IsCleared) 
-        progress.KillData.ClearedSpawners.Add(ID);
+        progressData.Kill.ClearedSpawners.Add(ID);
     }
   }
 }

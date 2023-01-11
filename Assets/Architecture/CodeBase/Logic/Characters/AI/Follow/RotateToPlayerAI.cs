@@ -2,7 +2,7 @@
 
 namespace CodeBase.Logic.Characters
 {
-  public class RotateToHeroAI : FollowAIBase
+  public class RotateToPlayerAI : FollowAIBase
   {
     public float Speed
     {
@@ -18,11 +18,11 @@ namespace CodeBase.Logic.Characters
     private void Update()
     {
       if (p_EnemyDeath.IsDead == false)
-        RotateToHero();
+        RotateToTarget();
     }
 
     
-    private void RotateToHero()
+    private void RotateToTarget()
     {
       UpdateLookAt();
 
@@ -32,7 +32,7 @@ namespace CodeBase.Logic.Characters
     private void UpdateLookAt()
     {
       Vector3 currentPos = transform.position;
-      Vector3 targetPos = p_Hero.transform.position;
+      Vector3 targetPos = p_Player.transform.position;
       Vector3 lookDirection = targetPos - currentPos;
       
       _lookAt = new Vector3(lookDirection.x, currentPos.y, lookDirection.z);

@@ -1,13 +1,13 @@
 using CodeBase.Data;
-using CodeBase.Infrastructure.Services.Input;
 using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.Services.Input;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace CodeBase.Logic.Characters.Hero
+namespace CodeBase.Logic.Characters
 {
-  public class HeroMover : MonoBehaviour,
+  public class PlayerMover : MonoBehaviour,
     ISaverProgress
   {
     public bool IsActive
@@ -49,16 +49,16 @@ namespace CodeBase.Logic.Characters.Hero
     }
     
 
-    public void SaveProgress(PlayerProgress progress)
+    public void SaveProgress(PlayerProgressData progressData)
     { 
-      progress.WorldData.LevelPosition = new LevelPosition(CurrentLevelName(), transform.position.ToVector3Data()); 
+      progressData.World.LevelPos = new LevelPositionData(CurrentLevelName(), transform.position.ToVector3Data()); 
     }
 
-    public void LoadProgress(PlayerProgress progress)
+    public void LoadProgress(PlayerProgressData progressData)
     {
-      if (CurrentLevelName() == progress.WorldData.LevelPosition.LevelName)
+      if (CurrentLevelName() == progressData.World.LevelPos.LevelName)
       {
-        Vector3Data savedPos = progress.WorldData.LevelPosition.Position;
+        Vector3Data savedPos = progressData.World.LevelPos.Position;
         
         if (savedPos != null) 
           Warp(to: savedPos);

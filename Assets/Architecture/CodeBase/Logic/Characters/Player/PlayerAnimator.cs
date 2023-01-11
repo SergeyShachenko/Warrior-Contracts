@@ -3,9 +3,9 @@ using CodeBase.Logic.Animation;
 using UnityEngine;
 using AnimationState = CodeBase.Logic.Animation.AnimationState;
 
-namespace CodeBase.Logic.Characters.Hero
+namespace CodeBase.Logic.Characters
 {
-  public class HeroAnimator : MonoBehaviour, 
+  public class PlayerAnimator : MonoBehaviour, 
     IAnimationStateReader
   {
     public event Action Attack, AttackEnd;

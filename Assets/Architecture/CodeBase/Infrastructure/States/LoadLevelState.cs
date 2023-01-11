@@ -1,8 +1,7 @@
 ﻿using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Logic.Camera;
-using CodeBase.Logic.Characters.Enemy;
-using CodeBase.Logic.Characters.Hero;
+using CodeBase.Logic.Characters;
 using CodeBase.Logic.Screens;
 using CodeBase.UI.HUD.Character;
 using UnityEngine;
@@ -55,11 +54,11 @@ namespace CodeBase.Infrastructure.States
 
     private void InitGameWorld()
     {
-      GameObject hero = _gameFactory.CreateHero(GameObject.FindWithTag(SpawnPointTag));
+      GameObject player = _gameFactory.CreatePlayer(GameObject.FindWithTag(SpawnPointTag));
       InitSpawners();
-      InitHUD(hero);
+      InitHUD(player);
 
-      CameraFollow(hero);
+      CameraFollow(player);
     }
 
     private void InitSpawners()
@@ -71,16 +70,16 @@ namespace CodeBase.Infrastructure.States
       }
     }
 
-    private void InitHUD(GameObject hero)
+    private void InitHUD(GameObject player)
     {
       GameObject hud = _gameFactory.CreateHUD();
-      hud.GetComponentInChildren<ActorHUD>().Construct(hero.GetComponent<HeroHealth>());
+      hud.GetComponentInChildren<ActorHUD>().Construct(player.GetComponent<PlayerHealth>());
     }
 
     private void InformProgressReaders()
     {
       foreach (ILoaderProgress progressReader in _gameFactory.ProgressLoaders)
-        progressReader.LoadProgress(_progressService.Progress);
+        progressReader.LoadProgress(_progressService.ProgressData);
     }
 
     private void CameraFollow(GameObject target) =>

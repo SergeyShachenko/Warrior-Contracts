@@ -10,9 +10,9 @@ namespace CodeBase.Infrastructure.Factories
   {
     List<ISaverProgress> ProgressSavers { get; }
     List<ILoaderProgress> ProgressLoaders { get; }
-    GameObject Hero { get; }
+    GameObject Player { get; }
 
-    GameObject CreateHero(GameObject at);
+    GameObject CreatePlayer(GameObject at);
     GameObject CreateEnemyWarrior(WarriorType warriorType, Transform parent);
     GameObject CreateHUD();
     void CleanUp();

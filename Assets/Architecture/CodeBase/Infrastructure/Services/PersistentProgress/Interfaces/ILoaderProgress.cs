@@ -4,6 +4,6 @@ namespace CodeBase.Infrastructure.Services.PersistentProgress
 {
   public interface ILoaderProgress
   {
-    void LoadProgress(PlayerProgress progress);
+    void LoadProgress(PlayerProgressData progressData);
   }
 }

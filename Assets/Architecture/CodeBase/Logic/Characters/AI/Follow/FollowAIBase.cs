@@ -1,6 +1,4 @@
-﻿using CodeBase.Logic.Characters.Enemy;
-using CodeBase.Logic.Characters.Hero;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CodeBase.Logic.Characters
 {
@@ -9,14 +7,14 @@ namespace CodeBase.Logic.Characters
     [Header("Links")]
     [SerializeField] protected EnemyDeath p_EnemyDeath;
     
-    protected GameObject p_Hero;
-    protected HeroDeath p_HeroDeath;
+    protected GameObject p_Player;
+    protected PlayerDeath p_PlayerDeath;
 
 
-    public void Construct(GameObject hero)
+    public void Construct(GameObject player)
     {
-      p_Hero = hero;
-      p_HeroDeath = p_Hero.GetComponent<HeroDeath>();
+      p_Player = player;
+      p_PlayerDeath = p_Player.GetComponent<PlayerDeath>();
     }
   }
 }

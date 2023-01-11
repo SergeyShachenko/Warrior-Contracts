@@ -1,5 +1,4 @@
-﻿using CodeBase.Infrastructure.AssetManagement;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CodeBase.Infrastructure.AssetManagement
 {

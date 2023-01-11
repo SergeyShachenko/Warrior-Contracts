@@ -1,5 +1,4 @@
-﻿using CodeBase.Logic.Characters.Enemy;
-using CodeBase.Logic.Tools;
+﻿using CodeBase.Logic.Tools;
 using UnityEngine;
 
 namespace CodeBase.Logic.Characters

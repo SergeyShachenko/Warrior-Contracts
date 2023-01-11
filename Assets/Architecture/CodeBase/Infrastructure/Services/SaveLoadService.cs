@@ -22,12 +22,12 @@ namespace CodeBase.Infrastructure.Services
     public void SaveProgress()
     {
       foreach (ISaverProgress progressSaver in _gameFactory.ProgressSavers)
-        progressSaver.SaveProgress(_progressService.Progress);
+        progressSaver.SaveProgress(_progressService.ProgressData);
 
-      PlayerPrefs.SetString(ProgressKey, _progressService.Progress.ToJson());
+      PlayerPrefs.SetString(ProgressKey, _progressService.ProgressData.ToJson());
     }
 
-    public PlayerProgress LoadProgress() => 
-      PlayerPrefs.GetString(ProgressKey)?.ToDeserialized<PlayerProgress>();
+    public PlayerProgressData LoadProgress() => 
+      PlayerPrefs.GetString(ProgressKey)?.ToDeserialized<PlayerProgressData>();
   }
 }
