@@ -4,14 +4,20 @@ namespace CodeBase.Logic.Characters
 {
   public class RotateToHeroAI : FollowAIBase
   {
-    [SerializeField] private float _rotateSpeed = 4f;
+    public float Speed
+    {
+      get => _speed;
+      set => _speed = value;
+    }
+
+    [SerializeField] private float _speed;
 
     private Vector3 _lookAt;
     
 
     private void Update()
     {
-      if (HeroIsCreated() && p_EnemyDeath.IsDead == false)
+      if (p_EnemyDeath.IsDead == false)
         RotateToHero();
     }
 
@@ -33,6 +39,6 @@ namespace CodeBase.Logic.Characters
     }
 
     private Quaternion SmoothRotation(Quaternion currentRotation, Vector3 targetRotation) =>
-      Quaternion.Lerp(currentRotation, Quaternion.LookRotation(targetRotation), _rotateSpeed * Time.deltaTime);
+      Quaternion.Lerp(currentRotation, Quaternion.LookRotation(targetRotation), _speed * Time.deltaTime);
   }
 }

@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using CodeBase.Infrastructure.Factories;
-using CodeBase.Infrastructure.Services;
 using CodeBase.Logic.Characters.Hero;
 using CodeBase.Tools;
 using UnityEngine;
@@ -10,19 +8,39 @@ namespace CodeBase.Logic.Characters.Enemy
   public class EnemyAttack : MonoBehaviour
   {
     public bool IsActive { get; set; }
+    
+    public float Damage
+    {
+      get => _damage;
+      set => _damage = value;
+    }
+    public float AttackDistance
+    {
+      get => _attackDistance;
+      set => _attackDistance = value;
+    }
+    public float AttackCooldown
+    {
+      get => _attackCooldown;
+      set => _attackCooldown = value;
+    }
+    public float HitRadius
+    {
+      get => _hitRadius;
+      set => _hitRadius = value;
+    }
 
     private const float HitDebugDuration = 1f;
 
-    [SerializeField] private float _damage = 10f;
-    [SerializeField] private float _attackDistance = 2f;
-    [SerializeField] private float _hitRadius = 0.5f;
-    [SerializeField] private float _attackCooldown = 1f;
+    [SerializeField] private float _damage;
+    [SerializeField] private float _attackDistance;
+    [SerializeField] private float _hitRadius;
+    [SerializeField] private float _attackCooldown;
 
     [Header("Links")] 
     [SerializeField] private EnemyDeath _enemyDeath;
     [SerializeField] private EnemyAnimator _enemyAnimator;
-
-    private IGameFactory _gameFactory;
+    
     private HeroDeath _heroDeath;
     private GameObject _hero;
     private Collider[] _hits = new Collider[1];
@@ -30,12 +48,15 @@ namespace CodeBase.Logic.Characters.Enemy
     private bool _isAttack;
     private int _layerMask;
 
-
+    public void Construct(GameObject hero)
+    {
+      _hero = hero;
+      _heroDeath = _hero.GetComponent<HeroDeath>();
+    }
+    
+    
     private void Awake()
     {
-      _gameFactory = AllServices.Container.Single<IGameFactory>();
-      
-      _gameFactory.HeroCreate += OnHeroCreate;
       _enemyAnimator.Attack += OnAttack;
       _enemyAnimator.AttackEnd += OnAttackEnd;
 
@@ -63,12 +84,6 @@ namespace CodeBase.Logic.Characters.Enemy
       _enemyAnimator.PlayAttack();
 
       _isAttack = true;
-    }
-
-    private void OnHeroCreate()
-    {
-      _hero = _gameFactory.Hero;
-      _heroDeath = _hero.GetComponent<HeroDeath>();
     }
 
     private void OnAttack()

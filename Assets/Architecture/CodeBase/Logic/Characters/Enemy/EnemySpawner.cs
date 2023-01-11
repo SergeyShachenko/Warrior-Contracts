@@ -1,4 +1,6 @@
 ﻿using CodeBase.Data;
+using CodeBase.Infrastructure.Factories;
+using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.StaticData;
 using UnityEngine;
@@ -16,10 +18,29 @@ namespace CodeBase.Logic.Characters.Enemy
     [Header("Links")]
     [SerializeField] private UniqueID _uniqueID;
 
+    private IGameFactory _factory;
+    private EnemyDeath _enemyDeath;
+
+
+    private void Awake()
+    {
+      _factory = AllServices.Container.Single<IGameFactory>();
+    }
+
 
     private void Spawn()
     {
+      GameObject enemyWarrior = _factory.CreateEnemyWarrior(_warriorType, transform);
+      _enemyDeath = enemyWarrior.GetComponent<EnemyDeath>();
+      _enemyDeath.Happened += OnEnemyDead;
+    }
+
+    private void OnEnemyDead()
+    {
+      if (_enemyDeath != null)
+        _enemyDeath.Happened -= OnEnemyDead;
       
+      IsCleared = true;
     }
 
     public void LoadProgress(PlayerProgress progress)

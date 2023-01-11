@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.PersistentProgress;
+using CodeBase.StaticData;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factories
@@ -12,9 +12,8 @@ namespace CodeBase.Infrastructure.Factories
     List<ILoaderProgress> ProgressLoaders { get; }
     GameObject Hero { get; }
 
-    event Action HeroCreate;
-
     GameObject CreateHero(GameObject at);
+    GameObject CreateEnemyWarrior(WarriorType warriorType, Transform parent);
     GameObject CreateHUD();
     void CleanUp();
     void Register(ILoaderProgress progressLoader);

@@ -8,8 +8,17 @@ namespace CodeBase.Logic.Characters.Enemy
   {
     public event Action HealthChanged;
 
-    public float Max => _max;
-    public float Current => _current;
+    public float Max
+    {
+      get => _max;
+      set => _max = value;
+    }
+
+    public float Current
+    {
+      get => _current;
+      set => _current = value;
+    }
 
     [SerializeField] private float _max, _current;
      

@@ -14,7 +14,7 @@ namespace CodeBase.Logic.Characters.Hero
     public float Current
     {
       get => _heroState.CurrentHP;
-      private set
+      set
       {
         if (_heroState.CurrentHP == value) return;
         
@@ -27,7 +27,7 @@ namespace CodeBase.Logic.Characters.Hero
     public float Max
     {
       get => _heroState.MaxHP;
-      private set
+      set
       {
         if (_heroState.MaxHP == value) return;
         
