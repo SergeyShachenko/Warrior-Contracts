@@ -10,6 +10,10 @@ namespace CodeBase.Infrastructure.StaticData
     
     [Range(1f, 100f)] public float HP = 20f;
     [Range(1f, 30f)] public float Damage = 10f;
+
+    public int MaxLootExp;
+    public int MinLootExp;
+    
     [Range(0.5f, 3f)] public float AttackDistance = 2f;
     [Range(0.5f, 3f)] public float AttackCooldown = 1f;
     [Range(0.5f, 3f)] public float HitRadius = 0.5f;

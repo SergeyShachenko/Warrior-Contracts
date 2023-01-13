@@ -5,7 +5,9 @@ using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Logic;
 using CodeBase.Logic.Characters;
+using CodeBase.Logic.Loot;
 using CodeBase.StaticData;
+using CodeBase.UI.HUD;
 using CodeBase.UI.HUD.Character;
 using UnityEngine;
 using UnityEngine.AI;
@@ -19,19 +21,27 @@ namespace CodeBase.Infrastructure.Factories
     public List<ILoaderProgress> ProgressLoaders { get; } = new();
     public GameObject Player { get; private set; }
 
+    private readonly IPersistentProgressService _progressService;
     private readonly IAssets _assets;
-    private IStaticDataService _staticData;
+    private readonly IStaticDataService _staticData;
+    private readonly IRandomService _randomService;
 
-    public GameFactory(IAssets assets, IStaticDataService staticData)
+    public GameFactory(
+      IPersistentProgressService progressService, 
+      IAssets assets,
+      IStaticDataService staticData, 
+      IRandomService randomService)
     {
+      _progressService = progressService;
       _assets = assets;
       _staticData = staticData;
+      _randomService = randomService;
     }
     
     
     public GameObject CreatePlayer(GameObject at)
     {
-      Player = InstantiateRegistered(AssetPath.Character, at.transform.position);
+      Player = InstantiateRegistered(AssetPath.PlayerSword, at.transform.position);
       return Player;
     }
 
@@ -62,12 +72,29 @@ namespace CodeBase.Infrastructure.Factories
 
       warrior.GetComponentInChildren<ActorHUD>().Construct(health);
       warrior.GetComponent<NavMeshAgent>().speed = warriorData.Speed;
+      
+      var lootSpawner = warrior.GetComponentInChildren<LootSpawner>();
+      lootSpawner.Construct(this, _randomService);
+      lootSpawner.SetLootExp(warriorData.MinLootExp, warriorData.MaxLootExp);
 
       return warrior;
     }
 
-    public GameObject CreateHUD() => 
-      InstantiateRegistered(AssetPath.HUD);
+    public LootPiece CreateLoot()
+    {
+      var lootPiece = InstantiateRegistered(AssetPath.LootExp).GetComponent<LootPiece>();
+      lootPiece.Construct(_progressService.Progress.World);
+      return lootPiece; 
+    }
+
+    public GameObject CreateHUD()
+    {
+      GameObject hud = InstantiateRegistered(AssetPath.HUD);
+      hud.GetComponentInChildren<LootCounter>()
+        .Construct(_progressService.Progress.World);
+      
+      return hud;
+    }
 
     public void CleanUp()
     {

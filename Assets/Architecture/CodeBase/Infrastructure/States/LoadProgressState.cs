@@ -24,7 +24,7 @@ namespace CodeBase.Infrastructure.States
     public void Enter()
     {
       LoadProgressOrInitNew();
-      _gameStateMachine.Enter<LoadLevelState, string>(_progressService.ProgressData.World.LevelPos.LevelName);
+      _gameStateMachine.Enter<LoadLevelState, string>(_progressService.Progress.World.LevelPos.LevelName);
     }
 
     public void Exit()
@@ -33,7 +33,7 @@ namespace CodeBase.Infrastructure.States
     }
 
     private void LoadProgressOrInitNew() => 
-      _progressService.ProgressData = _saveLoadService.LoadProgress() ?? NewProgress();
+      _progressService.Progress = _saveLoadService.LoadProgress() ?? NewProgress();
 
     private PlayerProgressData NewProgress()
     {

@@ -15,6 +15,8 @@ MonoBehaviour:
   Type: 1
   HP: 5
   Damage: 10
+  MaxLootExp: 10
+  MinLootExp: 1
   AttackDistance: 2
   AttackCooldown: 1
   HitRadius: 0.5

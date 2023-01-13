@@ -1,0 +1,51 @@
+﻿using CodeBase.Data;
+using CodeBase.Infrastructure.Factories;
+using CodeBase.Infrastructure.Services;
+using CodeBase.Logic.Characters;
+using UnityEngine;
+
+namespace CodeBase.Logic.Loot
+{
+  public class LootSpawner : MonoBehaviour
+  {
+    [Header("Links")]
+    [SerializeField] private EnemyDeath _enemyDeath;
+    
+    private IGameFactory _gameFactory;
+    private IRandomService _randomService;
+    private int _minLootExp, _maxLootExp;
+
+    public void Construct(IGameFactory gameFactory, IRandomService randomService)
+    {
+      _gameFactory = gameFactory;
+      _randomService = randomService;
+    }
+
+
+    private void Start()
+    {
+      _enemyDeath.Happened += OnEnemyDead;
+    }
+
+
+    public void SetLootExp(int min, int max)
+    {
+      _minLootExp = min;
+      _maxLootExp = max;
+    }
+
+    private void OnEnemyDead()
+    {
+      SpawnLoot();
+    }
+
+    private void SpawnLoot()
+    {
+      LootPiece loot = _gameFactory.CreateLoot();
+      loot.transform.position = transform.position;
+
+      LootData lootExp = new(value: _randomService.Next(_minLootExp, _maxLootExp));
+      loot.Init(lootExp); 
+    }
+  }
+}

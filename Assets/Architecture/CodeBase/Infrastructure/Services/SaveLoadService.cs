@@ -22,9 +22,9 @@ namespace CodeBase.Infrastructure.Services
     public void SaveProgress()
     {
       foreach (ISaverProgress progressSaver in _gameFactory.ProgressSavers)
-        progressSaver.SaveProgress(_progressService.ProgressData);
+        progressSaver.SaveProgress(_progressService.Progress);
 
-      PlayerPrefs.SetString(ProgressKey, _progressService.ProgressData.ToJson());
+      PlayerPrefs.SetString(ProgressKey, _progressService.Progress.ToJson());
     }
 
     public PlayerProgressData LoadProgress() => 

@@ -37,19 +37,26 @@ namespace CodeBase.Infrastructure.States
 
     private void RegisterServices()
     {
-      RegisterStaticData();
+      IAssets assets = new AssetProvider();
+      IStaticDataService staticDataService = RegisterStaticData();
+      IPersistentProgressService progressService = new PersistentProgressService();
+      IRandomService randomService = new RandomService();
+      
       _services.RegisterSingle(InputService());
-      _services.RegisterSingle<IAssets>(new AssetProvider());
-      _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
-      _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>(), _services.Single<IStaticDataService>()));
+      _services.RegisterSingle(assets);
+      _services.RegisterSingle(progressService);
+      _services.RegisterSingle(randomService);
+      _services.RegisterSingle<IGameFactory>(new GameFactory(progressService, assets, staticDataService, randomService));
       _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentProgressService>(), _services.Single<IGameFactory>()));
     }
 
-    private void RegisterStaticData()
+    private IStaticDataService RegisterStaticData()
     {
       IStaticDataService staticData = new StaticDataService();
       staticData.LoadEnemyWarriors();
       _services.RegisterSingle(staticData);
+
+      return staticData;
     }
 
     private void EnterLoadLevel() => 

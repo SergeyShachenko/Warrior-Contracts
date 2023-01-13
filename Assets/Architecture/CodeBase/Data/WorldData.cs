@@ -6,10 +6,12 @@ namespace CodeBase.Data
   public class WorldData
   {
     public LevelPositionData LevelPos;
+    public AllLootData AllLoot;
 
     public WorldData(string startLevelName)
     {
       LevelPos = new LevelPositionData(startLevelName);
+      AllLoot = new AllLootData();
     }
   }
 }
