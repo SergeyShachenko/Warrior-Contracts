@@ -1,10 +1,14 @@
-﻿using CodeBase.Infrastructure.Factories;
+﻿using CodeBase.Data;
+using CodeBase.Infrastructure.Factories;
+using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.PersistentProgress;
+using CodeBase.Infrastructure.StaticData;
 using CodeBase.Logic.Camera;
 using CodeBase.Logic.Characters;
 using CodeBase.Logic.Screens;
 using CodeBase.UI.HUD.Character;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -18,19 +22,21 @@ namespace CodeBase.Infrastructure.States
     private readonly LoadingScreen _loadingScreen;
     private readonly IGameFactory _gameFactory;
     private readonly IPersistentProgressService _progressService;
+    private readonly IStaticDataService _staticDataService;
 
-    public LoadLevelState(
-      GameStateMachine stateMachine, 
+    public LoadLevelState(GameStateMachine stateMachine,
       SceneLoader sceneLoader,
       LoadingScreen loadingScreen,
       IGameFactory gameFactory,
-      IPersistentProgressService progressService)
+      IPersistentProgressService progressService, 
+      IStaticDataService staticDataService)
     {
       _stateMachine = stateMachine;
       _sceneLoader = sceneLoader;
       _loadingScreen = loadingScreen;
       _gameFactory = gameFactory;
       _progressService = progressService;
+      _staticDataService = staticDataService;
     }
 
     
@@ -63,10 +69,11 @@ namespace CodeBase.Infrastructure.States
 
     private void InitSpawners()
     {
-      foreach (GameObject spawnerObj in GameObject.FindGameObjectsWithTag(EnemySpawnerTag))
+      var sceneKey = SceneManager.GetActiveScene().name;
+      LevelStaticData levelData = _staticDataService.ForLevel(sceneKey);
+      foreach (EnemySpawnerData spawner in levelData.EnemySpawners)
       {
-        var spawner = spawnerObj.GetComponent<EnemySpawner>();
-        _gameFactory.Register(spawner);
+        _gameFactory.CreateSpawnPoint(spawner.ID, spawner.Position, spawner.WarriorType);
       }
     }
 

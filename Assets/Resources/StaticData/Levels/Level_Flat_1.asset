@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45c5923a89314784b445776a67995d00, type: 3}
+  m_Name: Level_Flat_1
+  m_EditorClassIdentifier: 
+  LevelKey: Level_1
+  EnemySpawners:
+  - ID: Level_1-e489f8c8-1c21-4717-9d48-8fd8c76d9173
+    WarriorType: 4
+    Position: {x: 3.02, y: 0, z: 9.57}
+  - ID: Level_1-0f889107-0640-4a8e-aab1-e7806736bc96
+    WarriorType: 3
+    Position: {x: 0.98, y: 0, z: 9.57}
+  - ID: Level_1-e781b34a-7418-45f8-84ab-2cf991975cd6
+    WarriorType: 2
+    Position: {x: -1, y: 0, z: 9.57}
+  - ID: Level_1-071cadb3-066b-4e7e-bf5d-d134e81e42af
+    WarriorType: 1
+    Position: {x: -3.04, y: 0, z: 9.57}

@@ -7,30 +7,26 @@ using UnityEngine;
 
 namespace CodeBase.Logic.Characters
 {
-  public class EnemySpawner : MonoBehaviour, 
+  public class SpawnPoint : MonoBehaviour, 
     ISaverProgress
   {
-    public string ID => _uniqueID.ID;
-    [field: SerializeField] public bool IsCleared { get; set; }
-
-    [SerializeField] private WarriorType _warriorType;
+    public WarriorType WarriorType;
     
-    [Header("Links")]
-    [SerializeField] private UniqueID _uniqueID;
+    [HideInInspector] public string ID;
 
-    private IGameFactory _factory;
+    private IGameFactory _gameFactory;
     private EnemyDeath _enemyDeath;
+    private bool _isCleared;
 
-
-    private void Awake()
+    public void Construct(IGameFactory gameFactory)
     {
-      _factory = AllServices.Container.Single<IGameFactory>();
+      _gameFactory = gameFactory;
     }
-
-
+    
+    
     private void Spawn()
     {
-      GameObject enemyWarrior = _factory.CreateEnemyWarrior(_warriorType, transform);
+      GameObject enemyWarrior = _gameFactory.CreateEnemyWarrior(WarriorType, transform);
       _enemyDeath = enemyWarrior.GetComponent<EnemyDeath>();
       _enemyDeath.Happened += OnEnemyDead;
     }
@@ -40,20 +36,20 @@ namespace CodeBase.Logic.Characters
       if (_enemyDeath != null)
         _enemyDeath.Happened -= OnEnemyDead;
       
-      IsCleared = true;
+      _isCleared = true;
     }
 
     public void LoadProgress(PlayerProgressData progressData)
     {
       if (progressData.Kill.ClearedSpawners.Contains(ID)) 
-        IsCleared = true;
+        _isCleared = true;
       else
         Spawn();
     }
 
     public void SaveProgress(PlayerProgressData progressData)
     {
-      if (IsCleared) 
+      if (_isCleared) 
         progressData.Kill.ClearedSpawners.Add(ID);
     }
   }

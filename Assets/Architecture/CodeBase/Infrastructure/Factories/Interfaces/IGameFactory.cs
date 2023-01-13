@@ -15,9 +15,10 @@ namespace CodeBase.Infrastructure.Factories
 
     GameObject CreatePlayer(GameObject at);
     GameObject CreateEnemyWarrior(WarriorType warriorType, Transform parent);
+    void CreateSpawnPoint(string spawnerID, Vector3 at, WarriorType warriorType);
     LootPiece CreateLoot();
     GameObject CreateHUD();
+    
     void CleanUp();
-    void Register(ILoaderProgress progressLoader);
   }
 }

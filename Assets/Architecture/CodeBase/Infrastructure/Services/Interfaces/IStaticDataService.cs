@@ -7,5 +7,6 @@ namespace CodeBase.Infrastructure.Services
   {
     void LoadEnemyWarriors();
     WarriorStaticData ForWarrior(WarriorType type);
+    LevelStaticData ForLevel(string sceneKey);
   }
 }

@@ -80,6 +80,15 @@ namespace CodeBase.Infrastructure.Factories
       return warrior;
     }
 
+    public void CreateSpawnPoint(string spawnerID, Vector3 at, WarriorType warriorType)
+    {
+      var spawner = InstantiateRegistered(AssetPath.SpawnPoint, at)
+        .GetComponent<SpawnPoint>();
+      spawner.Construct(this);
+      spawner.ID = spawnerID;
+      spawner.WarriorType = warriorType;
+    }
+
     public LootPiece CreateLoot()
     {
       var lootPiece = InstantiateRegistered(AssetPath.LootExp).GetComponent<LootPiece>();
@@ -102,7 +111,7 @@ namespace CodeBase.Infrastructure.Factories
       ProgressLoaders.Clear();
     }
     
-    public void Register(ILoaderProgress progressLoader)
+    private void Register(ILoaderProgress progressLoader)
     {
       if(progressLoader is ISaverProgress progressSaver)
         ProgressSavers.Add(progressSaver);
