@@ -5,6 +5,7 @@ using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Infrastructure.States;
 using CodeBase.Logic.Screens;
+using CodeBase.UI.Services;
 
 namespace CodeBase.Infrastructure
 {
@@ -18,8 +19,17 @@ namespace CodeBase.Infrastructure
       _states = new Dictionary<Type, IStateBase>
       {
         [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingScreen, services.Single<IGameFactory>(), services.Single<IPersistentProgressService>(), services.Single<IStaticDataService>()),
-        [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentProgressService>(), services.Single<ISaveLoadService>()),
+        
+        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingScreen, 
+          services.Single<IGameFactory>(), 
+          services.Single<IPersistentProgressService>(), 
+          services.Single<IStaticDataService>(),
+          services.Single<IUIFactory>()),
+        
+        [typeof(LoadProgressState)] = new LoadProgressState(this, 
+          services.Single<IPersistentProgressService>(), 
+          services.Single<ISaveLoadService>()),
+        
         [typeof(GameLoopState)] = new GameLoopState(this)
       };
     }

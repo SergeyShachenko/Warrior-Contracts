@@ -2,7 +2,7 @@
 
 namespace CodeBase.Infrastructure.AssetManagement
 {
-  public class AssetProvider : IAssets
+  public class AssetProviderProvider : IAssetsProvider
   {
     public GameObject Instantiate(string path) => 
       Object.Instantiate(Resources.Load<GameObject>(path));

@@ -1,5 +1,7 @@
+using CodeBase.Data;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.StaticData;
+using CodeBase.UI;
 
 namespace CodeBase.Infrastructure.Services
 {
@@ -8,5 +10,6 @@ namespace CodeBase.Infrastructure.Services
     void LoadEnemyWarriors();
     WarriorStaticData ForWarrior(WarriorType type);
     LevelStaticData ForLevel(string sceneKey);
+    WindowConfig ForWindow(WindowID id);
   }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CodeBase.Infrastructure.StaticData
 {
-  [CreateAssetMenu(fileName = "Enemy_Warrior_TYPE_NAME", menuName = "Dev/StaticData/Character/Enemy")]
+  [CreateAssetMenu(menuName = "Dev/StaticData/Character/Enemy", fileName = "Enemy_Warrior_TYPE_NAME")]
   public class WarriorStaticData : ScriptableObject
   {
     public WarriorType Type;

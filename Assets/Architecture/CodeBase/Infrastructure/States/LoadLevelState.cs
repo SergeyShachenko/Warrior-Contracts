@@ -7,6 +7,7 @@ using CodeBase.Logic.Camera;
 using CodeBase.Logic.Characters;
 using CodeBase.Logic.Screens;
 using CodeBase.UI.HUD.Character;
+using CodeBase.UI.Services;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,7 +16,6 @@ namespace CodeBase.Infrastructure.States
   public class LoadLevelState : IPayloadState<string>
   {
     private const string SpawnPointTag = "SpawnPoint";
-    private const string EnemySpawnerTag = "EnemySpawner";
 
     private readonly GameStateMachine _stateMachine;
     private readonly SceneLoader _sceneLoader;
@@ -23,13 +23,15 @@ namespace CodeBase.Infrastructure.States
     private readonly IGameFactory _gameFactory;
     private readonly IPersistentProgressService _progressService;
     private readonly IStaticDataService _staticDataService;
+    private readonly IUIFactory _uiFactory;
 
     public LoadLevelState(GameStateMachine stateMachine,
       SceneLoader sceneLoader,
       LoadingScreen loadingScreen,
       IGameFactory gameFactory,
       IPersistentProgressService progressService, 
-      IStaticDataService staticDataService)
+      IStaticDataService staticDataService,
+      IUIFactory uiFactory)
     {
       _stateMachine = stateMachine;
       _sceneLoader = sceneLoader;
@@ -37,6 +39,7 @@ namespace CodeBase.Infrastructure.States
       _gameFactory = gameFactory;
       _progressService = progressService;
       _staticDataService = staticDataService;
+      _uiFactory = uiFactory;
     }
 
     
@@ -52,11 +55,15 @@ namespace CodeBase.Infrastructure.States
 
     private void OnLoaded()
     {
+      InitUI();
       InitGameWorld();
       InformProgressReaders();
       
       _stateMachine.Enter<GameLoopState>();
     }
+
+    private void InitUI() => 
+      _uiFactory.CreateUI();
 
     private void InitGameWorld()
     {
@@ -71,10 +78,9 @@ namespace CodeBase.Infrastructure.States
     {
       var sceneKey = SceneManager.GetActiveScene().name;
       LevelStaticData levelData = _staticDataService.ForLevel(sceneKey);
+      
       foreach (EnemySpawnerData spawner in levelData.EnemySpawners)
-      {
         _gameFactory.CreateSpawnPoint(spawner.ID, spawner.Position, spawner.WarriorType);
-      }
     }
 
     private void InitHUD(GameObject player)

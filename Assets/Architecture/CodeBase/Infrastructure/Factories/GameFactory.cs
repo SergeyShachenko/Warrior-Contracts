@@ -9,6 +9,8 @@ using CodeBase.Logic.Loot;
 using CodeBase.StaticData;
 using CodeBase.UI.HUD;
 using CodeBase.UI.HUD.Character;
+using CodeBase.UI.Services;
+using CodeBase.UI.UIElements;
 using UnityEngine;
 using UnityEngine.AI;
 using Object = UnityEngine.Object;
@@ -22,20 +24,23 @@ namespace CodeBase.Infrastructure.Factories
     public GameObject Player { get; private set; }
 
     private readonly IPersistentProgressService _progressService;
-    private readonly IAssets _assets;
+    private readonly IAssetsProvider _assetsProvider;
     private readonly IStaticDataService _staticData;
     private readonly IRandomService _randomService;
+    private readonly IWindowService _windowService;
 
     public GameFactory(
       IPersistentProgressService progressService, 
-      IAssets assets,
+      IAssetsProvider assetsProvider,
       IStaticDataService staticData, 
-      IRandomService randomService)
+      IRandomService randomService,
+      IWindowService windowService)
     {
       _progressService = progressService;
-      _assets = assets;
+      _assetsProvider = assetsProvider;
       _staticData = staticData;
       _randomService = randomService;
+      _windowService = windowService;
     }
     
     
@@ -101,6 +106,11 @@ namespace CodeBase.Infrastructure.Factories
       GameObject hud = InstantiateRegistered(AssetPath.HUD);
       hud.GetComponentInChildren<LootCounter>()
         .Construct(_progressService.Progress.World);
+
+      foreach (OpenWindowButton button in hud.GetComponentsInChildren<OpenWindowButton>())
+      {
+        button.Construct(_windowService);
+      }
       
       return hud;
     }
@@ -121,14 +131,14 @@ namespace CodeBase.Infrastructure.Factories
 
     private GameObject InstantiateRegistered(string prefabPath, Vector3 at)
     {
-      GameObject gameObject = _assets.Instantiate(path: prefabPath, position: at);
+      GameObject gameObject = _assetsProvider.Instantiate(path: prefabPath, position: at);
       RegisterProgressWatchers(gameObject);
       return gameObject;
     }
     
     private GameObject InstantiateRegistered(string prefabPath)
     {
-      GameObject gameObject = _assets.Instantiate(path: prefabPath);
+      GameObject gameObject = _assetsProvider.Instantiate(path: prefabPath);
       RegisterProgressWatchers(gameObject);
       return gameObject;
     }
