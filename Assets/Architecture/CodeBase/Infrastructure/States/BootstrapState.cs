@@ -38,16 +38,17 @@ namespace CodeBase.Infrastructure.States
 
     private void RegisterServices()
     {
+      IInputService inputService = RegisterInputService();
       IAssetsProvider assetsProvider = new AssetProviderProvider();
       IStaticDataService staticDataService = RegisterStaticData();
       IPersistentProgressService progressService = new PersistentProgressService();
       IRandomService randomService = new RandomService();
-      IUIFactory uiFactory = new UIFactory(assetsProvider, staticDataService, progressService);
+      IAdsService adsService = RegisterAdsService();
+      IUIFactory uiFactory = new UIFactory(assetsProvider, staticDataService, progressService, adsService);
       IWindowService windowService = new WindowService(uiFactory);
       IGameFactory gameFactory = new GameFactory(progressService, assetsProvider, staticDataService, randomService, windowService);
       ISaveLoadService saveLoadService = new SaveLoadService(progressService, gameFactory);
-
-      _services.RegisterSingle(InputService());
+      
       _services.RegisterSingle(assetsProvider);
       _services.RegisterSingle(progressService);
       _services.RegisterSingle(randomService);
@@ -66,15 +67,24 @@ namespace CodeBase.Infrastructure.States
       return staticData;
     }
 
+    private AdsService RegisterAdsService()
+    {
+      var adsService = new AdsService();
+      adsService.Init();
+      _services.RegisterSingle(adsService);
+      
+      return adsService;
+    }
+
     private void EnterLoadLevel() => 
       _stateMachine.Enter<LoadProgressState>();
 
-    private static IInputService InputService()
+    private IInputService RegisterInputService()
     {
-      if (Application.isEditor)
-        return new StandaloneInputService();
-      else
-        return new TouchInputService();
+      IInputService inputService = Application.isEditor ? new StandaloneInputService() : new TouchInputService();
+      _services.RegisterSingle(inputService);
+
+      return inputService;
     }
   }
 }

@@ -32,7 +32,7 @@ namespace CodeBase.Logic.Loot
       
       
       _picked = true;
-      _worldData.AllLoot.Collect(_lootData);
+      _worldData.Loot.Collect(_lootData);
       Destroy(gameObject);
     }
   }

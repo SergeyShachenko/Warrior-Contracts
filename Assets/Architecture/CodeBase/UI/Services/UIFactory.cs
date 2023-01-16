@@ -13,17 +13,20 @@ namespace CodeBase.UI.Services
     private readonly IAssetsProvider _assetsProvider;
     private readonly IStaticDataService _staticData;
     private readonly IPersistentProgressService _progressService;
+    private readonly IAdsService _adsService;
 
     private Transform _ui;
 
     public UIFactory(
       IAssetsProvider assetsProvider, 
       IStaticDataService staticData, 
-      IPersistentProgressService progressService)
+      IPersistentProgressService progressService,
+      IAdsService adsService)
     {
       _assetsProvider = assetsProvider;
       _staticData = staticData;
       _progressService = progressService;
+      _adsService = adsService;
     }
 
 
@@ -33,8 +36,8 @@ namespace CodeBase.UI.Services
     public void CreateShop()
     {
       WindowConfig windowConfig = _staticData.ForWindow(WindowID.Shop);
-      WindowBase window = Object.Instantiate(windowConfig.Window, _ui);
-      window.Construct(_progressService);
+      var window = Object.Instantiate(windowConfig.Window, _ui) as ShopWindow;
+      window.Construct(_adsService, _progressService);
     }
   }
 }
