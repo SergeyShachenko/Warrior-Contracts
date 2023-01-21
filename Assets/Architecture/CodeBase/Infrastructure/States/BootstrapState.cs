@@ -49,6 +49,7 @@ namespace CodeBase.Infrastructure.States
       IGameFactory gameFactory = new GameFactory(progressService, assetsProvider, staticDataService, randomService, windowService);
       ISaveLoadService saveLoadService = new SaveLoadService(progressService, gameFactory);
       
+      _services.RegisterSingle<IGameStateMachine>(_stateMachine);
       _services.RegisterSingle(assetsProvider);
       _services.RegisterSingle(progressService);
       _services.RegisterSingle(randomService);

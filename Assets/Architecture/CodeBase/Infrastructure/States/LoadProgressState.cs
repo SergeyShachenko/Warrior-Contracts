@@ -6,6 +6,8 @@ namespace CodeBase.Infrastructure.States
 {
   public class LoadProgressState : IDefaultState
   {
+    private const string StartLevel = "Level_Flat_1";
+    
     private readonly GameStateMachine _gameStateMachine;
     private readonly IPersistentProgressService _progressService;
     private readonly ISaveLoadService _saveLoadService;
@@ -37,7 +39,7 @@ namespace CodeBase.Infrastructure.States
 
     private PlayerProgressData NewProgress()
     {
-      var progress = new PlayerProgressData(startLevel: "Level_1");
+      var progress = new PlayerProgressData(StartLevel);
       progress.State.MaxHP = 50f;
       progress.Stats.Damage = 5f;
       progress.Stats.DamageRadius = 2f;

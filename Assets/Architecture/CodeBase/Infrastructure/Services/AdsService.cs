@@ -43,7 +43,7 @@ namespace CodeBase.Infrastructure.Services
 
     public void OnUnityAdsReady(string placementId)
     {
-      Debug.Log($"UnityAds: Placement <b>{placementId}</b> <color=Yellow>is ready</color>");
+      Debug.Log($"UnityAds: Placement <b>{placementId}</b> <color=Green>is ready</color>");
 
       if (placementId == RewAndroidID) 
         RewardedReady?.Invoke();
@@ -53,7 +53,7 @@ namespace CodeBase.Infrastructure.Services
       Debug.LogError($"UnityAds: {message}");
 
     public void OnUnityAdsDidStart(string placementId) => 
-      Debug.Log($"UnityAds: Placement <b>{placementId}</b> <color=Yellow>starts</color>");
+      Debug.Log($"UnityAds: Placement <b>{placementId}</b> <color=Green>starts</color>");
 
     public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
     {
@@ -64,7 +64,7 @@ namespace CodeBase.Infrastructure.Services
         case ShowResult.Finished:
         {
           _onVideoFinished?.Invoke();
-          Debug.Log($"UnityAds: Placement <b>{placementId}</b> <color=Yellow>{showResult}</color>");
+          Debug.Log($"UnityAds: Placement <b>{placementId}</b> <color=Green>{showResult}</color>");
         }
           break;
         

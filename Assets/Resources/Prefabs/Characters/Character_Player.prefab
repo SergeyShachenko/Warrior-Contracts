@@ -22,6 +22,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 31
       objectReference: {fileID: 0}
+    - target: {fileID: 396369836091184924, guid: 720c02cef404a384682abf5b81113c28,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 396369836091184927, guid: 720c02cef404a384682abf5b81113c28,
         type: 3}
       propertyPath: m_RootOrder

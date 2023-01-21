@@ -15,8 +15,6 @@ namespace CodeBase.Infrastructure.States
 {
   public class LoadLevelState : IPayloadState<string>
   {
-    private const string SpawnPointTag = "SpawnPoint";
-
     private readonly GameStateMachine _stateMachine;
     private readonly SceneLoader _sceneLoader;
     private readonly LoadingScreen _loadingScreen;
@@ -67,18 +65,16 @@ namespace CodeBase.Infrastructure.States
 
     private void InitGameWorld()
     {
-      GameObject player = _gameFactory.CreatePlayer(GameObject.FindWithTag(SpawnPointTag));
-      InitSpawners();
+      LevelStaticData levelData = GetLevelStaticData();
+      GameObject player = _gameFactory.CreatePlayer(levelData.InitPlayerPos);
+      
+      InitSpawners(levelData);
       InitHUD(player);
-
       CameraFollow(player);
     }
 
-    private void InitSpawners()
+    private void InitSpawners(LevelStaticData levelData)
     {
-      var sceneKey = SceneManager.GetActiveScene().name;
-      LevelStaticData levelData = _staticDataService.ForLevel(sceneKey);
-      
       foreach (EnemySpawnerData spawner in levelData.EnemySpawners)
         _gameFactory.CreateSpawnPoint(spawner.ID, spawner.Position, spawner.WarriorType);
     }
@@ -88,6 +84,9 @@ namespace CodeBase.Infrastructure.States
       GameObject hud = _gameFactory.CreateHUD();
       hud.GetComponentInChildren<ActorHUD>().Construct(player.GetComponent<PlayerHealth>());
     }
+
+    private LevelStaticData GetLevelStaticData() => 
+      _staticDataService.ForLevel(SceneManager.GetActiveScene().name);
 
     private void InformProgressReaders()
     {

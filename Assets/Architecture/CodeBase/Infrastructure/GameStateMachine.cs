@@ -9,7 +9,7 @@ using CodeBase.UI.Services;
 
 namespace CodeBase.Infrastructure
 {
-  public class GameStateMachine
+  public class GameStateMachine : IGameStateMachine
   {
     private readonly Dictionary<Type, IStateBase> _states;
     private IStateBase _currentState;

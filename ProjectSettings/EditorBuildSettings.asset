@@ -9,8 +9,11 @@ EditorBuildSettings:
     path: Assets/Architecture/Scenes/BootScene.unity
     guid: 96e97263255eb464f8bb6145728dbc08
   - enabled: 1
-    path: Assets/Architecture/Scenes/Level_1.unity
+    path: Assets/Architecture/Scenes/Level_Flat_1.unity
     guid: 8124e5870f4fd4c779e7a5f994e84ad1
+  - enabled: 1
+    path: Assets/Architecture/Scenes/Level_Flat_2.unity
+    guid: 3f2337d96aa9e6143a42aa396aae912c
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: cf11ff7fc96834043b08e87597b8b8fb,
       type: 2}

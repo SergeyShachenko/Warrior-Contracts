@@ -13,7 +13,7 @@ namespace CodeBase.Infrastructure.Factories
     List<ILoaderProgress> ProgressLoaders { get; }
     GameObject Player { get; }
 
-    GameObject CreatePlayer(GameObject at);
+    GameObject CreatePlayer(Vector3 at);
     GameObject CreateEnemyWarrior(WarriorType warriorType, Transform parent);
     void CreateSpawnPoint(string spawnerID, Vector3 at, WarriorType warriorType);
     LootPiece CreateLoot();

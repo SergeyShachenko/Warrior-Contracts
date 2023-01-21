@@ -44,9 +44,9 @@ namespace CodeBase.Infrastructure.Factories
     }
     
     
-    public GameObject CreatePlayer(GameObject at)
+    public GameObject CreatePlayer(Vector3 at)
     {
-      Player = InstantiateRegistered(AssetPath.PlayerSword, at.transform.position);
+      Player = InstantiateRegistered(AssetPath.PlayerSword, at);
       return Player;
     }
 

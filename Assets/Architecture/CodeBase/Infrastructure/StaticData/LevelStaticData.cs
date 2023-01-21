@@ -9,5 +9,6 @@ namespace CodeBase.Infrastructure.StaticData
   {
     public string LevelKey;
     public List<EnemySpawnerData> EnemySpawners;
+    public Vector3 InitPlayerPos;
   }
 }
