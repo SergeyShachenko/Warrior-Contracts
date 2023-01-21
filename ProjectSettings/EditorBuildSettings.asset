@@ -15,5 +15,7 @@ EditorBuildSettings:
     path: Assets/Architecture/Scenes/Level_Flat_2.unity
     guid: 3f2337d96aa9e6143a42aa396aae912c
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: ed0b7cf8ac518ad42b41970ffeaa99c9,
+      type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: cf11ff7fc96834043b08e87597b8b8fb,
       type: 2}
