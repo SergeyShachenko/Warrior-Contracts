@@ -39,18 +39,17 @@ namespace CodeBase.Infrastructure.States
     private void RegisterServices()
     {
       IInputService inputService = RegisterInputService();
-      IAssetsProvider assetsProvider = new AssetProviderProvider();
+      IAssets assetProvider = RegisterAssetProvider();
       IStaticDataService staticDataService = RegisterStaticData();
       IPersistentProgressService progressService = new PersistentProgressService();
       IRandomService randomService = new RandomService();
       IAdsService adsService = RegisterAdsService();
-      IUIFactory uiFactory = new UIFactory(assetsProvider, staticDataService, progressService, adsService);
+      IUIFactory uiFactory = new UIFactory(assetProvider, staticDataService, progressService, adsService);
       IWindowService windowService = new WindowService(uiFactory);
-      IGameFactory gameFactory = new GameFactory(progressService, assetsProvider, staticDataService, randomService, windowService);
+      IGameFactory gameFactory = new GameFactory(progressService, assetProvider, staticDataService, randomService, windowService);
       ISaveLoadService saveLoadService = new SaveLoadService(progressService, gameFactory);
       
       _services.RegisterSingle<IGameStateMachine>(_stateMachine);
-      _services.RegisterSingle(assetsProvider);
       _services.RegisterSingle(progressService);
       _services.RegisterSingle(randomService);
       _services.RegisterSingle(uiFactory);
@@ -59,10 +58,19 @@ namespace CodeBase.Infrastructure.States
       _services.RegisterSingle(saveLoadService);
     }
 
+    private AssetProvider RegisterAssetProvider()
+    {
+      var assetProvider = new AssetProvider();
+      assetProvider.Init();
+      _services.RegisterSingle(assetProvider);
+      
+      return assetProvider;
+    }
+
     private IStaticDataService RegisterStaticData()
     {
       IStaticDataService staticData = new StaticDataService();
-      staticData.LoadEnemyWarriors();
+      staticData.LoadData();
       _services.RegisterSingle(staticData);
 
       return staticData;

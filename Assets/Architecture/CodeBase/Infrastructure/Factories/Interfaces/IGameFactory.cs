@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Logic.Loot;
@@ -13,12 +14,15 @@ namespace CodeBase.Infrastructure.Factories
     List<ILoaderProgress> ProgressLoaders { get; }
     GameObject Player { get; }
 
-    GameObject CreatePlayer(Vector3 at);
-    GameObject CreateEnemyWarrior(WarriorType warriorType, Transform parent);
-    void CreateSpawnPoint(string spawnerID, Vector3 at, WarriorType warriorType);
-    LootPiece CreateLoot();
-    GameObject CreateHUD();
+    void Register(ILoaderProgress progressLoader);
     
+    Task<GameObject> CreatePlayerWarrior(WarriorType warriorType, Vector3 at);
+    Task<GameObject> CreateEnemyWarrior(WarriorType warriorType, Transform parent);
+    Task CreateSpawnPoint(string spawnerID, Vector3 at, WarriorType warriorType);
+    Task<LootPiece> CreateLoot();
+    Task<GameObject> CreateHUD();
+
+    Task WarmUp();
     void CleanUp();
   }
 }

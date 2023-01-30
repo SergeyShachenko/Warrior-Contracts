@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.PersistentProgress;
@@ -24,104 +25,27 @@ namespace CodeBase.Infrastructure.Factories
     public GameObject Player { get; private set; }
 
     private readonly IPersistentProgressService _progressService;
-    private readonly IAssetsProvider _assetsProvider;
+    private readonly IAssets _assets;
     private readonly IStaticDataService _staticData;
     private readonly IRandomService _randomService;
     private readonly IWindowService _windowService;
 
     public GameFactory(
       IPersistentProgressService progressService, 
-      IAssetsProvider assetsProvider,
+      IAssets assets,
       IStaticDataService staticData, 
       IRandomService randomService,
       IWindowService windowService)
     {
       _progressService = progressService;
-      _assetsProvider = assetsProvider;
+      _assets = assets;
       _staticData = staticData;
       _randomService = randomService;
       _windowService = windowService;
     }
-    
-    
-    public GameObject CreatePlayer(Vector3 at)
-    {
-      Player = InstantiateRegistered(AssetPath.PlayerSword, at);
-      return Player;
-    }
 
-    public GameObject CreateEnemyWarrior(WarriorType warriorType, Transform parent)
-    {
-      WarriorStaticData warriorData = _staticData.ForWarrior(warriorType);
-      GameObject warrior = Object.Instantiate(warriorData.Prefab, parent.position, parent.rotation, parent);
 
-      var health = warrior.GetComponent<IHealth>();
-      health.Current = warriorData.HP;
-      health.Max = warriorData.HP;
-
-      var attack = warrior.GetComponentInChildren<EnemyAttack>();
-      attack.Construct(Player);
-      attack.Damage = warriorData.Damage;
-      attack.AttackDistance = warriorData.AttackDistance;
-      attack.AttackCooldown = warriorData.AttackCooldown;
-      attack.HitRadius = warriorData.HitRadius;
-
-      if (warrior.TryGetComponent(out RotateToPlayerAI rotateToPlayer))
-      {
-        rotateToPlayer.Construct(Player);
-        rotateToPlayer.Speed = warriorData.Speed;
-      }
-      
-      if (warrior.TryGetComponent(out MoveToPlayerAI moveToPlayerAI)) 
-        moveToPlayerAI.Construct(Player);
-
-      warrior.GetComponentInChildren<ActorHUD>().Construct(health);
-      warrior.GetComponent<NavMeshAgent>().speed = warriorData.Speed;
-      
-      var lootSpawner = warrior.GetComponentInChildren<LootSpawner>();
-      lootSpawner.Construct(this, _randomService);
-      lootSpawner.SetLootExp(warriorData.MinLootExp, warriorData.MaxLootExp);
-
-      return warrior;
-    }
-
-    public void CreateSpawnPoint(string spawnerID, Vector3 at, WarriorType warriorType)
-    {
-      var spawner = InstantiateRegistered(AssetPath.SpawnPoint, at)
-        .GetComponent<SpawnPoint>();
-      spawner.Construct(this);
-      spawner.ID = spawnerID;
-      spawner.WarriorType = warriorType;
-    }
-
-    public LootPiece CreateLoot()
-    {
-      var lootPiece = InstantiateRegistered(AssetPath.LootExp).GetComponent<LootPiece>();
-      lootPiece.Construct(_progressService.Progress.World);
-      return lootPiece; 
-    }
-
-    public GameObject CreateHUD()
-    {
-      GameObject hud = InstantiateRegistered(AssetPath.HUD);
-      hud.GetComponentInChildren<LootCounter>()
-        .Construct(_progressService.Progress.World);
-
-      foreach (OpenWindowButton button in hud.GetComponentsInChildren<OpenWindowButton>())
-      {
-        button.Construct(_windowService);
-      }
-      
-      return hud;
-    }
-
-    public void CleanUp()
-    {
-      ProgressSavers.Clear();
-      ProgressLoaders.Clear();
-    }
-    
-    private void Register(ILoaderProgress progressLoader)
+    public void Register(ILoaderProgress progressLoader)
     {
       if(progressLoader is ISaverProgress progressSaver)
         ProgressSavers.Add(progressSaver);
@@ -129,16 +53,123 @@ namespace CodeBase.Infrastructure.Factories
       ProgressLoaders.Add(progressLoader);
     }
 
-    private GameObject InstantiateRegistered(string prefabPath, Vector3 at)
+    public async Task<GameObject> CreatePlayerWarrior(WarriorType warriorType, Vector3 at)
     {
-      GameObject gameObject = _assetsProvider.Instantiate(path: prefabPath, position: at);
+      Player = await InstantiateRegisteredAsync(AssetAddress.PlayerSword, at);
+      return Player;
+    }
+
+    public async Task<GameObject> CreateEnemyWarrior(WarriorType warriorType, Transform parent)
+    {
+      EnemyWarriorStaticData enemyWarriorData = _staticData.ForEnemyWarrior(warriorType);
+      var warriorPref = await _assets.Load<GameObject>(enemyWarriorData.PrefabRef);
+      
+      
+      GameObject warrior = Object.Instantiate(warriorPref, parent.position, parent.rotation, parent);
+
+      var health = warrior.GetComponent<IHealth>();
+      health.Current = enemyWarriorData.HP;
+      health.Max = enemyWarriorData.HP;
+
+      var attack = warrior.GetComponentInChildren<EnemyAttack>();
+      attack.Construct(Player);
+      attack.Damage = enemyWarriorData.Damage;
+      attack.AttackDistance = enemyWarriorData.AttackDistance;
+      attack.AttackCooldown = enemyWarriorData.AttackCooldown;
+      attack.HitRadius = enemyWarriorData.HitRadius;
+
+      if (warrior.TryGetComponent(out RotateToPlayerAI rotateToPlayer))
+      {
+        rotateToPlayer.Construct(Player);
+        rotateToPlayer.Speed = enemyWarriorData.Speed;
+      }
+      
+      if (warrior.TryGetComponent(out MoveToPlayerAI moveToPlayerAI)) 
+        moveToPlayerAI.Construct(Player);
+
+      warrior.GetComponentInChildren<ActorHUD>().Construct(health);
+      warrior.GetComponent<NavMeshAgent>().speed = enemyWarriorData.Speed;
+      
+      var lootSpawner = warrior.GetComponentInChildren<LootSpawner>();
+      lootSpawner.Construct(this, _randomService);
+      lootSpawner.SetLootExp(enemyWarriorData.MinLootExp, enemyWarriorData.MaxLootExp);
+
+      return warrior;
+    }
+
+    public async Task CreateSpawnPoint(string spawnerID, Vector3 at, WarriorType warriorType)
+    {
+      var spawnerObj = await _assets.Load<GameObject>(AssetAddress.SpawnPoint);
+      
+      
+      var spawnPoint = InstantiateRegisteredAsync(spawnerObj, at)
+        .GetComponent<SpawnPoint>();
+      
+      spawnPoint.Construct(this);
+      spawnPoint.ID = spawnerID;
+      spawnPoint.WarriorType = warriorType;
+    }
+
+    public async Task<LootPiece> CreateLoot()
+    {
+      var lootObj = await _assets.Load<GameObject>(AssetAddress.Loot);
+      
+      
+      var lootPiece = InstantiateRegisteredAsync(lootObj).GetComponent<LootPiece>();
+      lootPiece.Construct(_progressService.Progress.World);
+      
+      return lootPiece; 
+    }
+
+    public async Task<GameObject> CreateHUD()
+    {
+      GameObject hud = await InstantiateRegisteredAsync(AssetAddress.HUD);
+      hud.GetComponentInChildren<LootCounter>()
+        .Construct(_progressService.Progress.World);
+
+      foreach (OpenWindowButton button in hud.GetComponentsInChildren<OpenWindowButton>())
+        button.Construct(_windowService);
+
+      return hud;
+    }
+
+    public async Task WarmUp()
+    {
+      await _assets.Load<GameObject>(AssetAddress.Loot);
+      await _assets.Load<GameObject>(AssetAddress.SpawnPoint);
+    }
+
+    public void CleanUp()
+    {
+      ProgressSavers.Clear();
+      ProgressLoaders.Clear();
+      _assets.CleanUp();
+    }
+
+    private GameObject InstantiateRegisteredAsync(GameObject prefab)
+    {
+      GameObject gameObject = Object.Instantiate(prefab);
       RegisterProgressWatchers(gameObject);
       return gameObject;
     }
     
-    private GameObject InstantiateRegistered(string prefabPath)
+    private async Task<GameObject> InstantiateRegisteredAsync(string address)
     {
-      GameObject gameObject = _assetsProvider.Instantiate(path: prefabPath);
+      GameObject gameObject = await _assets.Instantiate(address);
+      RegisterProgressWatchers(gameObject);
+      return gameObject;
+    }
+
+    private async Task<GameObject> InstantiateRegisteredAsync(string address, Vector3 at)
+    {
+      GameObject gameObject = await _assets.Instantiate(address, at);
+      RegisterProgressWatchers(gameObject);
+      return gameObject;
+    }
+    
+    private GameObject InstantiateRegisteredAsync(GameObject prefab, Vector3 at)
+    {
+      GameObject gameObject = Object.Instantiate(prefab, position: at, Quaternion.identity);
       RegisterProgressWatchers(gameObject);
       return gameObject;
     }

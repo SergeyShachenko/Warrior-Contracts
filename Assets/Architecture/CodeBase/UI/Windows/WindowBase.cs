@@ -1,5 +1,4 @@
-﻿using System;
-using CodeBase.Data;
+﻿using CodeBase.Data;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,10 +17,8 @@ namespace CodeBase.UI
       p_ProgressService = progressService;
 
 
-    private void Awake()
-    {
+    private void Awake() => 
       OnAwake();
-    }
 
     private void Start()
     {

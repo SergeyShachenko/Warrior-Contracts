@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Character_Enemy_Warriors
+  m_EditorClassIdentifier: 
+  m_GroupName: Character_Enemy_Warriors
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 834d9d1c42ebb3748aa4dbda1c3d1963
+  m_SerializeEntries:
+  - m_GUID: 499d0c2532713b644a2114b89eb475f5
+    m_Address: Warrior_Enemy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6608706d76859fb4597b5dd0e537c940
+    m_Address: Warrior_Enemy_Boss_Sword
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a6ebe2425fd4446488dacee64746b664
+    m_Address: Warrior_Enemy_Boss_SwordShield
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 48c66c7874a9f414185223a38095a1ad
+    m_Address: Warrior_Enemy_Sword
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: afab53dfaa23d5145a316b30c1de1c5e
+    m_Address: Warrior_Enemy_SwordShield
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9ade387ac11e3a74d84732767761a67a
+    m_Address: Model_Warrior_Enemy_Boss_Sword
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8a65ee07a71f1804ab4251820debc73d
+    m_Address: Model_Warrior_Enemy_Boss_SwordShield
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e1987c05ea69a7d479226c74034d92c5
+    m_Address: Model_Warrior_Enemy_Sword
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 65f13af3c129ea341b3c8df4be2f4348
+    m_Address: Model_Warrior_Enemy_SwordShield
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 46264aa5c4a90b24a845c27406db65df, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 15eb686c9ff197f4bb6a47f994820f1f, type: 2}
+    - {fileID: 11400000, guid: 42a9feeafbabd4d41b2c9478dc59756a, type: 2}

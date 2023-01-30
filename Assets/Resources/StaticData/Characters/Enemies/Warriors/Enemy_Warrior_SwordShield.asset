@@ -21,4 +21,8 @@ MonoBehaviour:
   AttackCooldown: 1
   HitRadius: 0.5
   Speed: 3
-  Prefab: {fileID: 7987901006066334026, guid: afab53dfaa23d5145a316b30c1de1c5e, type: 3}
+  PrefabRef:
+    m_AssetGUID: afab53dfaa23d5145a316b30c1de1c5e
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UI_Gameplay
+  m_EditorClassIdentifier: 
+  m_GroupName: UI_Gameplay
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 69f70241df52ffa4fa99c45f4c88aa2a
+  m_SerializeEntries:
+  - m_GUID: 60b6e9d0d800a054fa5acc72583ac601
+    m_Address: UI_HUD_Gameplay
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9c5a79b1f2e68d74bbe417650d81f5dc
+    m_Address: Sprite_UI_HUD_Gameplay_Button_Attack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 34e20354a76194d459b5a75c56f3a56a
+    m_Address: Sprite_UI_HUD_Gameplay_Character_HealthBar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 46264aa5c4a90b24a845c27406db65df, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: f466b2d1f8ec81b4ca991f1cf961d39f, type: 2}
+    - {fileID: 11400000, guid: f13af20e8bdaa6a4088a661de9c66d78, type: 2}

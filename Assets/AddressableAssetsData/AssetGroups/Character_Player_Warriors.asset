@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Character_Player_Warriors
+  m_EditorClassIdentifier: 
+  m_GroupName: Character_Player_Warriors
+  m_Data:
+    m_SerializedData: []
+  m_GUID: e3917d45944db0045a390d8ec04c0f40
+  m_SerializeEntries:
+  - m_GUID: f1a64731d64a8f747a50651d2181905f
+    m_Address: Warrior_Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a249796836309ed4387b96c09248b3b8
+    m_Address: Warrior_Player_Sword
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e35acb1d57da74349b65aa819bc05f32
+    m_Address: Warrior_Player_SwordShield
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 06b4eb2765640564aa9bc5a3dff0f374
+    m_Address: Model_Warrior_Player_Sword
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 53b88c2fb8eb4a649941170a8d601286
+    m_Address: Model_Warrior_Player_SwordShield
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 46264aa5c4a90b24a845c27406db65df, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: f908860ad563ab048810fed6d5ae3c0d, type: 2}
+    - {fileID: 11400000, guid: 6a517e698752a564baaf0a64204d1680, type: 2}

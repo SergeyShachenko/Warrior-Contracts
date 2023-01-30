@@ -7,8 +7,9 @@ namespace CodeBase.Infrastructure.Services
 {
   public interface IStaticDataService : IService
   {
-    void LoadEnemyWarriors();
-    WarriorStaticData ForWarrior(WarriorType type);
+    void LoadData();
+    PlayerWarriorStaticData ForPlayerWarrior(WarriorType type);
+    EnemyWarriorStaticData ForEnemyWarrior(WarriorType type);
     LevelStaticData ForLevel(string sceneKey);
     WindowConfig ForWindow(WindowID id);
   }

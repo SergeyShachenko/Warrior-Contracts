@@ -24,9 +24,11 @@ namespace CodeBase.Logic.Characters
     }
     
     
-    private void Spawn()
+    private async void Spawn()
     {
-      GameObject enemyWarrior = _gameFactory.CreateEnemyWarrior(WarriorType, transform);
+      GameObject enemyWarrior = await _gameFactory.CreateEnemyWarrior(WarriorType, transform);
+      
+      
       _enemyDeath = enemyWarrior.GetComponent<EnemyDeath>();
       _enemyDeath.Happened += OnEnemyDead;
     }

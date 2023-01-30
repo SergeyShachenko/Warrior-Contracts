@@ -1,11 +1,14 @@
-﻿using CodeBase.Data;
+﻿using System.Threading.Tasks;
+using CodeBase.Data;
 using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Infrastructure.StaticData;
 using CodeBase.Logic.Camera;
 using CodeBase.Logic.Characters;
+using CodeBase.Logic.Loot;
 using CodeBase.Logic.Screens;
+using CodeBase.StaticData;
 using CodeBase.UI.HUD.Character;
 using CodeBase.UI.Services;
 using UnityEngine;
@@ -45,44 +48,67 @@ namespace CodeBase.Infrastructure.States
     {
       _loadingScreen.Show();
       _gameFactory.CleanUp();
+      _gameFactory.WarmUp();
       _sceneLoader.Load(sceneName, OnLoaded);
     }
 
     public void Exit() => 
       _loadingScreen.Hide();
 
-    private void OnLoaded()
+    private async void OnLoaded()
     {
-      InitUI();
-      InitGameWorld();
-      InformProgressReaders();
+      await InitUI();
+      await InitGameWorld();
       
+      InformProgressReaders();
       _stateMachine.Enter<GameLoopState>();
     }
 
-    private void InitUI() => 
-      _uiFactory.CreateUI();
+    private async Task InitUI() => 
+      await _uiFactory.CreateUI();
 
-    private void InitGameWorld()
+    private async Task InitGameWorld()
     {
       LevelStaticData levelData = GetLevelStaticData();
-      GameObject player = _gameFactory.CreatePlayer(levelData.InitPlayerPos);
+
+      await InitSpawners(levelData);
+ 
+      // TODO Сделать механику сохранения лута
+      //await InitDroppedLoot();
       
-      InitSpawners(levelData);
-      InitHUD(player);
+      GameObject player = await InitPlayer(levelData);
+      await InitHUD(player);
+
       CameraFollow(player);
     }
 
-    private void InitSpawners(LevelStaticData levelData)
+    private async Task InitSpawners(LevelStaticData levelData)
     {
       foreach (EnemySpawnerData spawner in levelData.EnemySpawners)
-        _gameFactory.CreateSpawnPoint(spawner.ID, spawner.Position, spawner.WarriorType);
+        await _gameFactory.CreateSpawnPoint(spawner.ID, spawner.Position, spawner.WarriorType);
     }
 
-    private void InitHUD(GameObject player)
+    private async Task<GameObject> InitPlayer(LevelStaticData levelData) => 
+      await _gameFactory.CreatePlayerWarrior(WarriorType.Sword, levelData.InitPlayerPos);
+
+    // private async Task InitDroppedLoot()
+    // {
+    //   DroppedLoot droppedLoot = _progressService.Progress.World.DroppedLoot;
+    //
+    //   foreach (DroppedItem drop in droppedLoot.Items)
+    //   {
+    //     LootPiece loot = await _gameFactory.CreateLoot();
+    //     loot.transform.position = drop.Position.AsUnityVector(); // AsUnityVector() - экстеншн
+    //     loot.Init(drop.Loot);
+    //   }
+    // }
+
+    private async Task InitHUD(GameObject player)
     {
-      GameObject hud = _gameFactory.CreateHUD();
-      hud.GetComponentInChildren<ActorHUD>().Construct(player.GetComponent<PlayerHealth>());
+      GameObject hud = await _gameFactory.CreateHUD();
+      
+      hud.GetComponentInChildren<ActorHUD>()
+        .Construct(player.GetComponent<PlayerHealth>());
     }
 
     private LevelStaticData GetLevelStaticData() => 

@@ -39,13 +39,18 @@ namespace CodeBase.Logic.Loot
       SpawnLoot();
     }
 
-    private void SpawnLoot()
+    private async void SpawnLoot()
     {
-      LootPiece loot = _gameFactory.CreateLoot();
+      LootPiece loot = await _gameFactory.CreateLoot();
+      
+      
       loot.transform.position = transform.position;
-
       LootData lootExp = new(value: _randomService.Next(_minLootExp, _maxLootExp));
-      loot.Init(lootExp); 
+      loot.Init(lootExp);
+      
+      // TODO Сделать механику сохранения лута
+      // _gameFactory.Register(loot);
+      // loot.Picked += () => _gameFactory.Unregister(loot);
     }
   }
 }

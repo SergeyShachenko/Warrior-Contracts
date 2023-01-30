@@ -13,13 +13,11 @@ namespace CodeBase.UI.HUD
     {
       _worldData = worldData;
       _worldData.Loot.Changed += UpdateCounter;
+      
+      UpdateCounter();
     }
 
-
-    private void Start() => 
-      UpdateCounter();
-
-
+    
     private void UpdateCounter() => 
       Counter.text = $"{_worldData.Loot.Collected}";
   }

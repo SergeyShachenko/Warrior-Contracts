@@ -1,4 +1,5 @@
-﻿using CodeBase.Data;
+﻿using System.Threading.Tasks;
+using CodeBase.Data;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.PersistentProgress;
@@ -8,9 +9,7 @@ namespace CodeBase.UI.Services
 {
   public class UIFactory : IUIFactory
   {
-    private const string UIPath = "Prefabs/UI/UI";
-    
-    private readonly IAssetsProvider _assetsProvider;
+    private readonly IAssets _assets;
     private readonly IStaticDataService _staticData;
     private readonly IPersistentProgressService _progressService;
     private readonly IAdsService _adsService;
@@ -18,20 +17,23 @@ namespace CodeBase.UI.Services
     private Transform _ui;
 
     public UIFactory(
-      IAssetsProvider assetsProvider, 
+      IAssets assets, 
       IStaticDataService staticData, 
       IPersistentProgressService progressService,
       IAdsService adsService)
     {
-      _assetsProvider = assetsProvider;
+      _assets = assets;
       _staticData = staticData;
       _progressService = progressService;
       _adsService = adsService;
     }
 
 
-    public void CreateUI() => 
-      _ui = _assetsProvider.Instantiate(UIPath).transform;
+    public async Task CreateUI()
+    {
+      GameObject instantiate = await _assets.Instantiate(AssetAddress.UI);
+      _ui =  instantiate.transform;
+    }
 
     public void CreateShop()
     {

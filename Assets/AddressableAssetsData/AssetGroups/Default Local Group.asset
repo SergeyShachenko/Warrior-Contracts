@@ -16,7 +16,11 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 130a142e6eca22c4e9a60ede933c2f86
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 6e4ae4064600d784cac1e41a9e6f2e59
+    m_Address: Shader_Lit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 46264aa5c4a90b24a845c27406db65df, type: 2}
   m_SchemaSet:
