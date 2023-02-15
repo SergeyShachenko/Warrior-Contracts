@@ -2,6 +2,7 @@
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Factories;
 using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.Services.IAP;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.UI.Services;
 using UnityEngine;
@@ -42,6 +43,7 @@ namespace CodeBase.Infrastructure.States
       IAssets assetProvider = RegisterAssetProvider();
       IStaticDataService staticDataService = RegisterStaticData();
       IPersistentProgressService progressService = new PersistentProgressService();
+      IAPService iapService = RegisterIAPService(new IAPProvider(), progressService);
       IRandomService randomService = new RandomService();
       IAdsService adsService = RegisterAdsService();
       IUIFactory uiFactory = new UIFactory(assetProvider, staticDataService, progressService, adsService);
@@ -80,9 +82,18 @@ namespace CodeBase.Infrastructure.States
     {
       var adsService = new AdsService();
       adsService.Init();
-      _services.RegisterSingle(adsService);
+      _services.RegisterSingle<IAdsService>(adsService);
       
       return adsService;
+    }
+    
+    private IAPService RegisterIAPService(IAPProvider iapProvider, IPersistentProgressService progressService)
+    {
+      var iapService = new IAPService(iapProvider, progressService);
+      iapService.Init();
+      _services.RegisterSingle<IIAPService>(iapService);
+      
+      return iapService;
     }
 
     private void EnterLoadLevel() => 
