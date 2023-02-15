@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine.Purchasing;
 
 namespace CodeBase.Infrastructure.Services.IAP
 {
@@ -10,5 +11,6 @@ namespace CodeBase.Infrastructure.Services.IAP
     void Init();
     List<ProductDescription> GetProductDescriptions();
     void StartPurchase(string productID);
+    PurchaseProcessingResult ProcessPurchase(Product product);
   }
 }

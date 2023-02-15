@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UI_Shop_Art
+  m_EditorClassIdentifier: 
+  m_GroupName: UI_Shop_Icons
+  m_Data:
+    m_SerializedData: []
+  m_GUID: a133c4dd1731b3749b5c71e9d7566f8e
+  m_SerializeEntries:
+  - m_GUID: 33ba85d5fc7cbab4a9dcd8dc35e31542
+    m_Address: Sprite_Shop_Icon_Item_Food_Carrot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c6c531e9c23db0e40b2eba0a8f947629
+    m_Address: Sprite_Shop_Icon_Item_Food_Meat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ea9306e1aa95eb8439400efefff9f8db
+    m_Address: Sprite_Shop_Icon_Item_Potion_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0c52b44113e098941bd61a55af4745b1
+    m_Address: Sprite_Shop_Icon_Item_Potion_11
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8a38e0c362c83a047983d02b417b0980
+    m_Address: Sprite_Shop_Icon_Item_Potion_18
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8925c87a7beb94c4bb8da70f92affebc
+    m_Address: Sprite_Shop_Icon_Item_Potion_Health
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cb93653465f6bc64f938a8231850ae83
+    m_Address: Sprite_Shop_Icon_Item_Pumping_Exp
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6b213c5905ab86247bec56e1134be3ed
+    m_Address: Sprite_Shop_Icon_Item_Resource_12
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 45d8334376e3ebc42b7f1c93a0794240
+    m_Address: Sprite_Shop_Icon_Item_Weapon_Bomb
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 46264aa5c4a90b24a845c27406db65df, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 5d4de6c80f385a54e936fe0e1f0d5ada, type: 2}
+    - {fileID: 11400000, guid: c95676d51e7158c4d9113388deeb7adf, type: 2}

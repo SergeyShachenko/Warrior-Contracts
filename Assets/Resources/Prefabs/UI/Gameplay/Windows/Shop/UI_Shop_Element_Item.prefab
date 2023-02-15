@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5882835381154821341}
   - component: {fileID: 158920557827806404}
   m_Layer: 5
-  m_Name: Count
+  m_Name: Count_Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 8464076337290505630}
   - component: {fileID: 1878964833536347159}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Count_Gold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 8464076337346420052}
   - component: {fileID: 8464076337346420053}
   m_Layer: 5
-  m_Name: Icon
+  m_Name: Icon_Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -604,7 +604,7 @@ GameObject:
   - component: {fileID: 8464076338764201450}
   - component: {fileID: 421762700732500857}
   m_Layer: 5
-  m_Name: Shop_Item
+  m_Name: UI_Shop_Element_Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -667,7 +667,7 @@ GameObject:
   - component: {fileID: 8464076339178309197}
   - component: {fileID: 8464076339178309194}
   m_Layer: 5
-  m_Name: Icon
+  m_Name: Icon_Gold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

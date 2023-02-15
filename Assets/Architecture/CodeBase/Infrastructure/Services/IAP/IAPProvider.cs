@@ -18,10 +18,10 @@ namespace CodeBase.Infrastructure.Services.IAP
 
     private IStoreController _controller;
     private IExtensionProvider _extensions;
-    private IAPService _iapService;
+    private IIAPService _iapService;
 
 
-    public void Init(IAPService iapService)
+    public void Init(IIAPService iapService)
     {
       _iapService = iapService;
       Configs = new Dictionary<string, ProductConfig>();

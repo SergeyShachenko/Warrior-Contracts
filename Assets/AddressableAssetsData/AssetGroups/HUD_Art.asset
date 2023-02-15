@@ -10,28 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: UI
+  m_Name: HUD_Art
   m_EditorClassIdentifier: 
-  m_GroupName: UI
+  m_GroupName: HUD_Sprites
   m_Data:
     m_SerializedData: []
-  m_GUID: 624247e02d5e5064383f7c84269414a3
+  m_GUID: 1d463d7ea65fe804c9b4fa1902367cc8
   m_SerializeEntries:
-  - m_GUID: 5e6a90e48ffb87e48bfd2a800f6893b1
-    m_Address: Sprite_UI_Tool_Pixel
+  - m_GUID: 9c5a79b1f2e68d74bbe417650d81f5dc
+    m_Address: Sprite_HUD_Button_Attack
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 3bb74fc685073494a9926af0331af6c5
-    m_Address: UI
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: d899ca693d216fb40ae0466c2dffecd6
-    m_Address: Sprite_Icon_Exp
+  - m_GUID: 34e20354a76194d459b5a75c56f3a56a
+    m_Address: Sprite_HUD_Character_HealthBar
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 46264aa5c4a90b24a845c27406db65df, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 4d60a06e540a6684c8fc98893661da24, type: 2}
-    - {fileID: 11400000, guid: eb2499ce5f010f243bafc07a4e1b6cc6, type: 2}
+    - {fileID: 11400000, guid: d67acff292c540848ac4a16dc105bc5b, type: 2}
+    - {fileID: 11400000, guid: 04d9fad0a36c91d4cbd79c6cd07276e2, type: 2}

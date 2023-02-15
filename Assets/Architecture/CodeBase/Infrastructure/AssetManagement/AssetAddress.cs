@@ -5,7 +5,7 @@
     public const string PlayerSword = "Warrior_Player_Sword";
     public const string Loot = "Loot";
     public const string UI = "UI";
-    public const string HUD = "UI_HUD_Gameplay";
+    public const string HUD = "HUD";
     public const string SpawnPoint = "SpawnPoint";
   }
 }
