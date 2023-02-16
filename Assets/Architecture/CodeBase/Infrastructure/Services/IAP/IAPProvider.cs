@@ -74,10 +74,12 @@ namespace CodeBase.Infrastructure.Services.IAP
       Debug.LogError($"UnityPurchasing: Product <b>{product.definition.id}</b> purchase <color=Red>failed</color> - {failureReason}. " +
                      $"Transaction ID - <color=Yellow>{product.transactionID}</color>");
 
-    private void LoadConfigs() => 
+    private void LoadConfigs()
+    {
       Configs = Resources
         .Load<TextAsset>(AssetPath.IAPConfigs).text
         .ToDeserialized<ProductConfigWrapper>().Configs
         .ToDictionary(x => x.ID, x => x);
+    }
   }
 }

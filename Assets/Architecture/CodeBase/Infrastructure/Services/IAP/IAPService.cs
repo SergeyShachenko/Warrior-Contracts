@@ -43,7 +43,7 @@ namespace CodeBase.Infrastructure.Services.IAP
       {
         case ItemType.Gold:
         {
-          _progressService.Progress.World.Loot.Add(productConfig.ItemsCount);
+          _progressService.Progress.World.Loot.Add(productConfig.Amount);
           _progressService.Progress.Purchase.AddPurchase(product.definition.id);
         }
           break;

@@ -1,0 +1,31 @@
+{
+  "Configs": [
+    {
+      "ID": "Potion_Health",
+      "ProductType": 0,
+      "ItemType": 1,
+      "MaxPurchaseCount": "1",
+      "Amount": 23,
+      "Price": "6.66 $",
+      "IconAddress": "Sprite_Shop_Icon_Item_Potion_Health"
+    },
+    {
+      "ID": "Food_Meat",
+      "ProductType": 0,
+      "ItemType": 1,
+      "MaxPurchaseCount": "3",
+      "Amount": 45,
+      "Price": "2.99 $",
+      "IconAddress": "Sprite_Shop_Icon_Item_Food_Meat"
+    },
+    {
+      "ID": "Weapon_Bomb",
+      "ProductType": 0,
+      "ItemType": 1,
+      "MaxPurchaseCount": "20",
+      "Amount": 10,
+      "Price": "0.99 $",
+      "IconAddress": "Sprite_Shop_Icon_Item_Weapon_Bomb"
+    }
+  ]
+}

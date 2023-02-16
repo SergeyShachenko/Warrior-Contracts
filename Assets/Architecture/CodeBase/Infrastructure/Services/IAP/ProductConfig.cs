@@ -8,9 +8,12 @@ namespace CodeBase.Infrastructure.Services.IAP
   {
     public string ID;
     public ProductType ProductType;
-    public int MaxPurchaseCount;
-
     public ItemType ItemType;
-    public int ItemsCount;
+    
+    public int MaxPurchaseCount;
+    public int Amount;
+    public string Price;
+    
+    public string IconAddress;
   }
 }

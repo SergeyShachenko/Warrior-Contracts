@@ -12,13 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
   m_Name: UI_Main_Art
   m_EditorClassIdentifier: 
-  m_GroupName: UI_Main_Icons
+  m_GroupName: UI_Main_Art
   m_Data:
     m_SerializedData: []
   m_GUID: 6fd73260f3aad4a43910b84b77482d7d
   m_SerializeEntries:
   - m_GUID: d899ca693d216fb40ae0466c2dffecd6
-    m_Address: Sprite_Icon_Exp
+    m_Address: Sprite_UI_Icon_Exp
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5e6a90e48ffb87e48bfd2a800f6893b1
+    m_Address: Sprite_UI_Tool_Pixel
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

@@ -6,7 +6,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CodeBase.Infrastructure.AssetManagement
 {
-  public class AssetProvider : IAssets
+  public class AssetProvider : IAssetsProvider
   {
     private readonly Dictionary<string, AsyncOperationHandle> _completedHandles = new();
     private readonly Dictionary<string, List<AsyncOperationHandle>> _resourceHandles = new();
@@ -42,6 +42,9 @@ namespace CodeBase.Infrastructure.AssetManagement
 
     public Task<GameObject> Instantiate(string address, Vector3 at) => 
       Addressables.InstantiateAsync(address, at, Quaternion.identity).Task;
+    
+    public Task<GameObject> Instantiate(string address, Transform under) => 
+      Addressables.InstantiateAsync(address, under).Task;
 
     public void CleanUp()
     {

@@ -21,6 +21,14 @@ MonoBehaviour:
     m_Address: UI
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 68b66e318ff1dfc43b2e82bc6045709a
+    m_Address: UI_Window
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0c6a7669ff4fb474f90e220451f4497b
+    m_Address: UI_Screen_Loading
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 46264aa5c4a90b24a845c27406db65df, type: 2}
   m_SchemaSet:

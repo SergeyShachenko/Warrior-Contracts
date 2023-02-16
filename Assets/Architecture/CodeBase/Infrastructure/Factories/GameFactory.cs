@@ -25,20 +25,20 @@ namespace CodeBase.Infrastructure.Factories
     public GameObject Player { get; private set; }
 
     private readonly IPersistentProgressService _progressService;
-    private readonly IAssets _assets;
+    private readonly IAssetsProvider _assetsProvider;
     private readonly IStaticDataService _staticData;
     private readonly IRandomService _randomService;
     private readonly IWindowService _windowService;
 
     public GameFactory(
       IPersistentProgressService progressService, 
-      IAssets assets,
+      IAssetsProvider assetsProvider,
       IStaticDataService staticData, 
       IRandomService randomService,
       IWindowService windowService)
     {
       _progressService = progressService;
-      _assets = assets;
+      _assetsProvider = assetsProvider;
       _staticData = staticData;
       _randomService = randomService;
       _windowService = windowService;
@@ -62,7 +62,7 @@ namespace CodeBase.Infrastructure.Factories
     public async Task<GameObject> CreateEnemyWarrior(WarriorType warriorType, Transform parent)
     {
       EnemyWarriorStaticData enemyWarriorData = _staticData.ForEnemyWarrior(warriorType);
-      var warriorPref = await _assets.Load<GameObject>(enemyWarriorData.PrefabRef);
+      var warriorPref = await _assetsProvider.Load<GameObject>(enemyWarriorData.PrefabRef);
       
       
       GameObject warrior = Object.Instantiate(warriorPref, parent.position, parent.rotation, parent);
@@ -99,7 +99,7 @@ namespace CodeBase.Infrastructure.Factories
 
     public async Task CreateSpawnPoint(string spawnerID, Vector3 at, WarriorType warriorType)
     {
-      var spawnerObj = await _assets.Load<GameObject>(AssetAddress.SpawnPoint);
+      var spawnerObj = await _assetsProvider.Load<GameObject>(AssetAddress.SpawnPoint);
       
       
       var spawnPoint = InstantiateRegisteredAsync(spawnerObj, at)
@@ -112,7 +112,7 @@ namespace CodeBase.Infrastructure.Factories
 
     public async Task<LootPiece> CreateLoot()
     {
-      var lootObj = await _assets.Load<GameObject>(AssetAddress.Loot);
+      var lootObj = await _assetsProvider.Load<GameObject>(AssetAddress.Loot);
       
       
       var lootPiece = InstantiateRegisteredAsync(lootObj).GetComponent<LootPiece>();
@@ -135,15 +135,15 @@ namespace CodeBase.Infrastructure.Factories
 
     public async Task WarmUp()
     {
-      await _assets.Load<GameObject>(AssetAddress.Loot);
-      await _assets.Load<GameObject>(AssetAddress.SpawnPoint);
+      await _assetsProvider.Load<GameObject>(AssetAddress.Loot);
+      await _assetsProvider.Load<GameObject>(AssetAddress.SpawnPoint);
     }
 
     public void CleanUp()
     {
       ProgressSavers.Clear();
       ProgressLoaders.Clear();
-      _assets.CleanUp();
+      _assetsProvider.CleanUp();
     }
 
     private GameObject InstantiateRegisteredAsync(GameObject prefab)
@@ -155,14 +155,14 @@ namespace CodeBase.Infrastructure.Factories
     
     private async Task<GameObject> InstantiateRegisteredAsync(string address)
     {
-      GameObject gameObject = await _assets.Instantiate(address);
+      GameObject gameObject = await _assetsProvider.Instantiate(address);
       RegisterProgressWatchers(gameObject);
       return gameObject;
     }
 
     private async Task<GameObject> InstantiateRegisteredAsync(string address, Vector3 at)
     {
-      GameObject gameObject = await _assets.Instantiate(address, at);
+      GameObject gameObject = await _assetsProvider.Instantiate(address, at);
       RegisterProgressWatchers(gameObject);
       return gameObject;
     }

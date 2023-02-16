@@ -40,15 +40,15 @@ namespace CodeBase.Infrastructure.States
     private void RegisterServices()
     {
       IInputService inputService = RegisterInputService();
-      IAssets assetProvider = RegisterAssetProvider();
+      IAssetsProvider assetProviderProvider = RegisterAssetProvider();
       IStaticDataService staticDataService = RegisterStaticData();
       IPersistentProgressService progressService = new PersistentProgressService();
       IAPService iapService = RegisterIAPService(new IAPProvider(), progressService);
       IRandomService randomService = new RandomService();
       IAdsService adsService = RegisterAdsService();
-      IUIFactory uiFactory = new UIFactory(assetProvider, staticDataService, progressService, adsService);
+      IUIFactory uiFactory = new UIFactory(assetProviderProvider, staticDataService, progressService, adsService, iapService);
       IWindowService windowService = new WindowService(uiFactory);
-      IGameFactory gameFactory = new GameFactory(progressService, assetProvider, staticDataService, randomService, windowService);
+      IGameFactory gameFactory = new GameFactory(progressService, assetProviderProvider, staticDataService, randomService, windowService);
       ISaveLoadService saveLoadService = new SaveLoadService(progressService, gameFactory);
       
       _services.RegisterSingle<IGameStateMachine>(_stateMachine);
