@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using CodeBase.Data;
-using CodeBase.Infrastructure.StaticData;
+using CodeBase.Data.StaticData;
 using CodeBase.Logic;
 using CodeBase.Logic.Characters;
 using UnityEditor;
