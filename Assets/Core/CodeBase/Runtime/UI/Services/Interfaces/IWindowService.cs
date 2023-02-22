@@ -1,6 +1,7 @@
-﻿using CodeBase.Infrastructure.Services;
+﻿using WC.Runtime.UI.Windows;
+using WC.Runtime.Infrastructure.Services;
 
-namespace CodeBase.UI.Services
+namespace WC.Runtime.UI.Services
 {
   public interface IWindowService : IService
   {

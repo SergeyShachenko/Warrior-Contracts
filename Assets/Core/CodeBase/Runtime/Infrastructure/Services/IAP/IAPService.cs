@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CodeBase.Data;
-using CodeBase.Infrastructure.Services.PersistentProgress;
 using UnityEngine.Purchasing;
+using WC.Runtime.Data.IAP;
+using WC.Runtime.Infrastructure.Services;
 
-namespace CodeBase.Infrastructure.Services.IAP
+namespace WC.Runtime.Infrastructure.Services
 {
   public class IAPService : IIAPService
   {
@@ -61,7 +61,7 @@ namespace CodeBase.Infrastructure.Services.IAP
         ProductConfig config = _iapProvider.Configs[productID];
         Product product = _iapProvider.Products[productID];
 
-        BoughtProduct boughtProduct = purchaseData.BoughtProducts.Find(x => x.ID == productID);
+        BoughtProductData boughtProduct = purchaseData.BoughtProducts.Find(x => x.ID == productID);
         
         if (IsBoughtOut(boughtProduct, config)) continue;
 
@@ -78,7 +78,7 @@ namespace CodeBase.Infrastructure.Services.IAP
       }
     }
 
-    private bool IsBoughtOut(BoughtProduct boughtProduct, ProductConfig config) => 
+    private bool IsBoughtOut(BoughtProductData boughtProduct, ProductConfig config) => 
       boughtProduct != null && boughtProduct.Count >= config.MaxPurchaseCount;
   }
 }

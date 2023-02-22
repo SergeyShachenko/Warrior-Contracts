@@ -1,12 +1,11 @@
 ﻿using System.Threading.Tasks;
-using CodeBase.Data;
-using CodeBase.Infrastructure.AssetManagement;
-using CodeBase.Infrastructure.Services;
-using CodeBase.Infrastructure.Services.IAP;
-using CodeBase.Infrastructure.Services.PersistentProgress;
 using UnityEngine;
+using WC.Runtime.UI.Windows;
+using WC.Runtime.Data;
+using WC.Runtime.Infrastructure.AssetManagement;
+using WC.Runtime.Infrastructure.Services;
 
-namespace CodeBase.UI.Services
+namespace WC.Runtime.UI.Services
 {
   public class UIFactory : IUIFactory
   {
@@ -41,7 +40,7 @@ namespace CodeBase.UI.Services
 
     public void CreateShop()
     {
-      WindowConfigStaticData windowConfig = _staticData.ForWindow(WindowID.Shop);
+      WindowConfig windowConfig = _staticData.ForWindow(WindowID.Shop);
       var window = Object.Instantiate(windowConfig.Window, _ui) as ShopWindow;
       window.Construct(_adsService, _progressService, _iapService, _assetsProviderProvider);
     }

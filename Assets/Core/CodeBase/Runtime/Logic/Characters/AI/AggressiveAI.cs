@@ -1,8 +1,8 @@
 ﻿using System.Collections;
-using CodeBase.Logic.Tools;
 using UnityEngine;
+using WC.Runtime.Logic.Tools;
 
-namespace CodeBase.Logic.Characters
+namespace WC.Runtime.Logic.Characters
 {
   public class AggressiveAI : MonoBehaviour
   {

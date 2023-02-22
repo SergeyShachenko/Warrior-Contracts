@@ -1,9 +1,9 @@
-﻿using CodeBase.Data;
-using CodeBase.Infrastructure.Services.PersistentProgress;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using WC.Runtime.Data.Characters;
+using WC.Runtime.Infrastructure.Services;
 
-namespace CodeBase.UI
+namespace WC.Runtime.UI.Windows
 {
   public abstract class WindowBase : MonoBehaviour
   {

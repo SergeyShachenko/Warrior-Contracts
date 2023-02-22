@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CodeBase.Infrastructure.AssetManagement;
-using CodeBase.Infrastructure.Services.IAP;
-using CodeBase.Infrastructure.Services.PersistentProgress;
 using UnityEngine;
+using WC.Runtime.Infrastructure.AssetManagement;
+using WC.Runtime.Infrastructure.Services;
 
-namespace CodeBase.UI
+namespace WC.Runtime.UI.Windows
 {
   public class ShopItemsContainer : MonoBehaviour
   {

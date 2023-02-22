@@ -1,4 +1,4 @@
-﻿namespace CodeBase.Logic.Characters
+﻿namespace WC.Runtime.Logic.Characters
 {
   public enum WarriorType
   {

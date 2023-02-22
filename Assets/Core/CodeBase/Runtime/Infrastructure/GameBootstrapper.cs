@@ -1,9 +1,10 @@
-using CodeBase.Infrastructure.States;
-using CodeBase.Tools;
-using CodeBase.UI;
+using WC.Runtime.Tools;
+using WC.Runtime.UI;
 using UnityEngine;
+using WC.Runtime.UI.Screens;
+using WC.Runtime.Infrastructure.Services;
 
-namespace CodeBase.Infrastructure
+namespace WC.Runtime.Infrastructure
 {
   public class GameBootstrapper : MonoBehaviour,
     ICoroutineRunner

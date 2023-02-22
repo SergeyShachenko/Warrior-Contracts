@@ -1,10 +1,10 @@
-﻿using CodeBase.Infrastructure.AssetManagement;
-using CodeBase.Infrastructure.Services.IAP;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using WC.Runtime.Infrastructure.AssetManagement;
+using WC.Runtime.Infrastructure.Services;
 
-namespace CodeBase.UI
+namespace WC.Runtime.UI.Windows
 {
   public class ShopItem : MonoBehaviour
   {

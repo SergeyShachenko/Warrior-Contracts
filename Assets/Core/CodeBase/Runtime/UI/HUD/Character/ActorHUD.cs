@@ -1,7 +1,7 @@
-﻿using CodeBase.Logic;
-using UnityEngine;
+﻿using UnityEngine;
+using WC.Runtime.Logic.Characters;
 
-namespace CodeBase.UI.HUD.Character
+namespace WC.Runtime.UI.HUD
 {
   public class ActorHUD : MonoBehaviour
   {

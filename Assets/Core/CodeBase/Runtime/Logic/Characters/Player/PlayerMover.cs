@@ -1,11 +1,10 @@
-using CodeBase.Data;
-using CodeBase.Infrastructure.Services;
-using CodeBase.Infrastructure.Services.Input;
-using CodeBase.Infrastructure.Services.PersistentProgress;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using WC.Runtime.Data;
+using WC.Runtime.Data.Characters;
+using WC.Runtime.Infrastructure.Services;
 
-namespace CodeBase.Logic.Characters
+namespace WC.Runtime.Logic.Characters
 {
   public class PlayerMover : MonoBehaviour,
     ISaverProgress

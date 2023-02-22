@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using CodeBase.Infrastructure.Services;
-using CodeBase.Infrastructure.Services.PersistentProgress;
 using UnityEngine;
 using UnityEngine.UI;
+using WC.Runtime.Infrastructure.Services;
 
-namespace CodeBase.UI
+namespace WC.Runtime.UI.Windows
 {
   public class RewardedAdItem : MonoBehaviour
   {

@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CodeBase.Data;
-using CodeBase.Data.StaticData;
-using CodeBase.Logic.Characters;
-using CodeBase.UI;
 using UnityEngine;
+using WC.Runtime.UI.Windows;
+using WC.Runtime.Data;
+using WC.Runtime.Logic.Characters;
+using WC.Runtime.StaticData;
+using WC.Runtime.UI;
 
-namespace CodeBase.Infrastructure.Services
+namespace WC.Runtime.Infrastructure.Services
 {
   public class StaticDataService : IStaticDataService
   {
@@ -18,7 +19,7 @@ namespace CodeBase.Infrastructure.Services
     private Dictionary<WarriorType, PlayerWarriorStaticData> _playerWarriors;
     private Dictionary<WarriorType, EnemyWarriorStaticData> _enemyWarriors;
     private Dictionary<string, LevelStaticData> _levels;
-    private Dictionary<WindowID, WindowConfigStaticData> _windowConfigs;
+    private Dictionary<WindowID, WindowConfig> _windowConfigs;
 
 
     public void LoadData()
@@ -56,8 +57,8 @@ namespace CodeBase.Infrastructure.Services
         ? staticData 
         : null;
 
-    public WindowConfigStaticData ForWindow(WindowID id) => 
-      _windowConfigs.TryGetValue(id, out WindowConfigStaticData windowConfig) 
+    public WindowConfig ForWindow(WindowID id) => 
+      _windowConfigs.TryGetValue(id, out WindowConfig windowConfig) 
         ? windowConfig 
         : null;
   }

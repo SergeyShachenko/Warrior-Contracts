@@ -1,8 +1,9 @@
-﻿using CodeBase.UI.Services;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using WC.Runtime.UI.Windows;
+using WC.Runtime.UI.Services;
 
-namespace CodeBase.UI.UIElements
+namespace WC.Runtime.UI.Elements
 {
   public class OpenWindowButton : MonoBehaviour
   {

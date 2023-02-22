@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine.Purchasing;
 
-namespace CodeBase.Infrastructure.Services.IAP
+namespace WC.Runtime.Infrastructure.Services
 {
   [Serializable]
   public class ProductConfig

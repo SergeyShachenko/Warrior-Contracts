@@ -1,6 +1,7 @@
 ﻿using System;
+using WC.Runtime.Data.IAP;
 
-namespace CodeBase.Data
+namespace WC.Runtime.Data.Characters
 {
   [Serializable]
   public class PlayerProgressData

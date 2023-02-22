@@ -1,6 +1,6 @@
 using UnityEngine.Purchasing;
 
-namespace CodeBase.Infrastructure.Services.IAP
+namespace WC.Runtime.Infrastructure.Services
 {
   public class ProductDescription
   {

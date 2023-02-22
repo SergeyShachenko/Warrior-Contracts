@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CodeBase.Data
+namespace WC.Runtime.Data.Characters
 {
   [Serializable]
   public class PlayerStatsData

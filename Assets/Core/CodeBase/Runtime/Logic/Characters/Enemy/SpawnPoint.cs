@@ -1,9 +1,8 @@
-﻿using CodeBase.Data;
-using CodeBase.Infrastructure.Factories;
-using CodeBase.Infrastructure.Services.PersistentProgress;
-using UnityEngine;
+﻿using UnityEngine;
+using WC.Runtime.Data.Characters;
+using WC.Runtime.Infrastructure.Services;
 
-namespace CodeBase.Logic.Characters
+namespace WC.Runtime.Logic.Characters
 {
   public class SpawnPoint : MonoBehaviour, 
     ISaverProgress

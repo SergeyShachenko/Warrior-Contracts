@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using CodeBase.Logic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using WC.Runtime.Logic.Tools;
 
-namespace Editor
+namespace WC.Editor
 {
   [CustomEditor(typeof(UniqueID))]
   public class UniqueIDEditor : UnityEditor.Editor

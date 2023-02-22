@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using CodeBase.Infrastructure.Services;
+using WC.Runtime.Infrastructure.Services;
 
-namespace CodeBase.UI.Services
+namespace WC.Runtime.UI.Services
 {
   public interface IUIFactory : IService
   {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
-using CodeBase.Tools;
+using WC.Runtime.Tools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace CodeBase.Infrastructure
+namespace WC.Runtime.Infrastructure
 {
   public class SceneLoader
   {

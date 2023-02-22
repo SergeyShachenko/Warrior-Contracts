@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using WC.Runtime.Logic.Characters;
 
-namespace CodeBase.Logic.Characters
+namespace WC.Runtime.Logic.Characters
 {
   public class PlayerDeath : MonoBehaviour,
     IDeath

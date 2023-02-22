@@ -1,8 +1,8 @@
-﻿using CodeBase.Logic.Characters;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using WC.Runtime.Logic.Characters;
 
-namespace CodeBase.UI.HUD
+namespace WC.Runtime.UI.HUD
 {
   public class HUDButton : MonoBehaviour
   {

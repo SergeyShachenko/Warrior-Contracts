@@ -1,4 +1,6 @@
-﻿namespace CodeBase.UI.Services
+﻿using WC.Runtime.UI.Windows;
+
+namespace WC.Runtime.UI.Services
 {
   public class WindowService : IWindowService
   {

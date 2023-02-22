@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine.Purchasing;
+using WC.Runtime.Infrastructure.Services;
 
-namespace CodeBase.Infrastructure.Services.IAP
+namespace WC.Runtime.Infrastructure.Services
 {
   public interface IIAPService : IService
   {

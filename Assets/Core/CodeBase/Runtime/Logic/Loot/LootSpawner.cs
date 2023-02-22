@@ -1,10 +1,9 @@
-﻿using CodeBase.Data;
-using CodeBase.Infrastructure.Factories;
-using CodeBase.Infrastructure.Services;
-using CodeBase.Logic.Characters;
-using UnityEngine;
+﻿using UnityEngine;
+using WC.Runtime.Data;
+using WC.Runtime.Infrastructure.Services;
+using WC.Runtime.Logic.Characters;
 
-namespace CodeBase.Logic.Loot
+namespace WC.Runtime.Logic.Loot
 {
   public class LootSpawner : MonoBehaviour
   {

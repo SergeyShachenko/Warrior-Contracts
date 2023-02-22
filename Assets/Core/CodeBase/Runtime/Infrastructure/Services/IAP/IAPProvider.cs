@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Purchasing;
-using CodeBase.Data;
-using CodeBase.Infrastructure.AssetManagement;
+using WC.Runtime.Data;
+using WC.Runtime.Infrastructure.AssetManagement;
 
-namespace CodeBase.Infrastructure.Services.IAP
+namespace WC.Runtime.Infrastructure.Services
 {
   public class IAPProvider : IStoreListener
   {
@@ -51,28 +51,28 @@ namespace CodeBase.Infrastructure.Services.IAP
 
       Initialized?.Invoke();
       
-      Debug.Log("UnityPurchasing: Initialization <color=Green>success</color>");
+      UnityEngine.Debug.Log("UnityPurchasing: Initialization <color=Green>success</color>");
     }
 
     public void OnInitializeFailed(InitializationFailureReason error) => 
-      Debug.LogError($"UnityPurchasing: Initialization <color=Red>failed</color> - {error}");
+      UnityEngine.Debug.LogError($"UnityPurchasing: Initialization <color=Red>failed</color> - {error}");
 
     public void OnInitializeFailed(InitializationFailureReason error, string message) => 
-      Debug.LogError($"UnityPurchasing: Initialization <color=Red>failed</color> - {error}. {message}");
+      UnityEngine.Debug.LogError($"UnityPurchasing: Initialization <color=Red>failed</color> - {error}. {message}");
 
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
     {
       Product product = purchaseEvent.purchasedProduct;
       
-      Debug.Log($"UnityPurchasing: Product <b>{product.definition.id}</b> purchase <color=Green>success</color>. " +
-                $"Transaction ID - <color=Yellow>{product.transactionID}</color>");
+      UnityEngine.Debug.Log($"UnityPurchasing: Product <b>{product.definition.id}</b> purchase <color=Green>success</color>. " +
+                            $"Transaction ID - <color=Yellow>{product.transactionID}</color>");
 
       return _iapService.ProcessPurchase(purchaseEvent.purchasedProduct);
     }
 
     public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason) => 
-      Debug.LogError($"UnityPurchasing: Product <b>{product.definition.id}</b> purchase <color=Red>failed</color> - {failureReason}. " +
-                     $"Transaction ID - <color=Yellow>{product.transactionID}</color>");
+      UnityEngine.Debug.LogError($"UnityPurchasing: Product <b>{product.definition.id}</b> purchase <color=Red>failed</color> - {failureReason}. " +
+                                 $"Transaction ID - <color=Yellow>{product.transactionID}</color>");
 
     private void LoadConfigs()
     {

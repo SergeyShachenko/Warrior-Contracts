@@ -1,13 +1,13 @@
 ﻿using System.Linq;
-using CodeBase.Data;
-using CodeBase.Data.StaticData;
-using CodeBase.Logic;
-using CodeBase.Logic.Characters;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using WC.Runtime.Logic.Characters;
+using WC.Runtime.Logic.Tools;
+using WC.Runtime.Data.Characters;
+using WC.Runtime.StaticData;
 
-namespace Editor
+namespace WC.Editor
 {
   [CustomEditor(typeof(LevelStaticData))]
   public class LevelStaticDataEditor : UnityEditor.Editor

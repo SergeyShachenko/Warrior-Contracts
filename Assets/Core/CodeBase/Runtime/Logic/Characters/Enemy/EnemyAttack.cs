@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using CodeBase.Tools;
 using UnityEngine;
+using WC.Runtime.DebugTools;
 
-namespace CodeBase.Logic.Characters
+namespace WC.Runtime.Logic.Characters
 {
   public class EnemyAttack : MonoBehaviour
   {

@@ -1,8 +1,9 @@
-﻿using CodeBase.Infrastructure.Services;
-using CodeBase.Tools;
-using CodeBase.UI;
+﻿using WC.Runtime.UI.Screens;
+using WC.Runtime.Tools;
+using WC.Runtime.Infrastructure.Services;
+using WC.Runtime.UI;
 
-namespace CodeBase.Infrastructure
+namespace WC.Runtime.Infrastructure
 {
   public class Game
   {

@@ -1,0 +1,18 @@
+{
+    "name": "WC_Editor",
+    "rootNamespace": "WC.Editor",
+    "references": [
+        "GUID:38ebb21a492b4ac9a5989ee81f431536"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

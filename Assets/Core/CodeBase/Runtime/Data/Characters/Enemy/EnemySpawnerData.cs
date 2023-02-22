@@ -1,8 +1,8 @@
 ﻿using System;
-using CodeBase.Logic.Characters;
 using UnityEngine;
+using WC.Runtime.Logic.Characters;
 
-namespace CodeBase.Data
+namespace WC.Runtime.Data.Characters
 {
   [Serializable]
   public class EnemySpawnerData

@@ -1,6 +1,6 @@
 ﻿using Random = UnityEngine.Random;
 
-namespace CodeBase.Infrastructure.Services
+namespace WC.Runtime.Infrastructure.Services
 {
   public class RandomService : IRandomService
   {

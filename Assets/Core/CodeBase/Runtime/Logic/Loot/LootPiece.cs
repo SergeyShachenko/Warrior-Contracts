@@ -1,7 +1,7 @@
-﻿using CodeBase.Data;
-using UnityEngine;
+﻿using UnityEngine;
+using WC.Runtime.Data;
 
-namespace CodeBase.Logic.Loot
+namespace WC.Runtime.Logic.Loot
 {
   public class LootPiece : MonoBehaviour
   {

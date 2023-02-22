@@ -1,4 +1,4 @@
-﻿namespace CodeBase
+﻿namespace WC.Runtime
 {
   public static class Constants
   {

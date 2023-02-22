@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CodeBase.Data
+namespace WC.Runtime.Data
 {
   [Serializable]
   public class WorldData

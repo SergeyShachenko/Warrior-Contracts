@@ -1,9 +1,7 @@
-﻿using CodeBase.Infrastructure;
-using CodeBase.Infrastructure.Services;
-using CodeBase.Infrastructure.States;
-using UnityEngine;
+﻿using UnityEngine;
+using WC.Runtime.Infrastructure.Services;
 
-namespace CodeBase.Logic.Tools
+namespace WC.Runtime.Logic.Tools
 {
   public class LevelTransferTrigger : MonoBehaviour
   {

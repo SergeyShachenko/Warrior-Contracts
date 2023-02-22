@@ -1,4 +1,4 @@
-﻿namespace CodeBase.UI
+﻿namespace WC.Runtime.UI.Screens
 {
   public interface IScreen
   {

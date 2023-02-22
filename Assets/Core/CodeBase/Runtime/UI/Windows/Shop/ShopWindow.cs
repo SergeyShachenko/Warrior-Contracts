@@ -1,11 +1,9 @@
-﻿using CodeBase.Infrastructure.AssetManagement;
-using CodeBase.Infrastructure.Services;
-using CodeBase.Infrastructure.Services.IAP;
-using CodeBase.Infrastructure.Services.PersistentProgress;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
+using WC.Runtime.Infrastructure.AssetManagement;
+using WC.Runtime.Infrastructure.Services;
 
-namespace CodeBase.UI
+namespace WC.Runtime.UI.Windows
 {
   public class ShopWindow : WindowBase
   {

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace CodeBase.UI
+namespace WC.Runtime.UI.Screens
 {
   public class LoadingScreen : MonoBehaviour,
     IScreen

@@ -1,9 +1,10 @@
-using CodeBase.Data;
-using CodeBase.Data.StaticData;
-using CodeBase.Logic.Characters;
-using CodeBase.UI;
+using WC.Runtime.UI.Windows;
+using WC.Runtime.Data;
+using WC.Runtime.Logic.Characters;
+using WC.Runtime.StaticData;
+using WC.Runtime.UI;
 
-namespace CodeBase.Infrastructure.Services
+namespace WC.Runtime.Infrastructure.Services
 {
   public interface IStaticDataService : IService
   {
@@ -11,6 +12,6 @@ namespace CodeBase.Infrastructure.Services
     PlayerWarriorStaticData ForPlayerWarrior(WarriorType type);
     EnemyWarriorStaticData ForEnemyWarrior(WarriorType type);
     LevelStaticData ForLevel(string sceneKey);
-    WindowConfigStaticData ForWindow(WindowID id);
+    WindowConfig ForWindow(WindowID id);
   }
 }

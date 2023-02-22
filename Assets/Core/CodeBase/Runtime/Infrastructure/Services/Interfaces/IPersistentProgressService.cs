@@ -1,6 +1,6 @@
-﻿using CodeBase.Data;
+﻿using WC.Runtime.Data.Characters;
 
-namespace CodeBase.Infrastructure.Services.PersistentProgress
+namespace WC.Runtime.Infrastructure.Services
 {
   public interface IPersistentProgressService : IService
   {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CodeBase.Logic
+namespace WC.Runtime.Logic.Characters
 {
   public interface IHealth
   {

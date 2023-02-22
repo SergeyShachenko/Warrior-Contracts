@@ -1,8 +1,8 @@
-﻿using CodeBase.Logic.Characters;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
+using WC.Runtime.Logic.Characters;
 
-namespace Editor
+namespace WC.Editor
 {
   [CustomEditor(typeof(SpawnMarker))]
   public class SpawnMarkerEditor : UnityEditor.Editor

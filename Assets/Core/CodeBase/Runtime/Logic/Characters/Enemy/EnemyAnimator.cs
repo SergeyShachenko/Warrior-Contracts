@@ -1,9 +1,9 @@
 ﻿using System;
-using CodeBase.Logic.Animation;
 using UnityEngine;
-using AnimationState = CodeBase.Logic.Animation.AnimationState;
+using WC.Runtime.Logic.Animation;
+using AnimationState = WC.Runtime.Logic.Animation.AnimationState;
 
-namespace CodeBase.Logic.Characters
+namespace WC.Runtime.Logic.Characters
 {
   public class EnemyAnimator : MonoBehaviour,
     IAnimationStateReader

@@ -1,8 +1,8 @@
-﻿using CodeBase.Logic.Characters;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
+using WC.Runtime.Logic.Characters;
 
-namespace CodeBase.Logic.Animation
+namespace WC.Runtime.Logic.Animation
 {
   public class AnimateAlongAgent : MonoBehaviour
   {

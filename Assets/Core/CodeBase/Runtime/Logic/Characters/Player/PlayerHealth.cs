@@ -1,9 +1,10 @@
 ﻿using System;
-using CodeBase.Data;
-using CodeBase.Infrastructure.Services.PersistentProgress;
 using UnityEngine;
+using WC.Runtime.Data.Characters;
+using WC.Runtime.Infrastructure.Services;
+using WC.Runtime.Logic.Characters;
 
-namespace CodeBase.Logic.Characters
+namespace WC.Runtime.Logic.Characters
 {
   public class PlayerHealth : MonoBehaviour,
     IHealth,

@@ -1,4 +1,4 @@
-﻿namespace CodeBase.Infrastructure.AssetManagement
+﻿namespace WC.Runtime.Infrastructure.AssetManagement
 {
   public static class AssetAddress
   {

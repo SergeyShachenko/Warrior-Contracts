@@ -1,4 +1,4 @@
-namespace CodeBase.Logic.Animation
+namespace WC.Runtime.Logic.Animation
 {
   public interface IAnimationStateReader
   {

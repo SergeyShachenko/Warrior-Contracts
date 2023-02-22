@@ -1,4 +1,4 @@
-﻿namespace CodeBase.Infrastructure.Services.IAP
+﻿namespace WC.Runtime.Infrastructure.Services
 {
   public enum ItemType
   {

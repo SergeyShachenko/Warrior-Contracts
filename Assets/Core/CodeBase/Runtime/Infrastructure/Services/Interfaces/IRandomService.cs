@@ -1,4 +1,4 @@
-﻿namespace CodeBase.Infrastructure.Services
+﻿namespace WC.Runtime.Infrastructure.Services
 {
   public interface IRandomService : IService
   {
