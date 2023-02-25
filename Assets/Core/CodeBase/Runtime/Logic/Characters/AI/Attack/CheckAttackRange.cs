@@ -3,11 +3,10 @@ using WC.Runtime.Logic.Tools;
 
 namespace WC.Runtime.Logic.Characters
 {
-  [RequireComponent(typeof(EnemyAttack))]
   public class CheckAttackRange : MonoBehaviour
   {
     [Header("Links")]
-    [SerializeField] private EnemyAttack _enemyAttack;
+    [SerializeField] private Enemy _enemy;
     [SerializeField] private TriggerObserver _triggerObserver;
 
 
@@ -19,9 +18,9 @@ namespace WC.Runtime.Logic.Characters
 
     
     private void OnObserverTriggerEnter(Collider obj) => 
-      _enemyAttack.IsActive = true;
+      _enemy.Attack.IsActive = true;
 
     private void OnObserverTriggerExit(Collider obj) => 
-      _enemyAttack.IsActive = false;
+      _enemy.Attack.IsActive = false;
   }
 }

@@ -17,7 +17,7 @@ namespace WC.Runtime.Logic.Characters
 
     private void Update()
     {
-      if (p_EnemyDeath.IsDead == false)
+      if (p_Enemy.Death.IsDead == false)
         RotateToTarget();
     }
 

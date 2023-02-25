@@ -5,16 +5,16 @@ namespace WC.Runtime.Logic.Characters
   public abstract class FollowAIBase : MonoBehaviour
   {
     [Header("Links")]
-    [SerializeField] protected EnemyDeath p_EnemyDeath;
+    [SerializeField] protected Enemy p_Enemy;
     
     protected GameObject p_Player;
-    protected PlayerDeath p_PlayerDeath;
+    protected IDeath p_PlayerDeath;
 
 
     public void Construct(GameObject player)
     {
       p_Player = player;
-      p_PlayerDeath = p_Player.GetComponent<PlayerDeath>();
+      p_PlayerDeath = p_Player.GetComponent<Player>().Death;
     }
   }
 }

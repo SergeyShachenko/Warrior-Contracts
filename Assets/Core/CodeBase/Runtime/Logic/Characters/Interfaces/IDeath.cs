@@ -1,7 +1,11 @@
-﻿namespace WC.Runtime.Logic.Characters
+﻿using System;
+
+namespace WC.Runtime.Logic.Characters
 {
-  public interface IDeath
+  public interface IDeath : ILogicComponent
   {
+    event Action Happened;
     bool IsDead { get; }
+    void CheckDeath(float currentHealth);
   }
 }

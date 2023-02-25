@@ -5,17 +5,15 @@ using AnimationState = WC.Runtime.Logic.Animation.AnimationState;
 
 namespace WC.Runtime.Logic.Characters
 {
-  public class EnemyAnimator : MonoBehaviour,
+  public class EnemyAnimator : ICharacterAnimator,
     IAnimationStateReader
   {
-    public event Action Attack, AttackEnd;
     public event Action<AnimationState> StateEnter, StateExit;
-    
-    public AnimationState State { get; private set; }
-   
-    public Animator Animator => _animator;
 
-    [SerializeField] private Animator _animator;
+    public bool IsActive { get; set; } = true;
+    public AnimationState State { get; private set; }
+    public bool IsAttacking => State == AnimationState.Attack;
+    public Animator Animator => _animator;
 
     private static readonly int IsMovingHash = Animator.StringToHash("IsMoving");
     private static readonly int SpeedHash = Animator.StringToHash("Speed");
@@ -27,34 +25,48 @@ namespace WC.Runtime.Logic.Characters
     private readonly int _walkStateHash = Animator.StringToHash("Walk");
     private readonly int _attackStateHash = Animator.StringToHash("Attack");
     private readonly int _deathStateHash = Animator.StringToHash("Death");
+    
+    private readonly Animator _animator;
+
+    public EnemyAnimator(Animator animator) => 
+      _animator = animator;
 
 
     public void Move(float speed)
     {
+      if (IsActive == false) return;
+      
       _animator.SetBool(IsMovingHash, true);
       _animator.SetFloat(SpeedHash, speed);
     }
 
-    public void StopMove() =>
-      _animator.SetBool(IsMovingHash, false);
-
-    public void PlayAttack() =>
-      _animator.SetTrigger(AttackHash);
-
-    public void PlayHit() =>
-      _animator.SetTrigger(HitHash);
-
-    public void PlayDeath() =>
-      _animator.SetTrigger(DeathHash);
-
-    public void EnteredState(int stateHash)
+    public void StopMove()
     {
-      State = StateFor(stateHash);
-      StateEnter?.Invoke(State);
+      if (IsActive == false) return;
+      
+      _animator.SetBool(IsMovingHash, false);
     }
 
-    public void ExitedState(int stateHash) =>
-      StateExit?.Invoke(StateFor(stateHash));
+    public void PlayAttack()
+    {
+      if (IsActive == false) return;
+
+      _animator.SetTrigger(AttackHash);
+    }
+
+    public void PlayHit()
+    {
+      if (IsActive == false) return;
+      
+      _animator.SetTrigger(HitHash);
+    }
+
+    public void PlayDeath()
+    {
+      if (IsActive == false) return;
+      
+      _animator.SetTrigger(DeathHash);
+    }
 
     private AnimationState StateFor(int stateHash)
     {
@@ -74,10 +86,15 @@ namespace WC.Runtime.Logic.Characters
       return state;
     }
 
-    private void OnAttack() => 
-      Attack?.Invoke();
+    void IAnimationStateReader.EnteredState(int stateHash)
+    {
+      State = StateFor(stateHash);
+      StateEnter?.Invoke(State);
+    }
 
-    private void OnAttackEnd() => 
-      AttackEnd?.Invoke();
+    void IAnimationStateReader.ExitedState(int stateHash)
+    {
+      StateExit?.Invoke(StateFor(stateHash));
+    }
   }
 }

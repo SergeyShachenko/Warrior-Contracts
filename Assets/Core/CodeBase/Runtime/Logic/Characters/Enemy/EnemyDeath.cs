@@ -1,52 +1,27 @@
 ﻿using System;
-using System.Collections;
-using UnityEngine;
 
 namespace WC.Runtime.Logic.Characters
 {
-  public class EnemyDeath : MonoBehaviour,
-    IDeath
+  public class EnemyDeath : IDeath
   {
     public event Action Happened;
-    
+
+    public bool IsActive { get; set; } = true;
     public bool IsDead { get; private set; }
-
-    [Header("Links")]
-    [SerializeField] private EnemyHealth _enemyHealth;
-    [SerializeField] private EnemyAnimator _enemyAnimator;
-
-
-    private void Start() => 
-      _enemyHealth.HealthChanged += OnHealthChanged;
-
-    private void OnDestroy() => 
-      _enemyHealth.HealthChanged -= OnHealthChanged;
-
     
-    private void OnHealthChanged()
+
+    public void CheckDeath(float currentHealth)
     {
-      if (IsDead == false && _enemyHealth.Current <= 0) 
+      if (IsActive == false) return;
+
+      if (IsDead == false && currentHealth <= 0) 
         Die();
     }
 
     private void Die()
     {
       IsDead = true;
-      
-      _enemyAnimator.PlayDeath();
-      StartCoroutine(DestroyBody());
-      
-      _enemyHealth.HealthChanged -= OnHealthChanged;
-      
       Happened?.Invoke();
-    }
-
-    private IEnumerator DestroyBody()
-    {
-      yield return new WaitForSeconds(3);
-      
-      
-      Destroy(gameObject);
     }
   }
 }

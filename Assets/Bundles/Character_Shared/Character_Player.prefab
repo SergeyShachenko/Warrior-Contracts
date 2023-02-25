@@ -204,7 +204,7 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 1.48, z: 0}
   m_TimeToStationary: 0.5
---- !u!114 &2619408312334822
+--- !u!114 &1369837321243487605
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -213,51 +213,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 7608888775603707239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81bda9694ebf4c69b9d8a78878062fe5, type: 3}
+  m_Script: {fileID: 11500000, guid: 46e8a36cb9c94cd3a152eca1ed3cc2b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterController: {fileID: 7133066523359769848}
-  _playerAnimator: {fileID: 0}
---- !u!114 &814385029465273519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7608888775603707239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3789d372493048a43b8f9fddaa8fd388, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _movementSpeed: 8
-  _characterController: {fileID: 7133066523359769848}
---- !u!114 &4636685007634680680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7608888775603707239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 650ef84a2be147b0b77f0495e1d39bfa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerAnimator: {fileID: 0}
---- !u!114 &6109054017918777386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7608888775603707239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecf4deee69a84700957251ff22a5634f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerHealth: {fileID: 4636685007634680680}
-  _playerMover: {fileID: 814385029465273519}
-  _playerAttack: {fileID: 2619408312334822}
-  _playerAnimator: {fileID: 0}
+  _controller: {fileID: 7133066523359769848}
+  _animator: {fileID: 0}

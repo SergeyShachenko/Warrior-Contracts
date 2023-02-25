@@ -1,40 +1,52 @@
 ﻿using System;
-using UnityEngine;
 
 namespace WC.Runtime.Logic.Characters
 {
-  public class EnemyHealth : MonoBehaviour, 
-    IHealth
+  public class EnemyHealth : IHealth
   {
-    public event Action HealthChanged;
+    public event Action Changed, TakingDamage;
 
-    public float Max
-    {
-      get => _max;
-      set => _max = value;
-    }
-
+    public bool IsActive { get; set; } = true;
     public float Current
     {
       get => _current;
-      set => _current = value;
+      set
+      {
+        if (IsActive == false) return;
+        
+        _current = value;
+        Changed?.Invoke();
+      }
+    }
+    public float Max
+    {
+      get => _max;
+      set
+      {
+        if (IsActive == false) return;
+
+        _max = value;
+        Changed?.Invoke();
+      }
     }
 
-    [SerializeField] private float _max, _current;
-     
-    [Header("Links")]
-    [SerializeField] private EnemyAnimator _enemyAnimator;
-    
+    private float _max, _current;
+
+    public EnemyHealth(float current, float max)
+    {
+      _current = current;
+      _max = max;
+    }
+
 
     public void TakeDamage(float damage)
     {
-      if (_current <= 0) return;
+      if (IsActive == false) return;
+      if (Current <= 0) return;
       
       
-      _current -= damage;
-      _enemyAnimator.PlayHit();
-      
-      HealthChanged?.Invoke();
+      Current -= damage;
+      TakingDamage?.Invoke();
     }
   }
 }

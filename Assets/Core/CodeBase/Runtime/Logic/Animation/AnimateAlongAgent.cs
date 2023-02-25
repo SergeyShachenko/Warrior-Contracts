@@ -9,8 +9,13 @@ namespace WC.Runtime.Logic.Animation
     private const float MinAgentSpeed = 0.1f;
     
     [SerializeField] private NavMeshAgent _agent;
-    [SerializeField] private EnemyAnimator _enemyAnimator;
+    [SerializeField] private Enemy _enemy;
+    
+    private EnemyAnimator _enemyAnimator;
 
+
+    private void Awake() => 
+      _enemy.Initialized += OnEnemyInit;
 
     private void Update()
     {
@@ -19,6 +24,10 @@ namespace WC.Runtime.Logic.Animation
       else
         _enemyAnimator.StopMove();
     }
+
+    
+    private void OnEnemyInit() => 
+      _enemyAnimator = (EnemyAnimator)_enemy.Animator;
 
     private bool AgentShouldMove() => 
       _agent.velocity.magnitude > MinAgentSpeed && _agent.remainingDistance > _agent.radius;

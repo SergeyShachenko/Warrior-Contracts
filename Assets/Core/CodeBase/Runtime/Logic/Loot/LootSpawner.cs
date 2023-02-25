@@ -8,7 +8,7 @@ namespace WC.Runtime.Logic.Loot
   public class LootSpawner : MonoBehaviour
   {
     [Header("Links")]
-    [SerializeField] private EnemyDeath _enemyDeath;
+    [SerializeField] private Enemy _enemy;
     
     private IGameFactory _gameFactory;
     private IRandomService _randomService;
@@ -23,7 +23,7 @@ namespace WC.Runtime.Logic.Loot
 
     private void Start()
     {
-      _enemyDeath.Happened += OnEnemyDead;
+      _enemy.Death.Happened += OnEnemyDead;
     }
 
 

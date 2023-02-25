@@ -1,68 +1,50 @@
 ﻿using System;
-using UnityEngine;
 using WC.Runtime.Data.Characters;
-using WC.Runtime.Infrastructure.Services;
-using WC.Runtime.Logic.Characters;
 
 namespace WC.Runtime.Logic.Characters
 {
-  public class PlayerHealth : MonoBehaviour,
-    IHealth,
-    ISaverProgress
+  public class PlayerHealth : IHealth
   {
-    public event Action HealthChanged;
-    
+    public event Action Changed, TakingDamage;
+
+    public bool IsActive { get; set; } = true;
     public float Current
     {
-      get => _playerStateData.CurrentHP;
+      get => _progress.State.CurrentHP;
       set
       {
-        if (_playerStateData.CurrentHP == value) return;
-        
-        
-        _playerStateData.CurrentHP = value;
-        HealthChanged?.Invoke();
+        if (IsActive == false) return;
+
+        _progress.State.CurrentHP = value;
+        Changed?.Invoke();
       }
     }
-
     public float Max
     {
-      get => _playerStateData.MaxHP;
+      get => _progress.State.MaxHP;
       set
       {
-        if (_playerStateData.MaxHP == value) return;
-        
-        
-        _playerStateData.MaxHP = value;
-        HealthChanged?.Invoke();
+        if (IsActive == false) return;
+
+        _progress.State.MaxHP = value;
+        Changed?.Invoke();
       }
     }
-
-    [Header("Links")]
-    [SerializeField] private PlayerAnimator _playerAnimator;
     
-    private PlayerStateData _playerStateData;
+    private readonly PlayerProgressData _progress;
 
+    public PlayerHealth(PlayerProgressData progress) => 
+      _progress = progress;
 
-    public void LoadProgress(PlayerProgressData progressData)
-    {
-      _playerStateData = progressData.State;
-      HealthChanged?.Invoke();
-    }
-
-    public void SaveProgress(PlayerProgressData progressData)
-    {
-      progressData.State.CurrentHP = Current;
-      progressData.State.MaxHP = Max;
-    }
-
+    
     public void TakeDamage(float damage)
     {
+      if (IsActive == false) return;
       if(Current <= 0) return;
       
       
       Current -= damage;
-      _playerAnimator.PlayHit();
+      TakingDamage?.Invoke();
     }
   }
 }

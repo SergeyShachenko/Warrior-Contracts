@@ -7,11 +7,13 @@ namespace WC.Runtime.Data
   {
     public LevelPositionData LevelPos;
     public AllLootData Loot;
+    public string StartLevel;
 
-    public WorldData(string startLevelName)
+    public WorldData(string startLevel)
     {
-      LevelPos = new LevelPositionData(startLevelName);
+      LevelPos = new LevelPositionData(startLevel);
       Loot = new AllLootData();
+      StartLevel = startLevel;
     }
   }
 }

@@ -24,7 +24,7 @@ namespace WC.Editor
       if (GUILayout.Button("Collect"))
       {
         levelData.EnemySpawners =
-          FindObjectsOfType<SpawnMarker>()
+          FindObjectsOfType<WarriorSpawnMarker>()
             .Select(x => new EnemySpawnerData(x.GetComponent<UniqueID>().ID, x.WarriorType, x.transform.position))
             .ToList();
 

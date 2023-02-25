@@ -1,58 +1,64 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using WC.Runtime.Data.Characters;
 using WC.Runtime.Infrastructure.Services;
-using WC.Runtime.Logic.Characters;
 
 namespace WC.Runtime.Logic.Characters
 {
-  public class PlayerAttack : MonoBehaviour,
-    ILoaderProgress
+  public class PlayerAttack : IAttack
   {
-    public bool IsActive
-    {
-      get => enabled;
-      set => enabled = value;
-    }
+    public event Action Attack;
 
-    [Header("Links")]
-    [SerializeField] private CharacterController _characterController;
-    [SerializeField] private PlayerAnimator _playerAnimator;
+    public bool IsActive { get; set; } = true;
+    public float Damage => _progressData.Stats.Damage;
+    public float AttackDistance => _progressData.Stats.AttackDistance;
+    public float Cooldown => _progressData.Stats.Cooldown;
+    public float HitRadius => _progressData.Stats.HitRadius;
 
-    private static int layerMask;
-    
+    private readonly PlayerProgressData _progressData;
+    private readonly CharacterController _characterController;
+    private readonly Transform _transform;
+    private readonly int _layerMask;
+
     private IInputService _inputService;
-    private PlayerStatsData _playerStatsData;
-
     private Collider[] _hits = new Collider[3];
 
-
-    private void Awake()
+    public PlayerAttack(PlayerProgressData progressData, CharacterController characterController, Transform transform)
     {
+      _progressData = progressData;
+      _characterController = characterController;
+      _transform = transform;
+      
       _inputService = AllServices.Container.Single<IInputService>(); 
-      layerMask = 1 << LayerMask.NameToLayer("Hittable");
-      _playerAnimator.Attack += OnAttack;
+      _layerMask = 1 << LayerMask.NameToLayer("Hittable");
+    }
+    
+
+    public void Tick()
+    {
+      if (IsActive == false) return;
+
+      
+      if (_inputService.GetAttackButtonUp()) 
+        StartAttack();
     }
 
-    private void Update()
+    public void TakeDamage()
     {
-      if (_inputService.GetAttackButtonUp() && _playerAnimator.IsAttacking == false) 
-        _playerAnimator.PlayAttack();
-    }
-
-
-    private void OnAttack()
-    {
+      if (IsActive == false) return;
+      
+      
       for (var i = 0; i < Hit(); ++i) 
-        _hits[i].transform.parent.parent.GetComponent<IHealth>().TakeDamage(_playerStatsData.Damage);
+        _hits[i].transform.parent.parent.GetComponent<Enemy>().Health.TakeDamage(Damage);
     }
+
+    private void StartAttack() => 
+      Attack?.Invoke();
 
     private int Hit() => 
-      Physics.OverlapSphereNonAlloc(StartPoint() + transform.forward, _playerStatsData.DamageRadius, _hits, layerMask);
+      Physics.OverlapSphereNonAlloc(StartPoint() + _transform.forward, AttackDistance, _hits, _layerMask);
 
-    private Vector3 StartPoint() =>
-      new Vector3(transform.position.x, _characterController.center.y/2, transform.position.z);
-    
-    void ILoaderProgress.LoadProgress(PlayerProgressData progressData) => 
-      _playerStatsData = progressData.Stats;
+    private Vector3 StartPoint() => 
+      new(_transform.position.x, _characterController.center.y / 2, _transform.position.z);
   }
 }

@@ -12,20 +12,19 @@ namespace WC.Runtime.UI.HUD
     public void Construct(IHealth health)
     {
       _health = health;
-      _health.HealthChanged += OnHealthChanged;
+      UpdateView();
+      _health.Changed += UpdateView;
     }
 
 
     private void OnDestroy()
     {
       if (_health != null)
-        _health.HealthChanged -= OnHealthChanged;
+        _health.Changed -= UpdateView;
     }
 
 
-    private void OnHealthChanged()
-    {
+    private void UpdateView() => 
       _hpBar.SetProgress(_health.Current, _health.Max);
-    }
   }
 }

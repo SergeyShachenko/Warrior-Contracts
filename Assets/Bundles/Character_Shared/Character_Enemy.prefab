@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1256a8830dd48708becf4a29c2aed31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyDeath: {fileID: 4262951391017968553}
+  _enemy: {fileID: 9174288616616849945}
 --- !u!1 &3323760541984017311
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,7 +176,6 @@ GameObject:
   - component: {fileID: 6082176374991295024}
   - component: {fileID: 1844536858845152916}
   - component: {fileID: 265869392351083545}
-  - component: {fileID: 2723665314843207320}
   - component: {fileID: 5584230646085573549}
   m_Layer: 29
   m_Name: Attack
@@ -225,24 +224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8cfbc6a571e4049934963fd1bf3b938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2723665314843207320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5457471293364337596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 432a554e08644419aca36f8a9c3ecbae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _damage: 10
-  _attackDistance: 2
-  _hitRadius: 0.5
-  _attackCooldown: 1
-  _enemyDeath: {fileID: 4262951391017968553}
-  _enemyAnimator: {fileID: 0}
 --- !u!114 &5584230646085573549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,7 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 987f25ccbf4f433d911146aad9e49cba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyAttack: {fileID: 2723665314843207320}
+  _enemy: {fileID: 9174288616616849945}
   _triggerObserver: {fileID: 265869392351083545}
 --- !u!1001 &6977644832867663444
 PrefabInstance:
@@ -378,7 +359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agent: {fileID: 7943332399470105259}
-  _enemyAnimator: {fileID: 0}
+  _enemy: {fileID: 9174288616616849945}
 --- !u!4 &7228941384168490453 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 326450375132543873, guid: 720c02cef404a384682abf5b81113c28,
@@ -403,38 +384,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bd4d27d8ef94366bfa32a6cb2887527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  p_EnemyDeath: {fileID: 4262951391017968553}
+  p_Enemy: {fileID: 9174288616616849945}
   _minDistanceToPlayer: 2
   _agent: {fileID: 7943332399470105259}
---- !u!114 &4262951391017968553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7301921890016143688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67ba0efe3029470392cb2d3b38501090, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemyHealth: {fileID: 6560787361428165024}
-  _enemyAnimator: {fileID: 0}
---- !u!114 &6560787361428165024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7301921890016143688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e9c2ae0aba642398bc12f04eebaa813, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _max: 4
-  _current: 4
-  _enemyAnimator: {fileID: 0}
 --- !u!195 &7943332399470105259
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -457,6 +409,20 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &9174288616616849945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7301921890016143688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9aacb29e690413c94e558d8acaf7487, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
+  _animObserver: {fileID: 0}
 --- !u!1 &8426099678928539229 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1457501627848798217, guid: 720c02cef404a384682abf5b81113c28,
@@ -476,3 +442,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hud: {fileID: 2568867395777151657}
+  _enemy: {fileID: 9174288616616849945}

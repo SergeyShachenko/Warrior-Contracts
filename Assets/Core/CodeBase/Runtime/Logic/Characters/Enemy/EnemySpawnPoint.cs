@@ -4,7 +4,7 @@ using WC.Runtime.Infrastructure.Services;
 
 namespace WC.Runtime.Logic.Characters
 {
-  public class SpawnPoint : MonoBehaviour, 
+  public class EnemySpawnPoint : MonoBehaviour,
     ISaverProgress
   {
     public WarriorType WarriorType;
@@ -15,18 +15,16 @@ namespace WC.Runtime.Logic.Characters
     private EnemyDeath _enemyDeath;
     private bool _isCleared;
 
-    public void Construct(IGameFactory gameFactory)
-    {
+    public void Construct(IGameFactory gameFactory) => 
       _gameFactory = gameFactory;
-    }
-    
-    
+
+
     private async void Spawn()
     {
       GameObject enemyWarrior = await _gameFactory.CreateEnemyWarrior(WarriorType, transform);
       
       
-      _enemyDeath = enemyWarrior.GetComponent<EnemyDeath>();
+      _enemyDeath = (EnemyDeath)enemyWarrior.GetComponent<Enemy>().Death;
       _enemyDeath.Happened += OnEnemyDead;
     }
 
@@ -38,7 +36,7 @@ namespace WC.Runtime.Logic.Characters
       _isCleared = true;
     }
 
-    public void LoadProgress(PlayerProgressData progressData)
+    void ILoaderProgress.LoadProgress(PlayerProgressData progressData)
     {
       if (progressData.Kill.ClearedSpawners.Contains(ID)) 
         _isCleared = true;
@@ -46,7 +44,7 @@ namespace WC.Runtime.Logic.Characters
         Spawn();
     }
 
-    public void SaveProgress(PlayerProgressData progressData)
+    void ISaverProgress.SaveProgress(PlayerProgressData progressData)
     {
       if (_isCleared) 
         progressData.Kill.ClearedSpawners.Add(ID);

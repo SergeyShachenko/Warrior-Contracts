@@ -6,6 +6,9 @@ namespace WC.Runtime.Data.Characters
   public class PlayerStatsData
   {
     public float Damage;
-    public float DamageRadius;
+    public float AttackDistance;
+    public float Cooldown;
+    public float HitRadius;
+    public float MovementSpeed;
   }
 }

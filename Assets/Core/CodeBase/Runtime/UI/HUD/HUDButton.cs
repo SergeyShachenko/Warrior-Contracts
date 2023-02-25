@@ -7,13 +7,16 @@ namespace WC.Runtime.UI.HUD
   public class HUDButton : MonoBehaviour
   {
     [SerializeField] private Button _button;
-    
+
+    private Player _player;
     private PlayerAnimator _playerAnimator;
 
 
     private void Awake()
     {
-      _playerAnimator = FindObjectOfType<PlayerAnimator>();
+      _player = FindObjectOfType<Player>();
+      _player.Initialized += OnPlayerInit;
+      
       _button.onClick.AddListener(OnClick);
     }
 
@@ -21,6 +24,11 @@ namespace WC.Runtime.UI.HUD
     private void OnClick()
     {
       _playerAnimator.PlayAttack();
+    }
+
+    private void OnPlayerInit()
+    {
+      _playerAnimator = (PlayerAnimator)_player.Animator;
     }
   }
 }

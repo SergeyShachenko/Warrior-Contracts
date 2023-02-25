@@ -7,9 +7,7 @@ using WC.Runtime.UI.Elements;
 using WC.Runtime.Logic.Characters;
 using WC.Runtime.Logic.Loot;
 using WC.Runtime.Infrastructure.AssetManagement;
-using WC.Runtime.Infrastructure.Services;
 using WC.Runtime.StaticData;
-using WC.Runtime.UI;
 using WC.Runtime.UI.HUD;
 using Object = UnityEngine.Object;
 
@@ -58,38 +56,37 @@ namespace WC.Runtime.Infrastructure.Services
 
     public async Task<GameObject> CreateEnemyWarrior(WarriorType warriorType, Transform parent)
     {
-      EnemyWarriorStaticData enemyWarriorData = _staticData.ForEnemyWarrior(warriorType);
-      var warriorPref = await _assetsProvider.Load<GameObject>(enemyWarriorData.PrefabRef);
+      EnemyWarriorStaticData warriorData = _staticData.ForEnemyWarrior(warriorType);
+      var warriorPref = await _assetsProvider.Load<GameObject>(warriorData.PrefabRef);
       
       
       GameObject warrior = Object.Instantiate(warriorPref, parent.position, parent.rotation, parent);
-
-      var health = warrior.GetComponent<IHealth>();
-      health.Current = enemyWarriorData.HP;
-      health.Max = enemyWarriorData.HP;
-
-      var attack = warrior.GetComponentInChildren<EnemyAttack>();
-      attack.Construct(Player);
-      attack.Damage = enemyWarriorData.Damage;
-      attack.AttackDistance = enemyWarriorData.AttackDistance;
-      attack.AttackCooldown = enemyWarriorData.AttackCooldown;
-      attack.HitRadius = enemyWarriorData.HitRadius;
+      var enemy = warrior.GetComponent<Enemy>();
+      
+      enemy.Construct(
+        player: Player.GetComponent<Player>(),
+        currentHP: warriorData.HP, 
+        maxHP: warriorData.HP, 
+        damage: warriorData.Damage, 
+        attackDistance: warriorData.AttackDistance, 
+        hitRadius: warriorData.HitRadius, 
+        cooldown: warriorData.AttackCooldown);
 
       if (warrior.TryGetComponent(out RotateToPlayerAI rotateToPlayer))
       {
         rotateToPlayer.Construct(Player);
-        rotateToPlayer.Speed = enemyWarriorData.Speed;
+        rotateToPlayer.Speed = warriorData.Speed;
       }
       
       if (warrior.TryGetComponent(out MoveToPlayerAI moveToPlayerAI)) 
         moveToPlayerAI.Construct(Player);
 
-      warrior.GetComponentInChildren<ActorHUD>().Construct(health);
-      warrior.GetComponent<NavMeshAgent>().speed = enemyWarriorData.Speed;
+      warrior.GetComponentInChildren<ActorHUD>().Construct(enemy.Health);
+      warrior.GetComponent<NavMeshAgent>().speed = warriorData.Speed;
       
       var lootSpawner = warrior.GetComponentInChildren<LootSpawner>();
       lootSpawner.Construct(this, _randomService);
-      lootSpawner.SetLootExp(enemyWarriorData.MinLootExp, enemyWarriorData.MaxLootExp);
+      lootSpawner.SetLootExp(warriorData.MinLootExp, warriorData.MaxLootExp);
 
       return warrior;
     }
@@ -100,7 +97,7 @@ namespace WC.Runtime.Infrastructure.Services
       
       
       var spawnPoint = InstantiateRegisteredAsync(spawnerObj, at)
-        .GetComponent<SpawnPoint>();
+        .GetComponent<EnemySpawnPoint>();
       
       spawnPoint.Construct(this);
       spawnPoint.ID = spawnerID;

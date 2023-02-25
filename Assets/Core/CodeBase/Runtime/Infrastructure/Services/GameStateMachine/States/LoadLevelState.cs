@@ -6,9 +6,7 @@ using WC.Runtime.UI.Screens;
 using WC.Runtime.Logic.Camera;
 using WC.Runtime.Logic.Characters;
 using WC.Runtime.Data.Characters;
-using WC.Runtime.Infrastructure.Services;
 using WC.Runtime.StaticData;
-using WC.Runtime.UI;
 using WC.Runtime.UI.HUD;
 
 namespace WC.Runtime.Infrastructure.Services
@@ -22,6 +20,8 @@ namespace WC.Runtime.Infrastructure.Services
     private readonly IPersistentProgressService _progressService;
     private readonly IStaticDataService _staticDataService;
     private readonly IUIFactory _uiFactory;
+    
+    private GameObject _player, _ui, _hud;
 
     public LoadLevelState(GameStateMachine stateMachine,
       SceneLoader sceneLoader,
@@ -54,38 +54,46 @@ namespace WC.Runtime.Infrastructure.Services
 
     private async void OnLoaded()
     {
-      await InitUI();
-      await InitGameWorld();
-      
-      InformProgressReaders();
+      await CreateGameWorld();
+      await CreateUI();
+      _hud = await CreateHUD();
+
+      InformProgressLoaders();
+
+      InitHUD();
+      InitCamera(_player);
+
       _stateMachine.Enter<GameLoopState>();
     }
 
-    private async Task InitUI() => 
+    private void InitHUD()
+    {
+      _hud.GetComponentInChildren<ActorHUD>()
+        .Construct(_player.GetComponent<Player>().Health);
+    }
+
+    private async Task CreateUI() => 
       await _uiFactory.CreateUI();
 
-    private async Task InitGameWorld()
+    private async Task CreateGameWorld()
     {
       LevelStaticData levelData = GetLevelStaticData();
 
-      await InitSpawners(levelData);
+      await CreateSpawners(levelData);
  
       // TODO Сделать механику сохранения лута
       //await InitDroppedLoot();
       
-      GameObject player = await InitPlayer(levelData);
-      await InitHUD(player);
-
-      CameraFollow(player);
+      _player = await CreatePlayer(levelData);
     }
 
-    private async Task InitSpawners(LevelStaticData levelData)
+    private async Task CreateSpawners(LevelStaticData levelData)
     {
       foreach (EnemySpawnerData spawner in levelData.EnemySpawners)
         await _gameFactory.CreateSpawnPoint(spawner.ID, spawner.Position, spawner.WarriorType);
     }
 
-    private async Task<GameObject> InitPlayer(LevelStaticData levelData) => 
+    private async Task<GameObject> CreatePlayer(LevelStaticData levelData) => 
       await _gameFactory.CreatePlayerWarrior(WarriorType.Sword, levelData.InitPlayerPos);
 
     // private async Task InitDroppedLoot()
@@ -100,24 +108,19 @@ namespace WC.Runtime.Infrastructure.Services
     //   }
     // }
 
-    private async Task InitHUD(GameObject player)
-    {
-      GameObject hud = await _gameFactory.CreateHUD();
-      
-      hud.GetComponentInChildren<ActorHUD>()
-        .Construct(player.GetComponent<PlayerHealth>());
-    }
+    private async Task<GameObject> CreateHUD() => 
+      await _gameFactory.CreateHUD();
 
     private LevelStaticData GetLevelStaticData() => 
       _staticDataService.ForLevel(SceneManager.GetActiveScene().name);
 
-    private void InformProgressReaders()
+    private void InformProgressLoaders()
     {
-      foreach (ILoaderProgress progressReader in _gameFactory.ProgressLoaders)
-        progressReader.LoadProgress(_progressService.Progress);
+      foreach (ILoaderProgress progressLoader in _gameFactory.ProgressLoaders)
+        progressLoader.LoadProgress(_progressService.Progress.Copy());
     }
 
-    private void CameraFollow(GameObject target) =>
+    private void InitCamera(GameObject target) =>
       Camera.main.GetComponent<CameraMover>().Follow(target);
   }
 }

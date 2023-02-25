@@ -1,77 +1,84 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 using WC.Runtime.DebugTools;
 
 namespace WC.Runtime.Logic.Characters
 {
-  public class EnemyAttack : MonoBehaviour
+  public class EnemyAttack : IAttack
   {
-    public bool IsActive { get; set; }
-    
-    public float Damage
-    {
-      get => _damage;
-      set => _damage = value;
-    }
-    public float AttackDistance
-    {
-      get => _attackDistance;
-      set => _attackDistance = value;
-    }
-    public float AttackCooldown
-    {
-      get => _attackCooldown;
-      set => _attackCooldown = value;
-    }
-    public float HitRadius
-    {
-      get => _hitRadius;
-      set => _hitRadius = value;
-    }
+    public event Action Attack;
+
+    public bool IsActive { get; set; } = false;
+    public float Damage { get; }
+    public float AttackDistance { get; }
+    public float Cooldown { get; }
+    public float HitRadius { get; }
 
     private const float HitDebugDuration = 1f;
 
-    [SerializeField] private float _damage;
-    [SerializeField] private float _attackDistance;
-    [SerializeField] private float _hitRadius;
-    [SerializeField] private float _attackCooldown;
+    private readonly Player _player;
+    private readonly Transform _transform;
+    private readonly int _layerMask;
 
-    [Header("Links")] 
-    [SerializeField] private EnemyDeath _enemyDeath;
-    [SerializeField] private EnemyAnimator _enemyAnimator;
-    
-    private PlayerDeath _playerDeath;
-    private GameObject _player;
     private Collider[] _hits = new Collider[1];
+
     private float _attackCooldownCounter;
     private bool _isAttack;
-    private int _layerMask;
 
-    public void Construct(GameObject player)
+    public EnemyAttack(
+      Player player, 
+      Transform transform,
+      float damage,
+      float attackDistance,
+      float hitRadius, 
+      float cooldown)
     {
       _player = player;
-      _playerDeath = _player.GetComponent<PlayerDeath>();
-    }
-    
-    
-    private void Awake()
-    {
-      _enemyAnimator.Attack += OnAttack;
-      _enemyAnimator.AttackEnd += OnAttackEnd;
-
+      _transform = transform;
+      
+      Damage = damage;
+      AttackDistance = attackDistance;
+      HitRadius = hitRadius;
+      Cooldown = cooldown;
+      
       _layerMask = 1 << LayerMask.NameToLayer("Player");
     }
 
-    private void Update()
+
+    public void Tick()
     {
-      UpdateAttackCooldown();
+      if (IsActive == false) return;
+
+      
+      UpdateCooldown();
 
       if (CanAttack())
         StartAttack();
     }
 
-    
-    private void UpdateAttackCooldown()
+    public void TakeDamage()
+    {
+      if (IsActive == false) return;
+      
+      
+      if (Hit(out Collider hit))
+      {
+        PhysicsDebug.DrawSphere(GetHitPoint(), HitRadius, HitDebugDuration);
+        hit.transform.GetComponent<Player>().Health.TakeDamage(Damage);
+      }
+    }
+
+    public void StopAttack()
+    {
+      if (IsActive == false) return;
+      
+      
+      _attackCooldownCounter = Cooldown;
+      _isAttack = false;
+    }
+
+    private void UpdateCooldown()
     {
       if (_attackCooldownCounter > 0)
         _attackCooldownCounter -= Time.deltaTime;
@@ -79,30 +86,14 @@ namespace WC.Runtime.Logic.Characters
 
     private void StartAttack()
     {
-      transform.LookAt(_player.transform);
-      _enemyAnimator.PlayAttack();
-
+      _transform.LookAt(_player.transform);
       _isAttack = true;
-    }
-
-    private void OnAttack()
-    {
-      if (Hit(out Collider hit))
-      {
-        PhysicsDebug.DrawSphere(GetHitPoint(), _hitRadius, HitDebugDuration);
-        hit.transform.GetComponent<IHealth>().TakeDamage(_damage);
-      }
-    }
-
-    private void OnAttackEnd()
-    {
-      _attackCooldownCounter = _attackCooldown;
-      _isAttack = false;
+      Attack?.Invoke();
     }
 
     private bool Hit(out Collider hit)
     {
-      var hitsCount = Physics.OverlapSphereNonAlloc(GetHitPoint(), _hitRadius, _hits, _layerMask);
+      var hitsCount = Physics.OverlapSphereNonAlloc(GetHitPoint(), HitRadius, _hits, _layerMask);
       hit = _hits.FirstOrDefault();
       
       return hitsCount > 0;
@@ -110,13 +101,13 @@ namespace WC.Runtime.Logic.Characters
 
     private Vector3 GetHitPoint()
     {
-      Vector3 currentPos = transform.position;
+      Vector3 currentPos = _transform.position;
       var newPos = new Vector3(currentPos.x, currentPos.y + 0.5f, currentPos.z);
       
-      return newPos + transform.forward * _attackDistance;
+      return newPos + _transform.forward * AttackDistance;
     }
 
     private bool CanAttack() => 
-      IsActive && _isAttack == false && _playerDeath.IsDead == false && _enemyDeath.IsDead == false && _attackCooldownCounter <= 0;
+      _isAttack == false && _player.Death.IsDead == false && _attackCooldownCounter <= 0;
   }
 }

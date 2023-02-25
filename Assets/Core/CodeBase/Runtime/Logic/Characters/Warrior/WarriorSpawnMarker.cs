@@ -2,7 +2,7 @@
 
 namespace WC.Runtime.Logic.Characters
 {
-  public class SpawnMarker : MonoBehaviour
+  public class WarriorSpawnMarker : MonoBehaviour
   {
     public WarriorType WarriorType;
   }

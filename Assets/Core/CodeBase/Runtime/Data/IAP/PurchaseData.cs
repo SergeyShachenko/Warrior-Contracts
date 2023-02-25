@@ -22,5 +22,15 @@ namespace WC.Runtime.Data.IAP
       
       Changed?.Invoke();
     }
+
+    public PurchaseData Copy()
+    {
+      var copy = new PurchaseData();
+
+      foreach (BoughtProductData product in BoughtProducts) 
+        copy.BoughtProducts.Add(product);
+
+      return copy;
+    }
   }
 }

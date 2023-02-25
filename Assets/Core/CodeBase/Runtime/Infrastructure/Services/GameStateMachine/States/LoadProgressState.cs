@@ -39,13 +39,25 @@ namespace WC.Runtime.Infrastructure.Services
     private PlayerProgressData NewProgress()
     {
       var progress = new PlayerProgressData(StartLevel);
-      progress.State.MaxHP = 50f;
-      progress.Stats.Damage = 5f;
-      progress.Stats.DamageRadius = 2f;
-      
-      progress.State.ResetHP();
+      FillState(progress);
+      FillStats(progress);
 
       return progress;
+    }
+
+    private void FillState(PlayerProgressData progress)
+    {
+      progress.State.MaxHP = 50f;
+      progress.State.ResetHP();
+    }
+
+    private void FillStats(PlayerProgressData progress)
+    {
+      progress.Stats.Damage = 5f;
+      progress.Stats.AttackDistance = 2f;
+      progress.Stats.Cooldown = 1f;
+      progress.Stats.HitRadius = 2f;
+      progress.Stats.MovementSpeed = 8f;
     }
   }
 }

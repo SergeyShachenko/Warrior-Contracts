@@ -13,7 +13,7 @@ namespace WC.Runtime.Logic.Characters
     
     private void Update()
     {
-      if (PlayerIsFar() && p_PlayerDeath.IsDead == false && p_EnemyDeath.IsDead == false)
+      if (PlayerIsFar() && p_PlayerDeath.IsDead == false && p_Enemy.Death.IsDead == false)
         _agent.destination = p_Player.transform.position;
     }
 
