@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace WC.Editor
 {
-  public class Tools
+  public static class ToolsEditor
   {
     [MenuItem("Tools/Clear Prefs")]
     public static void ClearPrefs()

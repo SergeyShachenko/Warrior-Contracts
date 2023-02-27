@@ -1,0 +1,21 @@
+{
+    "name": "WC_UnitTests",
+    "rootNamespace": "WC.UnitTests",
+    "references": [
+        "GUID:38ebb21a492b4ac9a5989ee81f431536"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Zenject-usage.dll",
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
