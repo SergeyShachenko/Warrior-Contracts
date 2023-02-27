@@ -5,9 +5,8 @@ using WC.Runtime.Infrastructure.Services;
 
 namespace WC.Runtime.Infrastructure.AssetManagement
 {
-  public interface IAssetsProvider : IService
+  public interface IAssetsProvider
   {
-    void Init();
     Task<T> Load<T>(AssetReference assetRef) where T : class;
     Task<T> Load<T>(string address) where T : class;
     Task<GameObject> Instantiate(string address);

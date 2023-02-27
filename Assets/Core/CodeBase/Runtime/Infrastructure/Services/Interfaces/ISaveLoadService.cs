@@ -2,7 +2,7 @@
 
 namespace WC.Runtime.Infrastructure.Services
 {
-  public interface ISaveLoadService : IService
+  public interface ISaveLoadService
   {
     void SaveProgress();
     PlayerProgressData LoadProgress();

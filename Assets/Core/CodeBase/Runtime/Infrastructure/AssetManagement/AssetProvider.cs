@@ -11,9 +11,9 @@ namespace WC.Runtime.Infrastructure.AssetManagement
     private readonly Dictionary<string, AsyncOperationHandle> _completedHandles = new();
     private readonly Dictionary<string, List<AsyncOperationHandle>> _resourceHandles = new();
 
-
-    public void Init() => 
+    public AssetProvider() => 
       Addressables.InitializeAsync();
+
 
     public async Task<T> Load<T>(AssetReference assetRef) where T : class
     {

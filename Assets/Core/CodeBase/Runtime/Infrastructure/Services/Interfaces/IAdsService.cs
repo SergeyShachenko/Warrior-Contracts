@@ -2,12 +2,11 @@
 
 namespace WC.Runtime.Infrastructure.Services
 {
-  public interface IAdsService : IService
+  public interface IAdsService
   {
     event Action RewardedReady;
     bool IsRewardedReady { get; }
     int Reward { get; }
-    void Init();
     void ShowRewardedVideo(Action onVideoFinished);
   }
 }

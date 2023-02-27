@@ -2,7 +2,7 @@
 
 namespace WC.Runtime.Infrastructure.Services
 {
-  public interface IPersistentProgressService : IService
+  public interface IPersistentProgressService
   {
     PlayerProgressData Progress { get; set; }
   }

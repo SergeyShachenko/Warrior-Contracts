@@ -6,9 +6,8 @@ using WC.Runtime.UI;
 
 namespace WC.Runtime.Infrastructure.Services
 {
-  public interface IStaticDataService : IService
+  public interface IStaticDataService
   {
-    void LoadData();
     PlayerWarriorStaticData ForPlayerWarrior(WarriorType type);
     EnemyWarriorStaticData ForEnemyWarrior(WarriorType type);
     LevelStaticData ForLevel(string sceneKey);

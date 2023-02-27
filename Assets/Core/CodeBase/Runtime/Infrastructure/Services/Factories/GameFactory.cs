@@ -24,19 +24,22 @@ namespace WC.Runtime.Infrastructure.Services
     private readonly IStaticDataService _staticData;
     private readonly IRandomService _randomService;
     private readonly IWindowService _windowService;
+    private readonly IInputService _inputService;
 
     public GameFactory(
-      IPersistentProgressService progressService, 
+      IPersistentProgressService progressService,
       IAssetsProvider assetsProvider,
-      IStaticDataService staticData, 
+      IStaticDataService staticData,
       IRandomService randomService,
-      IWindowService windowService)
+      IWindowService windowService, 
+      IInputService inputService)
     {
       _progressService = progressService;
       _assetsProvider = assetsProvider;
       _staticData = staticData;
       _randomService = randomService;
       _windowService = windowService;
+      _inputService = inputService;
     }
 
 
@@ -51,6 +54,7 @@ namespace WC.Runtime.Infrastructure.Services
     public async Task<GameObject> CreatePlayerWarrior(WarriorType warriorType, Vector3 at)
     {
       Player = await InstantiateRegisteredAsync(AssetAddress.PlayerSword, at);
+      Player.GetComponent<Player>().Construct(_inputService);
       return Player;
     }
 
@@ -143,38 +147,38 @@ namespace WC.Runtime.Infrastructure.Services
     private GameObject InstantiateRegisteredAsync(GameObject prefab)
     {
       GameObject gameObject = Object.Instantiate(prefab);
-      RegisterProgressWatchers(gameObject);
+      RegisterProgressLoaders(gameObject);
       return gameObject;
     }
     
     private async Task<GameObject> InstantiateRegisteredAsync(string address)
     {
       GameObject gameObject = await _assetsProvider.Instantiate(address);
-      RegisterProgressWatchers(gameObject);
+      RegisterProgressLoaders(gameObject);
       return gameObject;
     }
 
     private async Task<GameObject> InstantiateRegisteredAsync(string address, Vector3 at)
     {
       GameObject gameObject = await _assetsProvider.Instantiate(address, at);
-      RegisterProgressWatchers(gameObject);
+      RegisterProgressLoaders(gameObject);
       return gameObject;
     }
     
     private GameObject InstantiateRegisteredAsync(GameObject prefab, Vector3 at)
     {
       GameObject gameObject = Object.Instantiate(prefab, position: at, Quaternion.identity);
-      RegisterProgressWatchers(gameObject);
+      RegisterProgressLoaders(gameObject);
       return gameObject;
     }
 
-    private void RegisterProgressWatchers(GameObject gameObject)
+    private void RegisterProgressLoaders(GameObject gameObject)
     {
       foreach (ILoaderProgress progressLoader in gameObject.GetComponentsInChildren<ILoaderProgress>())
-        RegisterProgressWatcher(progressLoader);
+        RegisterProgressLoader(progressLoader);
     }
 
-    private void RegisterProgressWatcher(ILoaderProgress progressLoader)
+    private void RegisterProgressLoader(ILoaderProgress progressLoader)
     {
       if (progressLoader is ISaverProgress progressSaver) 
         ProgressSavers.Add(progressSaver);

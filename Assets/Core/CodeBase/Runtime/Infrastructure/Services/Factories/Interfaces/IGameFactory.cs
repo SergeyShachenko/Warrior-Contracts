@@ -3,11 +3,10 @@ using System.Threading.Tasks;
 using UnityEngine;
 using WC.Runtime.Logic.Characters;
 using WC.Runtime.Logic.Loot;
-using WC.Runtime.Infrastructure.Services;
 
 namespace WC.Runtime.Infrastructure.Services
 {
-  public interface IGameFactory : IService
+  public interface IGameFactory
   {
     List<ISaverProgress> ProgressSavers { get; }
     List<ILoaderProgress> ProgressLoaders { get; }

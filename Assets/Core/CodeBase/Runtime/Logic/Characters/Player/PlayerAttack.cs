@@ -2,6 +2,7 @@
 using UnityEngine;
 using WC.Runtime.Data.Characters;
 using WC.Runtime.Infrastructure.Services;
+using Zenject;
 
 namespace WC.Runtime.Logic.Characters
 {
@@ -15,24 +16,26 @@ namespace WC.Runtime.Logic.Characters
     public float Cooldown => _progressData.Stats.Cooldown;
     public float HitRadius => _progressData.Stats.HitRadius;
 
+    private readonly IInputService _inputService;
     private readonly PlayerProgressData _progressData;
     private readonly CharacterController _characterController;
     private readonly Transform _transform;
+    private readonly Collider[] _hits = new Collider[3];
     private readonly int _layerMask;
-
-    private IInputService _inputService;
-    private Collider[] _hits = new Collider[3];
-
-    public PlayerAttack(PlayerProgressData progressData, CharacterController characterController, Transform transform)
+    
+    public PlayerAttack(
+      IInputService inputService, 
+      PlayerProgressData progressData, 
+      CharacterController characterController, 
+      Transform transform)
     {
+      _inputService = inputService;
       _progressData = progressData;
       _characterController = characterController;
       _transform = transform;
-      
-      _inputService = AllServices.Container.Single<IInputService>(); 
       _layerMask = 1 << LayerMask.NameToLayer("Hittable");
     }
-    
+
 
     public void Tick()
     {

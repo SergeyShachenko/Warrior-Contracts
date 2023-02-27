@@ -23,6 +23,8 @@ namespace WC.Runtime.Logic.Characters
     [SerializeField] private Animator _animator;
     [SerializeField] private CharacterAnimationObserver _animObserver;
 
+    private IInputService _inputService;
+    
     private PlayerProgressData _progress;
     private PlayerHealth _health;
     private PlayerDeath _death;
@@ -32,12 +34,15 @@ namespace WC.Runtime.Logic.Characters
 
     private bool _initialized;
 
+    public void Construct(IInputService inputService) => 
+      _inputService = inputService;
+
     private void Init()
     {
       _health = new PlayerHealth(_progress);
       _death = new PlayerDeath();
-      _attack = new PlayerAttack(_progress, _controller, transform);
-      _movement = new PlayerMovement(_progress, _controller, transform);
+      _attack = new PlayerAttack(_inputService, _progress, _controller, transform);
+      _movement = new PlayerMovement(_inputService, _progress, _controller, transform);
       _charAnimator = new PlayerAnimator(_controller, _animator);
       
       _health.TakingDamage += OnTakeDamage;

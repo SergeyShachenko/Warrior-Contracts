@@ -1,44 +1,43 @@
-﻿using WC.Runtime.Data.Characters;
-using WC.Runtime.Infrastructure.Services;
+﻿using System;
+using WC.Runtime.Data.Characters;
+using WC.Runtime.Infrastructure.AssetManagement;
+using Zenject;
 
 namespace WC.Runtime.Infrastructure.Services
 {
   public class LoadProgressState : IDefaultState
   {
-    private const string StartLevel = "Level_Flat_1";
-    
-    private readonly GameStateMachine _gameStateMachine;
+    private readonly GameStateMachine _stateMachine;
     private readonly IPersistentProgressService _progressService;
     private readonly ISaveLoadService _saveLoadService;
-
-    public LoadProgressState(
-      GameStateMachine gameStateMachine,
-      IPersistentProgressService progressService,
-      ISaveLoadService saveLoadService)
-    {
-      _gameStateMachine = gameStateMachine;
-      _progressService = progressService;
-      _saveLoadService = saveLoadService;
-    }
-
     
-    public void Enter()
+    private Action _onExit;
+
+    public LoadProgressState(GameStateMachine stateMachine, DiContainer container)
     {
-      LoadProgressOrInitNew();
-      _gameStateMachine.Enter<LoadLevelState, string>(_progressService.Progress.World.LevelPos.LevelName);
+      _stateMachine = stateMachine;
+      _progressService = container.Resolve<IPersistentProgressService>();
+      _saveLoadService = container.Resolve<ISaveLoadService>();
     }
 
-    public void Exit()
+
+    public void Enter(Action onExit = null)
     {
+      _onExit = onExit;
       
+      InitProgress();
+      _stateMachine.Enter<LoadLevelState, string>(_progressService.Progress.World.LevelPos.LevelName);
     }
 
-    private void LoadProgressOrInitNew() => 
+    public void Exit() => 
+      _onExit?.Invoke();
+
+    private void InitProgress() => 
       _progressService.Progress = _saveLoadService.LoadProgress() ?? NewProgress();
 
     private PlayerProgressData NewProgress()
     {
-      var progress = new PlayerProgressData(StartLevel);
+      var progress = new PlayerProgressData(AssetName.StartLevel);
       FillState(progress);
       FillStats(progress);
 

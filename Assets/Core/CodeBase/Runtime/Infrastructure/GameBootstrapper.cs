@@ -1,22 +1,28 @@
-using WC.Runtime.Tools;
-using WC.Runtime.UI;
 using UnityEngine;
-using WC.Runtime.UI.Screens;
 using WC.Runtime.Infrastructure.Services;
+using WC.Runtime.UI.Screens;
+using Zenject;
 
 namespace WC.Runtime.Infrastructure
 {
   public class GameBootstrapper : MonoBehaviour,
-    ICoroutineRunner
+    IInitializable
   {
-    [SerializeField] private LoadingScreen _loadingScreenPrefab;
-    
-    private Game _game;
+    public CoroutineRunner CoroutineRunner => _coroutineRunner;
+    public LoadingScreen LoadingScreen => _loadingScreen;
 
-    private void Awake()
+    [SerializeField] private CoroutineRunner _coroutineRunner;
+    [SerializeField] private LoadingScreen _loadingScreen;
+    
+    private IGameStateMachine _gameStateMachine;
+
+    [Inject]
+    private void Construct(IGameStateMachine gameStateMachine) => 
+      _gameStateMachine = gameStateMachine;
+
+    void IInitializable.Initialize()
     {
-      _game = new Game(this, Instantiate(_loadingScreenPrefab));
-      _game.StateMachine.Enter<BootstrapState>();
+      _gameStateMachine.Enter<BootstrapState>();
       
       DontDestroyOnLoad(this);
     }

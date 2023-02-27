@@ -24,6 +24,8 @@ namespace WC.Runtime.Infrastructure.Services
         progressSaver.SaveProgress(_progressService.Progress);
 
       PlayerPrefs.SetString(ProgressKey, _progressService.Progress.ToJson());
+      
+      Debug.Log("<color=Yellow>Игра сохранена</color>");
     }
 
     public PlayerProgressData LoadProgress() => 

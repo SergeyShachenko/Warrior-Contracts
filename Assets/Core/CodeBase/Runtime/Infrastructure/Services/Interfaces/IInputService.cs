@@ -2,7 +2,7 @@
 
 namespace WC.Runtime.Infrastructure.Services
 {
-  public interface IInputService : IService
+  public interface IInputService
   {
     Vector2 AxisDirection { get; }
 

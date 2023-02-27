@@ -1,43 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using WC.Runtime.UI.Services;
-using WC.Runtime.UI.Screens;
-using WC.Runtime.Infrastructure.Services;
-using WC.Runtime.UI;
+using Zenject;
 
 namespace WC.Runtime.Infrastructure.Services
 {
   public class GameStateMachine : IGameStateMachine
   {
     private readonly Dictionary<Type, IStateBase> _states;
+    
     private IStateBase _currentState;
 
-    public GameStateMachine(SceneLoader sceneLoader, LoadingScreen loadingScreen, AllServices services)
+    public GameStateMachine(DiContainer container)
     {
       _states = new Dictionary<Type, IStateBase>
       {
-        [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-        
-        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingScreen, 
-          services.Single<IGameFactory>(), 
-          services.Single<IPersistentProgressService>(), 
-          services.Single<IStaticDataService>(),
-          services.Single<IUIFactory>()),
-        
-        [typeof(LoadProgressState)] = new LoadProgressState(this, 
-          services.Single<IPersistentProgressService>(), 
-          services.Single<ISaveLoadService>()),
-        
-        [typeof(GameLoopState)] = new GameLoopState(this)
+        [typeof(BootstrapState)] = new BootstrapState(this, container),
+        [typeof(LoadProgressState)] = new LoadProgressState(this, container),
+        [typeof(LoadLevelState)] = new LoadLevelState(this, container),
+        [typeof(GameLoopState)] = new GameLoopState(this, container)
       };
     }
     
     
-    public void Enter<TState>() where TState : class, IDefaultState => 
-      SetCurrentState<TState>().Enter();
+    public void Enter<TState>(Action onExit = null) where TState : class, IDefaultState => 
+      SetCurrentState<TState>().Enter(onExit);
 
-    public void Enter<TState, TParam>(TParam param) where TState : class, IPayloadState<TParam> => 
-      SetCurrentState<TState>().Enter(param);
+    public void Enter<TState, TParam>(TParam param, Action onExit = null) where TState : class, IPayloadState<TParam> => 
+      SetCurrentState<TState>().Enter(param, onExit);
 
     private TState SetCurrentState<TState>() where TState : class, IStateBase
     {

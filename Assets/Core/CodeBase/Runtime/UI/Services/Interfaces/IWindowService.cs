@@ -3,7 +3,7 @@ using WC.Runtime.Infrastructure.Services;
 
 namespace WC.Runtime.UI.Services
 {
-  public interface IWindowService : IService
+  public interface IWindowService
   {
     void Open(WindowID id);
   }

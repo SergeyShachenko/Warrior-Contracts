@@ -1,10 +1,10 @@
-﻿using WC.Runtime.Infrastructure.Services;
+﻿using System;
 
 namespace WC.Runtime.Infrastructure.Services
 {
-  public interface IGameStateMachine : IService
+  public interface IGameStateMachine
   {
-    void Enter<TState>() where TState : class, IDefaultState;
-    void Enter<TState, TParam>(TParam param) where TState : class, IPayloadState<TParam>;
+    void Enter<TState>(Action onExit = null) where TState : class, IDefaultState;
+    void Enter<TState, TParam>(TParam param, Action onExit = null) where TState : class, IPayloadState<TParam>;
   }
 }

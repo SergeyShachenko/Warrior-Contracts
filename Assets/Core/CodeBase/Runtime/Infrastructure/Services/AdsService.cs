@@ -16,11 +16,11 @@ namespace WC.Runtime.Infrastructure.Services
     private const string RewAndroidID = "Rewarded_Android";
     private const string RewIOSID = "Rewarded_iOS";
 
-    private Action _onVideoFinished;
+    private event Action OnVideoFinished;
     
     private string _currentGameID;
 
-    public void Init()
+    public AdsService()
     {
       switch (Application.platform)
       {
@@ -38,7 +38,7 @@ namespace WC.Runtime.Infrastructure.Services
     public void ShowRewardedVideo(Action onVideoFinished)
     {
       Advertisement.Show(RewAndroidID);
-      _onVideoFinished = onVideoFinished;
+      OnVideoFinished = onVideoFinished;
     }
 
     public void OnUnityAdsReady(string placementId)
@@ -63,7 +63,7 @@ namespace WC.Runtime.Infrastructure.Services
         case ShowResult.Skipped: Debug.LogError($"UnityAds: Placement <b>{placementId}</b> <color=Red>{showResult}</color>"); break;
         case ShowResult.Finished:
         {
-          _onVideoFinished?.Invoke();
+          OnVideoFinished?.Invoke();
           Debug.Log($"UnityAds: Placement <b>{placementId}</b> <color=Green>{showResult}</color>");
         }
           break;
@@ -71,7 +71,7 @@ namespace WC.Runtime.Infrastructure.Services
         default: Debug.Log($"UnityAds: Placement <b>{placementId}</b> is <color=Blue>{showResult}</color>"); break;
       }
 
-      _onVideoFinished = null;
+      OnVideoFinished = null;
     }
   }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using WC.Runtime.UI.Services;
@@ -8,6 +9,7 @@ using WC.Runtime.Logic.Characters;
 using WC.Runtime.Data.Characters;
 using WC.Runtime.StaticData;
 using WC.Runtime.UI.HUD;
+using Zenject;
 
 namespace WC.Runtime.Infrastructure.Services
 {
@@ -20,37 +22,39 @@ namespace WC.Runtime.Infrastructure.Services
     private readonly IPersistentProgressService _progressService;
     private readonly IStaticDataService _staticDataService;
     private readonly IUIFactory _uiFactory;
-    
-    private GameObject _player, _ui, _hud;
 
-    public LoadLevelState(GameStateMachine stateMachine,
-      SceneLoader sceneLoader,
-      LoadingScreen loadingScreen,
-      IGameFactory gameFactory,
-      IPersistentProgressService progressService, 
-      IStaticDataService staticDataService,
-      IUIFactory uiFactory)
+    private GameObject _player;
+    private GameObject _ui, _hud;
+    
+    private Action _onExit;
+
+    public LoadLevelState(GameStateMachine stateMachine, DiContainer container)
     {
       _stateMachine = stateMachine;
-      _sceneLoader = sceneLoader;
-      _loadingScreen = loadingScreen;
-      _gameFactory = gameFactory;
-      _progressService = progressService;
-      _staticDataService = staticDataService;
-      _uiFactory = uiFactory;
+      _sceneLoader = container.Resolve<SceneLoader>();
+      _loadingScreen = container.Resolve<LoadingScreen>();
+      _gameFactory = container.Resolve<IGameFactory>();
+      _progressService = container.Resolve<IPersistentProgressService>();
+      _staticDataService = container.Resolve<IStaticDataService>();
+      _uiFactory = container.Resolve<IUIFactory>();
     }
 
-    
-    public void Enter(string sceneName)
+
+    public void Enter(string sceneName, Action onExit = null)
     {
+      _onExit = onExit;      
+      
       _loadingScreen.Show();
       _gameFactory.CleanUp();
       _gameFactory.WarmUp();
       _sceneLoader.Load(sceneName, OnLoaded);
     }
 
-    public void Exit() => 
+    public void Exit()
+    {
       _loadingScreen.Hide();
+      _onExit?.Invoke();
+    }
 
     private async void OnLoaded()
     {

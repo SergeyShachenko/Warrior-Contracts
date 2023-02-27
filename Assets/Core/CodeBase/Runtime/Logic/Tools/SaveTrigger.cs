@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using WC.Runtime.Infrastructure.Services;
+using Zenject;
 
 namespace WC.Runtime.Logic.Tools
 {
@@ -9,15 +10,14 @@ namespace WC.Runtime.Logic.Tools
     
     private ISaveLoadService _saveLoadService;
 
-    private void Awake()
-    {
-      _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
-    }
+    [Inject]
+    private void Construct(ISaveLoadService saveLoadService) => 
+      _saveLoadService = saveLoadService;
+    
 
     private void OnTriggerEnter(Collider other)
     {
       _saveLoadService.SaveProgress();
-      Debug.Log("Игра сохранена");
       gameObject.SetActive(false);
     }
 

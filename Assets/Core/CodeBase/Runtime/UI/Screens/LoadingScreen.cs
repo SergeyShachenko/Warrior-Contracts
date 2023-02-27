@@ -6,19 +6,23 @@ namespace WC.Runtime.UI.Screens
   public class LoadingScreen : MonoBehaviour,
     IScreen
   {
-    [SerializeField] private CanvasGroup _canvasGroup;
-    [SerializeField] private float _fadeInSpeed = 0.03f;
+    private readonly WaitForSeconds _waitDelay = new(0.000001f);
     
+    [SerializeField] private Canvas _canvas;
+    [SerializeField] private CanvasGroup _canvasGroup;
+    [SerializeField] private float _fadeInSpeed = 0.05f;
+
 
     private void Awake()
     {
-      DontDestroyOnLoad(this);
+      _canvas.enabled = false;
+      _canvasGroup.alpha = 0f;
     }
 
-
+    
     public void Show()
     {
-      gameObject.SetActive(true);
+      _canvas.enabled = true;
       _canvasGroup.alpha = 1f;
     }
 
@@ -30,10 +34,10 @@ namespace WC.Runtime.UI.Screens
       while (_canvasGroup.alpha > 0)
       {
         _canvasGroup.alpha -= _fadeInSpeed;
-        yield return new WaitForSeconds(_fadeInSpeed);
+        yield return _waitDelay;
       }
       
-      gameObject.SetActive(false);
+      _canvas.enabled = false;
     }
   }
 }

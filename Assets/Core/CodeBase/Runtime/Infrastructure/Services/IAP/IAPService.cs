@@ -20,10 +20,7 @@ namespace WC.Runtime.Infrastructure.Services
     {
       _iapProvider = iapProvider;
       _progressService = progressService;
-    }
-
-    public void Init()
-    {
+      
       _iapProvider.Init(this);
       _iapProvider.Initialized += () => Initizlized?.Invoke();
     }

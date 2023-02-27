@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using WC.Runtime.Data;
 using WC.Runtime.Data.Characters;
 using WC.Runtime.Infrastructure.Services;
+using Zenject;
 
 namespace WC.Runtime.Logic.Characters
 {
@@ -10,23 +11,27 @@ namespace WC.Runtime.Logic.Characters
   {
     public bool IsActive { get; set; } = true;
 
+    private readonly IInputService _inputService;
     private readonly PlayerProgressData _progressData;
     private readonly CharacterController _characterController;
     private readonly Transform _transform;
-    private readonly IInputService _inputService;
     private readonly float _movementSpeed;
-
-    public PlayerMovement(PlayerProgressData progressData, CharacterController characterController, Transform transform)
+    
+    public PlayerMovement(
+      IInputService inputService,
+      PlayerProgressData progressData,
+      CharacterController characterController,
+      Transform transform)
     {
+      _inputService = inputService;
       _progressData = progressData;
       _characterController = characterController;
       _transform = transform;
-      _inputService = AllServices.Container.Single<IInputService>();
       _movementSpeed = _progressData.Stats.MovementSpeed;
       
       WarpToSavedPos();
     }
-
+    
 
     public void Tick()
     {

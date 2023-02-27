@@ -5,7 +5,6 @@ using WC.Runtime.UI.Windows;
 using WC.Runtime.Data;
 using WC.Runtime.Logic.Characters;
 using WC.Runtime.StaticData;
-using WC.Runtime.UI;
 
 namespace WC.Runtime.Infrastructure.Services
 {
@@ -20,9 +19,12 @@ namespace WC.Runtime.Infrastructure.Services
     private Dictionary<WarriorType, EnemyWarriorStaticData> _enemyWarriors;
     private Dictionary<string, LevelStaticData> _levels;
     private Dictionary<WindowID, WindowConfig> _windowConfigs;
+    
+    public StaticDataService() => 
+      LoadData();
 
 
-    public void LoadData()
+    private void LoadData()
     {
       _playerWarriors = Resources
         .LoadAll<PlayerWarriorStaticData>(PlayerWarriorsPath)
