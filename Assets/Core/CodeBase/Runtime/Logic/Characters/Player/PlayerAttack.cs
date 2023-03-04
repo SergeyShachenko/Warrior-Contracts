@@ -57,6 +57,8 @@ namespace WC.Runtime.Logic.Characters
 
     private void StartAttack() => 
       Attack?.Invoke();
+    
+    public void StopAttack() {}
 
     private int Hit() => 
       Physics.OverlapSphereNonAlloc(StartPoint() + _transform.forward, AttackDistance, _hits, _layerMask);

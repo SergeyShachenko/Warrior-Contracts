@@ -4,13 +4,14 @@ using UnityEngine;
 namespace WC.Runtime.UI.Screens
 {
   public class LoadingScreen : MonoBehaviour,
-    IScreen
+    ILoadingScreen
   {
-    private readonly WaitForSeconds _waitDelay = new(0.000001f);
+    private readonly WaitForSeconds _waitDelay = new(0.0001f);
+    private readonly WaitForSeconds _fadeOutDelay = new(1f);
     
     [SerializeField] private Canvas _canvas;
     [SerializeField] private CanvasGroup _canvasGroup;
-    [SerializeField] private float _fadeInSpeed = 0.05f;
+    [SerializeField] private float _fadeOutSpeed = 0.05f;
 
 
     private void Awake()
@@ -27,13 +28,15 @@ namespace WC.Runtime.UI.Screens
     }
 
     public void Hide() =>
-      StartCoroutine(FadeIn());
+      StartCoroutine(FadeOut());
 
-    private IEnumerator FadeIn()
+    private IEnumerator FadeOut()
     {
+      yield return _fadeOutDelay;
+      
       while (_canvasGroup.alpha > 0)
       {
-        _canvasGroup.alpha -= _fadeInSpeed;
+        _canvasGroup.alpha -= _fadeOutSpeed;
         yield return _waitDelay;
       }
       

@@ -1,27 +1,37 @@
-﻿using WC.Runtime.UI.Windows;
+﻿using WC.Runtime.UI;
 
 namespace WC.Runtime.UI.Services
 {
   public class WindowService : IWindowService
   {
-    private readonly IUIFactory _uiFactory;
+    private readonly IUIRegistry _registry;
 
-    public WindowService(IUIFactory uiFactory)
-    {
-      _uiFactory = uiFactory;
-    }
+    public WindowService(IUIRegistry registry) => 
+      _registry = registry;
 
     
-    public void Open(WindowID id)
+    public void Open(UIWindowID id)
     {
-      switch (id)
-      {
-        case WindowID.None:
-          break;
-        case WindowID.Shop:
-          _uiFactory.CreateShop();
-          break;
-      }
+      if (_registry.TryGet(id, out WindowBase window) && window.IsVisible == false) 
+        window.Open();
+    }
+
+    public void Open(HUDWindowID id)
+    {
+      if (_registry.TryGet(id, out WindowBase window) && window.IsVisible == false) 
+        window.Open();
+    }
+
+    public void Close(UIWindowID id)
+    {
+      if (_registry.TryGet(id, out WindowBase window) && window.IsVisible) 
+        window.Close();
+    }
+
+    public void Close(HUDWindowID id)
+    {
+      if (_registry.TryGet(id, out WindowBase window) && window.IsVisible) 
+        window.Close();
     }
   }
 }

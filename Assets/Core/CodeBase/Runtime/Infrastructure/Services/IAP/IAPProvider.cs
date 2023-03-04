@@ -51,33 +51,33 @@ namespace WC.Runtime.Infrastructure.Services
 
       Initialized?.Invoke();
       
-      UnityEngine.Debug.Log("UnityPurchasing: Initialization <color=Green>success</color>");
+      Debug.Log("UnityPurchasing: Initialization <color=Green>success</color>");
     }
 
     public void OnInitializeFailed(InitializationFailureReason error) => 
-      UnityEngine.Debug.LogError($"UnityPurchasing: Initialization <color=Red>failed</color> - {error}");
+      Debug.LogError($"UnityPurchasing: Initialization <color=Red>failed</color> - {error}");
 
     public void OnInitializeFailed(InitializationFailureReason error, string message) => 
-      UnityEngine.Debug.LogError($"UnityPurchasing: Initialization <color=Red>failed</color> - {error}. {message}");
+      Debug.LogError($"UnityPurchasing: Initialization <color=Red>failed</color> - {error}. {message}");
 
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
     {
       Product product = purchaseEvent.purchasedProduct;
       
-      UnityEngine.Debug.Log($"UnityPurchasing: Product <b>{product.definition.id}</b> purchase <color=Green>success</color>. " +
+      Debug.Log($"UnityPurchasing: Product <b>{product.definition.id}</b> purchase <color=Green>success</color>. " +
                             $"Transaction ID - <color=Yellow>{product.transactionID}</color>");
 
       return _iapService.ProcessPurchase(purchaseEvent.purchasedProduct);
     }
 
     public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason) => 
-      UnityEngine.Debug.LogError($"UnityPurchasing: Product <b>{product.definition.id}</b> purchase <color=Red>failed</color> - {failureReason}. " +
+      Debug.LogError($"UnityPurchasing: Product <b>{product.definition.id}</b> purchase <color=Red>failed</color> - {failureReason}. " +
                                  $"Transaction ID - <color=Yellow>{product.transactionID}</color>");
 
     private void LoadConfigs()
     {
       Configs = Resources
-        .Load<TextAsset>(AssetPath.IAPConfigs).text
+        .Load<TextAsset>(AssetPath.Config.IAP).text
         .ToDeserialized<ProductConfigWrapper>().Configs
         .ToDictionary(x => x.ID, x => x);
     }

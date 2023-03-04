@@ -38,6 +38,9 @@ namespace WC.Runtime.Logic.Characters
       _max = max;
     }
 
+    
+    public void Tick() { }
+    
 
     public void TakeDamage(float damage)
     {

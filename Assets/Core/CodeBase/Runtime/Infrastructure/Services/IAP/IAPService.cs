@@ -40,8 +40,8 @@ namespace WC.Runtime.Infrastructure.Services
       {
         case ItemType.Gold:
         {
-          _progressService.Progress.World.Loot.Add(productConfig.Amount);
-          _progressService.Progress.Purchase.AddPurchase(product.definition.id);
+          _progressService.Player.World.Loot.Add(productConfig.Amount);
+          _progressService.Player.Purchase.AddPurchase(product.definition.id);
         }
           break;
       }
@@ -51,7 +51,7 @@ namespace WC.Runtime.Infrastructure.Services
 
     private IEnumerable<ProductDescription> CreateProductDescriptions()
     {
-      PurchaseData purchaseData = _progressService.Progress.Purchase;
+      PurchaseData purchaseData = _progressService.Player.Purchase;
 
       foreach (var productID in _iapProvider.Products.Keys)
       {

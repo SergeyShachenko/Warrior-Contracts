@@ -37,13 +37,13 @@ namespace WC.Runtime.Infrastructure.AssetManagement
         cacheKey: address);
     }
 
-    public Task<GameObject> Instantiate(string address) => 
+    public Task<GameObject> InstantiateAsync(string address) => 
       Addressables.InstantiateAsync(address).Task; 
 
-    public Task<GameObject> Instantiate(string address, Vector3 at) => 
+    public Task<GameObject> InstantiateAsync(string address, Vector3 at) => 
       Addressables.InstantiateAsync(address, at, Quaternion.identity).Task;
     
-    public Task<GameObject> Instantiate(string address, Transform under) => 
+    public Task<GameObject> InstantiateAsync(string address, Transform under) => 
       Addressables.InstantiateAsync(address, under).Task;
 
     public void CleanUp()

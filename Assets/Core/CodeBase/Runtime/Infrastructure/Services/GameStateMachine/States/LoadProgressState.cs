@@ -26,14 +26,14 @@ namespace WC.Runtime.Infrastructure.Services
       _onExit = onExit;
       
       InitProgress();
-      _stateMachine.Enter<LoadLevelState, string>(_progressService.Progress.World.LevelPos.LevelName);
+      _stateMachine.Enter<LoadLevelState, string>(_progressService.Player.World.LevelPos.LevelName);
     }
 
     public void Exit() => 
       _onExit?.Invoke();
 
     private void InitProgress() => 
-      _progressService.Progress = _saveLoadService.LoadProgress() ?? NewProgress();
+      _progressService.Player = _saveLoadService.LoadProgress() ?? NewProgress();
 
     private PlayerProgressData NewProgress()
     {

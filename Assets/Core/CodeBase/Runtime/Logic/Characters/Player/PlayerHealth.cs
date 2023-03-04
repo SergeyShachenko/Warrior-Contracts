@@ -37,6 +37,9 @@ namespace WC.Runtime.Logic.Characters
       _progress = progress;
 
     
+    public void Tick() { }
+    
+    
     public void TakeDamage(float damage)
     {
       if (IsActive == false) return;

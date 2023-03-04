@@ -4,7 +4,7 @@ using UnityEngine;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
 
-namespace WC.Runtime.UI.Windows
+namespace WC.Runtime.UI
 {
   public class ShopItemsContainer : MonoBehaviour
   {
@@ -31,13 +31,13 @@ namespace WC.Runtime.UI.Windows
     public void Subscribe()
     {
       _iapService.Initizlized += RefreshAvailableItems;
-      _progressService.Progress.Purchase.Changed += RefreshAvailableItems;
+      _progressService.Player.Purchase.Changed += RefreshAvailableItems;
     }
 
     public void CleanUp()
     {
       _iapService.Initizlized -= RefreshAvailableItems;
-      _progressService.Progress.Purchase.Changed -= RefreshAvailableItems;
+      _progressService.Player.Purchase.Changed -= RefreshAvailableItems;
     }
 
     private async void RefreshAvailableItems()
@@ -61,7 +61,7 @@ namespace WC.Runtime.UI.Windows
     {
       foreach (ProductDescription productDescription in _iapService.GetProductDescriptions())
       {
-        GameObject shopItemObj = await _assetsProvider.Instantiate(AssetAddress.ShopItem, _parent);
+        GameObject shopItemObj = await _assetsProvider.InstantiateAsync(AssetAddress.UI.ShopItem, _parent);
 
         var shopItem = shopItemObj.GetComponent<ShopItem>();
         shopItem.Construct(_iapService, _assetsProvider, productDescription);

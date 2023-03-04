@@ -5,8 +5,8 @@ namespace WC.Runtime.Data
   [Serializable]
   public class AllLootData
   {
+    public event Action Changed;
     public int Collected;
-    public Action Changed;
 
     public void Collect(LootData lootData)
     {

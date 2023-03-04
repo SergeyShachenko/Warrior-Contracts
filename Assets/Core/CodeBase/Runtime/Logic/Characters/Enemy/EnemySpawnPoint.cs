@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using WC.Runtime.Data.Characters;
+using WC.Runtime.Gameplay.Services;
 using WC.Runtime.Infrastructure.Services;
 
 namespace WC.Runtime.Logic.Characters
@@ -11,18 +12,26 @@ namespace WC.Runtime.Logic.Characters
     
     [HideInInspector] public string ID;
 
-    private IGameFactory _gameFactory;
+    private ICharacterFactory _characterFactory;
+    private PlayerProgressData _progress;
     private EnemyDeath _enemyDeath;
     private bool _isCleared;
 
-    public void Construct(IGameFactory gameFactory) => 
-      _gameFactory = gameFactory;
+    public void Construct(ICharacterFactory characterFactory) => 
+      _characterFactory = characterFactory;
+
+    private void Init()
+    {
+      if (_progress.Kill.ClearedSpawners.Contains(ID)) 
+        _isCleared = true;
+      else
+        Spawn();
+    }
 
 
     private async void Spawn()
     {
-      GameObject enemyWarrior = await _gameFactory.CreateEnemyWarrior(WarriorType, transform);
-      
+      GameObject enemyWarrior = await _characterFactory.CreateEnemy(WarriorType, transform);
       
       _enemyDeath = (EnemyDeath)enemyWarrior.GetComponent<Enemy>().Death;
       _enemyDeath.Happened += OnEnemyDead;
@@ -38,10 +47,8 @@ namespace WC.Runtime.Logic.Characters
 
     void ILoaderProgress.LoadProgress(PlayerProgressData progressData)
     {
-      if (progressData.Kill.ClearedSpawners.Contains(ID)) 
-        _isCleared = true;
-      else
-        Spawn();
+      _progress = progressData;
+      Init();
     }
 
     void ISaverProgress.SaveProgress(PlayerProgressData progressData)

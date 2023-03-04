@@ -10,6 +10,9 @@ namespace WC.Runtime.Logic.Characters
     public bool IsDead { get; private set; }
     
 
+    public void Tick() { }
+    
+    
     public void CheckDeath(float currentHealth)
     {
       if (IsActive == false) return;

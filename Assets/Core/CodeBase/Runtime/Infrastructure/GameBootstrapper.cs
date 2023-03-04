@@ -22,9 +22,9 @@ namespace WC.Runtime.Infrastructure
 
     void IInitializable.Initialize()
     {
-      _gameStateMachine.Enter<BootstrapState>();
-      
       DontDestroyOnLoad(this);
+      
+      _gameStateMachine.Enter<BootstrapState>();
     }
   }
 }

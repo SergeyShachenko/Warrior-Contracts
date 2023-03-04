@@ -1,28 +1,21 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
-using WC.Runtime.UI.Windows;
-using WC.Runtime.UI.Services;
+using WC.Runtime.UI;
 
 namespace WC.Runtime.UI.Elements
 {
   public class OpenWindowButton : MonoBehaviour
   {
-    [SerializeField] private WindowID _windowID;
+    public event Action<UIWindowID> Click;
+    
+    [SerializeField] private UIWindowID _windowID;
     
     [Header("Links")]
-    [SerializeField] private Button _openWindowButton;
-
-    private IWindowService _windowService;
-
-    public void Construct(IWindowService windowService) => 
-      _windowService = windowService;
-
+    [SerializeField] private Button _button;
+    
 
     private void Awake() => 
-      _openWindowButton.onClick.AddListener(OpenWindow);
-
-
-    private void OpenWindow() => 
-      _windowService.Open(_windowID);
+      _button.onClick.AddListener(() => Click?.Invoke(_windowID));
   }
 }

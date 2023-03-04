@@ -9,5 +9,8 @@ namespace WC.Runtime.Logic.Characters
     float AttackDistance { get; }
     float Cooldown { get; }
     float HitRadius { get; }
+
+    void TakeDamage();
+    void StopAttack();
   }
 }

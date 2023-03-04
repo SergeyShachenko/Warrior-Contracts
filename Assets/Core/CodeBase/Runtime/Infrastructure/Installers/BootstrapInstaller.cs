@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using WC.Runtime.Gameplay.Services;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
 using WC.Runtime.Tools;
@@ -16,13 +17,16 @@ namespace WC.Runtime.Infrastructure.Installers
     {
       Application.targetFrameRate = 60;
 
-      BindBootstrapper();
-      BindServices();
+      BindMonoServices();
+      BindBaseServices();
+      BindBusinessServices();
+      BindUIServices();
+      BindGameplayServices();
       BindGameStateMachine();
     }
 
     
-    private void BindBootstrapper()
+    private void BindMonoServices()
     {
       GameBootstrapper gameBootstrapper = Instantiate(_gameBootstrapper);
 
@@ -39,75 +43,41 @@ namespace WC.Runtime.Infrastructure.Installers
         .AsSingle();
 
       Container
-        .Bind<LoadingScreen>()
+        .Bind<ILoadingScreen>()
+        .To<LoadingScreen>()
         .FromInstance(gameBootstrapper.LoadingScreen)
         .AsSingle();
     }
 
-    private void BindServices()
+    private void BindBaseServices()
     {
       Container
         .Bind<SceneLoader>()
-        .FromNew()
         .AsSingle();
       
       Container
         .Bind<IAssetsProvider>()
         .To<AssetProvider>()
-        .FromNew()
         .AsSingle();
       
       Container
         .Bind<IStaticDataService>()
         .To<StaticDataService>()
-        .FromNew()
         .AsSingle();
       
       Container
         .Bind<IPersistentProgressService>()
         .To<PersistentProgressService>()
-        .FromNew()
         .AsSingle();
       
       Container
         .Bind<IRandomService>()
         .To<RandomService>()
-        .FromNew()
         .AsSingle();
-      
-      BindBusinessServices();
-      BindUIServices();
 
       Container
         .Bind<ISaveLoadService>()
         .To<SaveLoadService>()
-        .FromNew()
-        .AsSingle();
-      
-      Container
-        .Bind<IInputService>()
-        .FromInstance(Application.isEditor ? new StandaloneInputService() : new TouchInputService())
-        .AsSingle();
-      
-      Container
-        .Bind<IGameFactory>()
-        .To<GameFactory>()
-        .FromNew()
-        .AsSingle();
-    }
-
-    private void BindUIServices()
-    {
-      Container
-        .Bind<IUIFactory>()
-        .To<UIFactory>()
-        .FromNew()
-        .AsSingle();
-
-      Container
-        .Bind<IWindowService>()
-        .To<WindowService>()
-        .FromNew()
         .AsSingle();
     }
 
@@ -115,28 +85,75 @@ namespace WC.Runtime.Infrastructure.Installers
     {
       Container
         .Bind<IAPProvider>()
-        .FromNew()
         .AsSingle();
 
       Container
         .Bind<IIAPService>()
         .To<IAPService>()
-        .FromNew()
         .AsSingle();
       
       Container
         .Bind<IAdsService>()
         .To<AdsService>()
-        .FromNew()
         .AsSingle();
     }
-    
+
+    private void BindUIServices()
+    {
+      Container
+        .Bind<IUIRegistry>()
+        .To<UIRegistry>()
+        .AsSingle();
+      
+      Container
+        .Bind<IUIFactory>()
+        .To<UIFactory>()
+        .AsSingle();
+      
+      Container
+        .Bind<IHUDFactory>()
+        .To<HUDFactory>()
+        .AsSingle();
+
+      Container
+        .Bind<IWindowService>()
+        .To<WindowService>()
+        .AsSingle();
+      
+      Container
+        .Bind<IPanelService>()
+        .To<PanelService>()
+        .AsSingle();
+    }
+
+    private void BindGameplayServices()
+    {
+      Container
+        .Bind<IInputService>()
+        .FromInstance(Application.isEditor ? new StandaloneInputService() : new TouchInputService())
+        .AsSingle();
+      
+      Container
+        .Bind<ILootFactory>()
+        .To<LootFactory>()
+        .AsSingle();
+
+      Container
+        .Bind<ICharacterFactory>()
+        .To<CharacterFactory>()
+        .AsSingle();
+
+      Container
+        .Bind<ILevelFactory>()
+        .To<LevelFactory>()
+        .AsSingle();
+    }
+
     private void BindGameStateMachine()
     {
       Container
         .Bind<IGameStateMachine>()
         .To<GameStateMachine>()
-        .FromNew()
         .AsSingle();
     }
   }

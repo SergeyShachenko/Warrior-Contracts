@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using WC.Runtime.Infrastructure.Services;
 
-namespace WC.Runtime.UI.Windows
+namespace WC.Runtime.UI
 {
   public class RewardedAdItem : MonoBehaviour
   {
@@ -12,12 +12,12 @@ namespace WC.Runtime.UI.Windows
     [SerializeField] private List<GameObject> _adActiveObj, _adInactiveObj;
     
     private IAdsService _adsService;
-    private IPersistentProgressService _progressService;
+    private IPersistentProgressService _progress;
 
-    public void Construct(IAdsService adsService, IPersistentProgressService  progressService)
+    public void Construct(IAdsService adsService, IPersistentProgressService  progress)
     {
       _adsService = adsService;
-      _progressService = progressService;
+      _progress = progress;
     }
     
     public void Init()
@@ -49,6 +49,6 @@ namespace WC.Runtime.UI.Windows
       _adsService.ShowRewardedVideo(OnVideoFinished);
 
     private void OnVideoFinished() => 
-      _progressService.Progress.World.Loot.Add(_adsService.Reward);
+      _progress.Player.World.Loot.Add(_adsService.Reward);
   }
 }

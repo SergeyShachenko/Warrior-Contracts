@@ -3,5 +3,7 @@
   public interface ILogicComponent
   {
     bool IsActive { get; set; }
+    
+    void Tick();
   }
 }

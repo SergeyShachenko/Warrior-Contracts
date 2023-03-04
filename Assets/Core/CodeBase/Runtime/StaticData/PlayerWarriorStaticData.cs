@@ -4,7 +4,7 @@ using WC.Runtime.Logic.Characters;
 
 namespace WC.Runtime.StaticData
 {
-  [CreateAssetMenu(menuName = "Dev/StaticData/Character/Player", fileName = "Player_Warrior_TYPE_NAME")]
+  [CreateAssetMenu(menuName = "Dev/StaticData/Character/Player/Warrior", fileName = "Player_Warrior_TYPE_NAME")]
   public class PlayerWarriorStaticData : ScriptableObject
   {
     public WarriorType Type;

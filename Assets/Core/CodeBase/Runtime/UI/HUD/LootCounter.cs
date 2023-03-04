@@ -1,24 +1,14 @@
 ﻿using TMPro;
 using UnityEngine;
-using WC.Runtime.Data;
 
-namespace WC.Runtime.UI.HUD
+namespace WC.Runtime.UI
 {
   public class LootCounter : MonoBehaviour
   {
-    public TextMeshProUGUI Counter;
-    private WorldData _worldData;
-
-    public void Construct(WorldData worldData)
-    {
-      _worldData = worldData;
-      _worldData.Loot.Changed += UpdateCounter;
-      
-      UpdateCounter();
-    }
-
+    [SerializeField] private TextMeshProUGUI _counter;
     
-    private void UpdateCounter() => 
-      Counter.text = $"{_worldData.Loot.Collected}";
+
+    public void Set(float count) => 
+      _counter.text = $"{count}";
   }
 }

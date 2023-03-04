@@ -7,7 +7,7 @@ using Zenject;
 
 namespace WC.Runtime.Logic.Characters
 {
-  public class PlayerMovement : IMover
+  public class PlayerMovement : IMovement
   {
     public bool IsActive { get; set; } = true;
 

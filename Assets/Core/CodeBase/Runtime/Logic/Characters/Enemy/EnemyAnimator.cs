@@ -31,6 +31,9 @@ namespace WC.Runtime.Logic.Characters
     public EnemyAnimator(Animator animator) => 
       _animator = animator;
 
+    
+    public void Tick() { }
+    
 
     public void Move(float speed)
     {

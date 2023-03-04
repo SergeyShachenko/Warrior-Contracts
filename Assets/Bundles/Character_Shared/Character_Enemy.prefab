@@ -305,6 +305,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4860475025516133629, guid: 720c02cef404a384682abf5b81113c28,
+        type: 3}
+      propertyPath: _character
+      value: 
+      objectReference: {fileID: 9174288616616849945}
     - target: {fileID: 6217657056009094656, guid: 720c02cef404a384682abf5b81113c28,
         type: 3}
       propertyPath: m_Color.b
@@ -322,18 +327,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 720c02cef404a384682abf5b81113c28, type: 3}
---- !u!114 &2568867395777151657 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4860475025516133629, guid: 720c02cef404a384682abf5b81113c28,
-    type: 3}
-  m_PrefabInstance: {fileID: 6977644832867663444}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8426099678928539229}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6823da65c1534306b36aec51a1dcd617, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &4314791563571281885 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6572065847444898185, guid: 720c02cef404a384682abf5b81113c28,
@@ -421,25 +414,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9aacb29e690413c94e558d8acaf7487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _controller: {fileID: 0}
   _animator: {fileID: 0}
   _animObserver: {fileID: 0}
---- !u!1 &8426099678928539229 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1457501627848798217, guid: 720c02cef404a384682abf5b81113c28,
-    type: 3}
-  m_PrefabInstance: {fileID: 6977644832867663444}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4876431151306091072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8426099678928539229}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04d1574749564a4c967493b1e88ba91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _hud: {fileID: 2568867395777151657}
-  _enemy: {fileID: 9174288616616849945}

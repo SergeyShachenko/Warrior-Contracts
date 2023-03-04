@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using WC.Runtime.Logic.Characters;
 
-namespace WC.Runtime.UI.HUD
+namespace WC.Runtime.UI
 {
   public class HUDButton : MonoBehaviour
   {

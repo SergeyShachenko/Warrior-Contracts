@@ -3,7 +3,7 @@ using UnityEngine;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
 
-namespace WC.Runtime.UI.Windows
+namespace WC.Runtime.UI
 {
   public class ShopWindow : WindowBase
   {
@@ -11,20 +11,26 @@ namespace WC.Runtime.UI.Windows
     [SerializeField] private RewardedAdItem _adItem;
     [SerializeField] private ShopItemsContainer _itemsContainer;
 
+    private IPersistentProgressService _progress;
+
     public void Construct(
       IAdsService adsService,
-      IPersistentProgressService progressService,
+      IPersistentProgressService progress,
       IIAPService iapService, 
       IAssetsProvider assetProviderProvider)
     {
-      base.Construct(progressService);
+      _progress = progress;
       
-      _adItem.Construct(adsService, progressService);
-      _itemsContainer.Construct(iapService, progressService, assetProviderProvider);
+      _adItem.Construct(adsService, progress);
+      _itemsContainer.Construct(iapService, progress, assetProviderProvider);
+      
+      Init();
     }
     
     protected override void Init()
     {
+      base.Init();
+      
       _adItem.Init();
       _itemsContainer.Init();
       UpdateMoneyLabel();
@@ -33,7 +39,7 @@ namespace WC.Runtime.UI.Windows
     
     protected override void SubscribeUpdates()
     {
-      p_PlayerProgress.World.Loot.Changed += UpdateMoneyLabel;
+      _progress.Player.World.Loot.Changed += UpdateMoneyLabel;
       _adItem.Subscribe();
       _itemsContainer.Subscribe();
     }
@@ -42,12 +48,12 @@ namespace WC.Runtime.UI.Windows
     {
       base.CleanUp();
       
-      p_PlayerProgress.World.Loot.Changed -= UpdateMoneyLabel;
+      _progress.Player.World.Loot.Changed -= UpdateMoneyLabel;
       _adItem.CleanUp();
       _itemsContainer.CleanUp();
     }
 
     private void UpdateMoneyLabel() => 
-      _moneyLabel.text = p_PlayerProgress.World.Loot.Collected.ToString();
+      _moneyLabel.text = _progress.Player.World.Loot.Collected.ToString();
   }
 }

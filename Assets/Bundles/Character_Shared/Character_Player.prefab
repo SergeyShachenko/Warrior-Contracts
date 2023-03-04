@@ -112,6 +112,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 31
       objectReference: {fileID: 0}
+    - target: {fileID: 4860475025516133629, guid: 720c02cef404a384682abf5b81113c28,
+        type: 3}
+      propertyPath: _character
+      value: 
+      objectReference: {fileID: 1369837321243487605}
     - target: {fileID: 5502510868080408301, guid: 720c02cef404a384682abf5b81113c28,
         type: 3}
       propertyPath: m_Layer
@@ -218,3 +223,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controller: {fileID: 7133066523359769848}
   _animator: {fileID: 0}
+  _animObserver: {fileID: 0}
