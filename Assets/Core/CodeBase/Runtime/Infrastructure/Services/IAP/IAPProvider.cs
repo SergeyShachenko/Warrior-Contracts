@@ -77,7 +77,7 @@ namespace WC.Runtime.Infrastructure.Services
     private void LoadConfigs()
     {
       Configs = Resources
-        .Load<TextAsset>(AssetPath.Config.IAP).text
+        .Load<TextAsset>(AssetDirectory.Config.Root + AssetName.Config.IAP).text
         .ToDeserialized<ProductConfigWrapper>().Configs
         .ToDictionary(x => x.ID, x => x);
     }

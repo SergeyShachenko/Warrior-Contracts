@@ -37,7 +37,7 @@ namespace WC.Runtime.Infrastructure.Services
 
     private PlayerProgressData NewProgress()
     {
-      var progress = new PlayerProgressData(AssetName.StartLevel);
+      var progress = new PlayerProgressData(AssetName.Scene.Level.Flat1);
       FillState(progress);
       FillStats(progress);
 

@@ -20,15 +20,15 @@ namespace WC.Runtime.Infrastructure.Services
     private void LoadData()
     {
       _playerWarriors = Resources
-        .LoadAll<PlayerWarriorStaticData>(AssetPath.StaticData.PlayerWarriors)
+        .LoadAll<PlayerWarriorStaticData>(AssetDirectory.StaticData.Character.Player.Warrior)
         .ToDictionary(x => x.Type, x => x);
       
       _enemyWarriors = Resources
-        .LoadAll<EnemyWarriorStaticData>(AssetPath.StaticData.EnemyWarriors)
+        .LoadAll<EnemyWarriorStaticData>(AssetDirectory.StaticData.Character.Enemy.Warrior)
         .ToDictionary(x => x.Type, x => x);
       
       _levels = Resources
-        .LoadAll<LevelStaticData>(AssetPath.StaticData.Levels)
+        .LoadAll<LevelStaticData>(AssetDirectory.StaticData.Levels)
         .ToDictionary(x => x.LevelKey, x => x);
     }
 

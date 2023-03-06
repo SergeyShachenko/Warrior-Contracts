@@ -1,6 +1,6 @@
 namespace WC.Runtime.Infrastructure.AssetManagement
 {
-  public class AssetLootAddress
+  public class LootAddress
   {
     public string Gold => "Loot";
   }

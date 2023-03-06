@@ -33,7 +33,7 @@ namespace WC.Runtime.UI.Services
 
     public async Task<MainUI> CreateUI()
     {
-      GameObject uiObj = await p_AssetsProvider.InstantiateAsync(AssetAddress.UI.UI);
+      GameObject uiObj = await p_AssetsProvider.InstantiateAsync(AssetAddress.UI.MainUI);
       
       if (uiObj != null)
       {
@@ -63,7 +63,7 @@ namespace WC.Runtime.UI.Services
       {
         case UIWindowID.Shop:
         {
-          GameObject windowObj = await InstantiateAsync(AssetAddress.UI.Shop, _windowsParent);
+          GameObject windowObj = await InstantiateAsync(AssetAddress.UI.HUD.Windows.Shop, _windowsParent);
 
           var shopWindow = windowObj.GetComponent<ShopWindow>();
           shopWindow.Construct(_adsService, _progress, _iapService, p_AssetsProvider);

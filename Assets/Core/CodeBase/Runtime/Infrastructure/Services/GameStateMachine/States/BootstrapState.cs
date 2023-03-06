@@ -21,7 +21,7 @@ namespace WC.Runtime.Infrastructure.Services
     public void Enter(Action onExit = null)
     {
       _onExit = onExit;
-      _sceneLoader.HotLoad(AssetName.BootstrapScene, onLoaded: EnterLoadLevel);
+      _sceneLoader.HotLoad(AssetName.Scene.Bootstrap, onLoaded: EnterLoadLevel);
     }
 
     public void Exit() => 

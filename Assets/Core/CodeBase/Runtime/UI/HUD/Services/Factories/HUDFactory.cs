@@ -30,7 +30,7 @@ namespace WC.Runtime.UI.Services
     
     public async Task<GameplayHUD> CreateHUD(Player player)
     {
-      GameObject hudObj = await InstantiateAsync(AssetAddress.UI.HUD);
+      GameObject hudObj = await InstantiateAsync(AssetAddress.UI.HUD.GameplayHUD);
 
       if (hudObj != null)
       {
