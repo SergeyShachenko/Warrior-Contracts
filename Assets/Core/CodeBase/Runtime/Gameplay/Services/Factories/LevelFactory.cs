@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using UnityEngine;
 using WC.Runtime.Logic.Characters;
-using WC.Runtime.Logic.Loot;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
 
@@ -14,10 +13,11 @@ namespace WC.Runtime.Gameplay.Services
     private readonly ICharacterFactory _characterFactory;
 
     public LevelFactory(
-      IAssetsProvider assetsProvider, 
+      IAssetsProvider assetsProvider,
+      ISaveLoadService saveLoadService,
       IPersistentProgressService progress,
       ICharacterFactory characterFactory) 
-      : base(assetsProvider)
+      : base(assetsProvider, saveLoadService)
     {
       _progress = progress;
       _characterFactory = characterFactory;

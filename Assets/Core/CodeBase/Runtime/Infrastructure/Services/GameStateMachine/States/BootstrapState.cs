@@ -4,30 +4,41 @@ using Zenject;
 
 namespace WC.Runtime.Infrastructure.Services
 {
-  public class BootstrapState : IDefaultState
+  public class BootstrapState : PayloadGameStateBase<BootstrapType>
   {
-    private readonly GameStateMachine _stateMachine;
-    private readonly SceneLoader _sceneLoader;
-    
-    private Action _onExit;
+    private readonly ISaveLoadService _saveLoadService;
+    private readonly IPersistentProgressService _progressService;
 
-    public BootstrapState(GameStateMachine stateMachine, DiContainer container)
+    public BootstrapState(GameStateMachine stateMachine, DiContainer container) : base(stateMachine, container)
     {
-      _stateMachine = stateMachine;
-      _sceneLoader = container.Resolve<SceneLoader>();
+      _progressService = container.Resolve<IPersistentProgressService>();
+      _saveLoadService = container.Resolve<ISaveLoadService>();
     }
 
 
-    public void Enter(Action onExit = null)
+    public override void Enter(BootstrapType type, Action onExit = null)
     {
-      _onExit = onExit;
-      _sceneLoader.HotLoad(AssetName.Scene.Bootstrap, onLoaded: EnterLoadLevel);
+      base.Enter(type, onExit);
+      
+      switch (type)
+      {
+        case BootstrapType.Default:
+        {
+          _progressService.Player = _saveLoadService.LoadPlayerProgress();
+         
+          if (_progressService.Player == null) 
+            _progressService.NewProgress();
+          
+          StateMachine.Enter<LoadSceneState, string>(AssetName.Scene.MainMenu);
+        }
+          break;
+        case BootstrapType.Level:
+        {
+          _progressService.NewProgress();
+          StateMachine.Enter<LoadSceneState, string>(AssetName.Scene.Level.Flat1);
+        }
+          break;
+      }
     }
-
-    public void Exit() => 
-      _onExit?.Invoke();
-
-    private void EnterLoadLevel() => 
-      _stateMachine.Enter<LoadProgressState>();
   }
 }

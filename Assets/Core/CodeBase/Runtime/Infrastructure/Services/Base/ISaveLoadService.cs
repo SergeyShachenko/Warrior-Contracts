@@ -5,6 +5,8 @@ namespace WC.Runtime.Infrastructure.Services
   public interface ISaveLoadService
   {
     void SaveProgress();
-    PlayerProgressData LoadProgress();
+    PlayerProgressData LoadPlayerProgress();
+    void AddSaverProgress(FactoryBase factory);
+    void RemoveSaverProgress(FactoryBase factory);
   }
 }

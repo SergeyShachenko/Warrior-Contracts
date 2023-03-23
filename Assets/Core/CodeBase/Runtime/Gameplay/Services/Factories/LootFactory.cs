@@ -11,8 +11,14 @@ namespace WC.Runtime.Gameplay.Services
   {
     private readonly IPersistentProgressService _progress;
 
-    public LootFactory(IAssetsProvider assetsProvider, IPersistentProgressService progress) : base(assetsProvider) => 
+    public LootFactory(
+      IAssetsProvider assetsProvider, 
+      ISaveLoadService saveLoadService,
+      IPersistentProgressService progress)
+      : base(assetsProvider, saveLoadService)
+    {
       _progress = progress;
+    }
 
 
     public async Task<LootPiece> CreateGold()

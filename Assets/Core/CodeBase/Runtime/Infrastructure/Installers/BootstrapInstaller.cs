@@ -2,7 +2,6 @@
 using WC.Runtime.Gameplay.Services;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
-using WC.Runtime.Tools;
 using WC.Runtime.UI.Screens;
 using WC.Runtime.UI.Services;
 using Zenject;
@@ -21,7 +20,6 @@ namespace WC.Runtime.Infrastructure.Installers
       BindBaseServices();
       BindBusinessServices();
       BindUIServices();
-      BindGameplayServices();
       BindGameStateMachine();
     }
 
@@ -52,10 +50,6 @@ namespace WC.Runtime.Infrastructure.Installers
     private void BindBaseServices()
     {
       Container
-        .Bind<SceneLoader>()
-        .AsSingle();
-      
-      Container
         .Bind<IAssetsProvider>()
         .To<AssetProvider>()
         .AsSingle();
@@ -71,13 +65,23 @@ namespace WC.Runtime.Infrastructure.Installers
         .AsSingle();
       
       Container
-        .Bind<IRandomService>()
-        .To<RandomService>()
+        .Bind<ISaveLoadService>()
+        .To<SaveLoadService>()
         .AsSingle();
 
       Container
-        .Bind<ISaveLoadService>()
-        .To<SaveLoadService>()
+        .Bind<ISceneLoader>()
+        .To<SceneLoader>()
+        .AsSingle();
+      
+      Container
+        .Bind<IRandomService>()
+        .To<RandomService>()
+        .AsSingle();
+      
+      Container
+        .Bind<IInputService>()
+        .FromInstance(Application.isEditor ? new StandaloneInputService() : new TouchInputService())
         .AsSingle();
     }
 
@@ -109,11 +113,6 @@ namespace WC.Runtime.Infrastructure.Installers
         .Bind<IUIFactory>()
         .To<UIFactory>()
         .AsSingle();
-      
-      Container
-        .Bind<IHUDFactory>()
-        .To<HUDFactory>()
-        .AsSingle();
 
       Container
         .Bind<IWindowService>()
@@ -123,29 +122,6 @@ namespace WC.Runtime.Infrastructure.Installers
       Container
         .Bind<IPanelService>()
         .To<PanelService>()
-        .AsSingle();
-    }
-
-    private void BindGameplayServices()
-    {
-      Container
-        .Bind<IInputService>()
-        .FromInstance(Application.isEditor ? new StandaloneInputService() : new TouchInputService())
-        .AsSingle();
-      
-      Container
-        .Bind<ILootFactory>()
-        .To<LootFactory>()
-        .AsSingle();
-
-      Container
-        .Bind<ICharacterFactory>()
-        .To<CharacterFactory>()
-        .AsSingle();
-
-      Container
-        .Bind<ILevelFactory>()
-        .To<LevelFactory>()
         .AsSingle();
     }
 

@@ -18,11 +18,12 @@ namespace WC.Runtime.UI.Services
 
     public UIFactory(
       IAssetsProvider assetsProvider,
+      ISaveLoadService saveLoadService,
       IUIRegistry registry,
       IPersistentProgressService progress, 
       IAdsService adsService, 
       IIAPService iapService) 
-      : base(assetsProvider)
+      : base(assetsProvider, saveLoadService)
     {
       _registry = registry;
       _progress = progress;

@@ -17,10 +17,11 @@ namespace WC.Runtime.UI.Services
 
     public HUDFactory(
       IAssetsProvider assetsProvider,
+      ISaveLoadService saveLoadService,
       IUIRegistry registry,
       IPersistentProgressService progress,
       IWindowService windowService)
-      : base(assetsProvider)
+      : base(assetsProvider, saveLoadService)
     {
       _registry = registry;
       _progress = progress;

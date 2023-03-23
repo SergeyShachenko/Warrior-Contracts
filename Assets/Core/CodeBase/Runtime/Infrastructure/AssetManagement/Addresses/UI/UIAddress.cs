@@ -5,6 +5,7 @@ namespace WC.Runtime.Infrastructure.AssetManagement
     public string MainUI => "UI_Main";
     
     public HUDAddress HUD { get; } = new();
+    public UIScreenAddress Screen { get; } = new();
     public UIWindowAddress Window { get; } = new();
     public UIPanelAddress Panel { get; } = new();
   }

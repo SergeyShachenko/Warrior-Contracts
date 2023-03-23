@@ -19,11 +19,12 @@ namespace WC.Runtime.Gameplay.Services
 
     public CharacterFactory(
       IAssetsProvider assetsProvider,
+      ISaveLoadService saveLoadService,
       IStaticDataService staticData,
       ILootFactory lootFactory,
       IInputService inputService,
       IRandomService randomService) 
-      : base(assetsProvider)
+      : base(assetsProvider, saveLoadService)
     {
       _staticData = staticData;
       _lootFactory = lootFactory;

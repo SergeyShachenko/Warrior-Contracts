@@ -2,12 +2,12 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using WC.Runtime.Tools;
+using WC.Runtime.Infrastructure.Services;
 using WC.Runtime.UI.Screens;
 
 namespace WC.Runtime.Infrastructure
 {
-  public class SceneLoader
+  public class SceneLoader : ISceneLoader
   {
     private readonly ICoroutineRunner _coroutineRunner;
     private readonly ILoadingScreen _loadingScreen;
@@ -39,13 +39,6 @@ namespace WC.Runtime.Infrastructure
 
     private IEnumerator LoadScene(bool hotLoad, string nextScene, Action onLoaded = null)
     {
-      if (SceneManager.GetActiveScene().name == nextScene)
-      {
-        onLoaded?.Invoke();
-        
-        yield break;
-      }
-
       AsyncOperation waitNextScene = SceneManager.LoadSceneAsync(nextScene);
       
       while (waitNextScene.isDone == false)

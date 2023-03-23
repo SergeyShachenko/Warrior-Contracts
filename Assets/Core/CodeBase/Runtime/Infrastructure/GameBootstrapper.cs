@@ -11,20 +11,22 @@ namespace WC.Runtime.Infrastructure
     public CoroutineRunner CoroutineRunner => _coroutineRunner;
     public LoadingScreen LoadingScreen => _loadingScreen;
 
+    [SerializeField] private BootstrapType _type;
+    
+    [Header("Links")]
     [SerializeField] private CoroutineRunner _coroutineRunner;
     [SerializeField] private LoadingScreen _loadingScreen;
     
-    private IGameStateMachine _gameStateMachine;
+    private IGameStateMachine _stateMachine;
 
     [Inject]
-    private void Construct(IGameStateMachine gameStateMachine) => 
-      _gameStateMachine = gameStateMachine;
-
+    private void Construct(IGameStateMachine stateMachine) => 
+      _stateMachine = stateMachine;
+    
     void IInitializable.Initialize()
     {
       DontDestroyOnLoad(this);
-      
-      _gameStateMachine.Enter<BootstrapState>();
+      _stateMachine.Enter<BootstrapState, BootstrapType>(_type);
     }
   }
 }

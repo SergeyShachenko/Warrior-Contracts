@@ -14,72 +14,60 @@ using Zenject;
 
 namespace WC.Runtime.Infrastructure.Services
 {
-  public class LoadLevelState : IPayloadState<string>
+  public class LoadLevelState : PayloadGameStateBase<DiContainer>
   {
-    private readonly GameStateMachine _stateMachine;
-    private readonly SceneLoader _sceneLoader;
-    private readonly ILoadingScreen _loadingScreen;
     private readonly IPersistentProgressService _progressService;
-    private readonly IStaticDataService _staticDataService;
-    private readonly IUIRegistry _uiRegistry;
+    private readonly ILoadingScreen _loadingScreen;
+    private readonly IStaticDataService _staticData;
     private readonly IUIFactory _uiFactory;
-    private readonly IHUDFactory _hudFactory;
-    private readonly ILootFactory _lootFactory;
-    private readonly ICharacterFactory _characterFactory;
-    private readonly ILevelFactory _levelFactory;
+
+    private IHUDFactory _hudFactory;
+    private ILootFactory _lootFactory;
+    private ICharacterFactory _characterFactory;
+    private ILevelFactory _levelFactory;
 
     private Player _player;
-    private GameObject _ui, _hud;
 
-    private Action _onExit;
-
-    public LoadLevelState(GameStateMachine stateMachine, DiContainer container)
+    public LoadLevelState(GameStateMachine stateMachine, DiContainer container) : base(stateMachine, container)
     {
-      _stateMachine = stateMachine;
-      _sceneLoader = container.Resolve<SceneLoader>();
-      _loadingScreen = container.Resolve<ILoadingScreen>();
-      
-      _progressService = container.Resolve<IPersistentProgressService>();
-      _staticDataService = container.Resolve<IStaticDataService>();
-      
-      _uiRegistry = container.Resolve<IUIRegistry>();
-      _uiFactory = container.Resolve<IUIFactory>();
-      _hudFactory = container.Resolve<IHUDFactory>();
-      
-      _lootFactory = container.Resolve<ILootFactory>();
-      _characterFactory = container.Resolve<ICharacterFactory>();
-      _levelFactory = container.Resolve<ILevelFactory>();
+      _loadingScreen = Container.Resolve<ILoadingScreen>();
+      _progressService = Container.Resolve<IPersistentProgressService>();
+      _staticData = Container.Resolve<IStaticDataService>();
+      _uiFactory = Container.Resolve<IUIFactory>();
     }
 
 
-    public void Enter(string sceneName, Action onExit = null)
+    public override async void Enter(DiContainer subContainer, Action onExit = null)
     {
-      _onExit = onExit;      
+      BindSubServices(subContainer);
       
-      _loadingScreen.Show();
-      
-      CleanUpServices();
       WarmUpServices();
-
-      _sceneLoader.HotLoad(sceneName, OnLoaded);
-    }
-
-    public void Exit()
-    {
-      _loadingScreen.Hide();
-      _onExit?.Invoke();
-    }
-
-    private async void OnLoaded()
-    {
+      
       await CreateGameWorld();
       await CreateUI();
       await CreateHUD();
 
-      InformProgressLoaders();
+      LoadProgress();
       InitCamera(_player.gameObject);
 
-      _stateMachine.Enter<GameLoopState>();
+      base.Enter(subContainer, onExit);
+      
+      StateMachine.Enter<GameLoopState, DiContainer>(subContainer);
+    }
+
+    public override void Exit()
+    {
+      _loadingScreen.Hide();
+      
+      base.Exit();
+    }
+
+    private void BindSubServices(DiContainer subContainer)
+    {
+      _hudFactory = subContainer.Resolve<IHUDFactory>();
+      _lootFactory = subContainer.Resolve<ILootFactory>();
+      _characterFactory = subContainer.Resolve<ICharacterFactory>();
+      _levelFactory = subContainer.Resolve<ILevelFactory>();
     }
 
     private async Task CreateUI()
@@ -95,7 +83,7 @@ namespace WC.Runtime.Infrastructure.Services
 
     private async Task CreateGameWorld()
     {
-      LevelStaticData levelData = GetLevelStaticData();
+      LevelStaticData levelData = _staticData.GetLevel(SceneManager.GetActiveScene().name);;
       await CreateSpawners(levelData);
  
       // TODO Сделать механику сохранения лута
@@ -134,20 +122,7 @@ namespace WC.Runtime.Infrastructure.Services
       _levelFactory.WarmUp();
     }
 
-    private void CleanUpServices()
-    {
-      _uiRegistry.CleanUp();
-      _uiFactory.CleanUp();
-      _hudFactory.CleanUp();
-      _lootFactory.CleanUp();
-      _characterFactory.CleanUp();
-      _levelFactory.CleanUp();
-    }
-
-    private LevelStaticData GetLevelStaticData() => 
-      _staticDataService.GetLevel(SceneManager.GetActiveScene().name);
-
-    private void InformProgressLoaders()
+    private void LoadProgress()
     {
       PlayerProgressData progress = _progressService.Player.Copy();
       

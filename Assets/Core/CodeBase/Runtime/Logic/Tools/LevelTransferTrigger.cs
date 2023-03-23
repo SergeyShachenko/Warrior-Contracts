@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
 using Zenject;
 
@@ -6,9 +7,7 @@ namespace WC.Runtime.Logic.Tools
 {
   public class LevelTransferTrigger : MonoBehaviour
   {
-    private const string PlayerTag = "Player";
-    
-    [SerializeField] private string _transferTo;
+    [SerializeField] private string _levelName;
     
     private IGameStateMachine _gameStateMachine;
     private ISaveLoadService _saveLoadService;
@@ -27,15 +26,12 @@ namespace WC.Runtime.Logic.Tools
       if (_triggered) return;
       
       
-      if (other.CompareTag(PlayerTag))
+      if (other.CompareTag(AssetTag.Player))
       {
         _triggered = true;
         _saveLoadService.SaveProgress();
-        _gameStateMachine.Enter<LoadLevelState, string>(_transferTo, OnExitLoadLevelState);
+        _gameStateMachine.Enter<LoadSceneState, string>(_levelName);
       }
     }
-
-    private void OnExitLoadLevelState() => 
-      _saveLoadService.SaveProgress();
   }
 }
