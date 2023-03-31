@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8faf2efa7c057c44939bc5f84ec0b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 1
   _coroutineRunner: {fileID: 833183148173622391}
   _loadingScreen: {fileID: 6644027433848822940}
 --- !u!1 &4524832289561076986

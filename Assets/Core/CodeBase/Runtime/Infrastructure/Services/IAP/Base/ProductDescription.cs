@@ -1,8 +1,9 @@
 using UnityEngine.Purchasing;
+using WC.Runtime.Data.IAP;
 
 namespace WC.Runtime.Infrastructure.Services
 {
-  public class ProductDescription
+  public struct ProductDescription
   {
     public string ID;
     public Product Product;

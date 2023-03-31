@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using WC.Runtime.UI;
 
 namespace WC.Runtime.UI.Services
 {
@@ -8,35 +7,21 @@ namespace WC.Runtime.UI.Services
     public MainUI UI { get; set; }
     public GameplayHUD HUD { get; set; }
     
-    private readonly Dictionary<UIWindowID,WindowBase> _uiWindows = new();
-    private readonly Dictionary<HUDWindowID,WindowBase> _hudWindows = new();
-    private readonly Dictionary<UIPanelID,PanelBase> _uiPanels = new();
-    private readonly Dictionary<HUDPanelID,PanelBase> _hudPanels = new();
+    private readonly Dictionary<UIWindowID, WindowBase> _uiWindows = new();
+    private readonly Dictionary<HUDWindowID, WindowBase> _hudWindows = new();
+    private readonly Dictionary<UIPanelID, PanelBase> _uiPanels = new();
+    private readonly Dictionary<HUDPanelID, PanelBase> _hudPanels = new();
     
-
-    public void Register(UIWindowID id, WindowBase window) => 
-      _uiWindows.Add(id, window);
-
-    public void Register(HUDWindowID id, WindowBase window) => 
-      _hudWindows.Add(id, window);
-
-    public void Register(UIPanelID id, PanelBase panel) => 
-      _uiPanels.Add(id, panel);
-
-    public void Register(HUDPanelID id, PanelBase panel) => 
-      _hudPanels.Add(id, panel);
-
-    public void Unregister(UIWindowID id) => 
-      _uiWindows.Remove(id);
-
-    public void Unregister(HUDWindowID id) => 
-      _hudWindows.Remove(id);
-
-    public void Unregister(UIPanelID id) => 
-      _uiPanels.Remove(id);
-
-    public void Unregister(HUDPanelID id) => 
-      _hudPanels.Remove(id);
+    
+    public void Register(UIWindowID id, WindowBase window) => _uiWindows.Add(id, window);
+    public void Register(HUDWindowID id, WindowBase window) => _hudWindows.Add(id, window);
+    public void Register(UIPanelID id, PanelBase panel) => _uiPanels.Add(id, panel);
+    public void Register(HUDPanelID id, PanelBase panel) => _hudPanels.Add(id, panel);
+    
+    public void Unregister(UIWindowID id) => _uiWindows.Remove(id);
+    public void Unregister(HUDWindowID id) => _hudWindows.Remove(id);
+    public void Unregister(UIPanelID id) => _uiPanels.Remove(id);
+    public void Unregister(HUDPanelID id) => _hudPanels.Remove(id);
 
     public WindowBase Get(UIWindowID id)
     {

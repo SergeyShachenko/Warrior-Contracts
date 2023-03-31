@@ -34,7 +34,7 @@ namespace WC.Runtime.UI.Services
 
     public async Task<MainUI> CreateUI()
     {
-      GameObject uiObj = await p_AssetsProvider.InstantiateAsync(AssetAddress.UI.MainUI);
+      GameObject uiObj = await p_AssetsProvider.Instantiate(AssetAddress.UI.MainUI);
       
       if (uiObj != null)
       {

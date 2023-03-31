@@ -61,7 +61,7 @@ namespace WC.Runtime.UI
     {
       foreach (ProductDescription productDescription in _iapService.GetProductDescriptions())
       {
-        GameObject shopItemObj = await _assetsProvider.InstantiateAsync(AssetAddress.UI.HUD.Windows.ShopItem, _parent);
+        GameObject shopItemObj = await _assetsProvider.Instantiate(AssetAddress.UI.HUD.Windows.ShopItem, _parent);
 
         var shopItem = shopItemObj.GetComponent<ShopItem>();
         shopItem.Construct(_iapService, _assetsProvider, productDescription);

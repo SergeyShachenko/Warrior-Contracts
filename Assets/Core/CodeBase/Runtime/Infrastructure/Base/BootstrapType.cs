@@ -3,6 +3,6 @@
   public enum BootstrapType
   {
     Default = 0,
-    Level = 1
+    Debug = 1
   }
 }

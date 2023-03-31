@@ -23,6 +23,9 @@ namespace WC.Runtime.Infrastructure.Services
 
     public void SaveProgress()
     {
+      if (BootstrapMode.Type == BootstrapType.Debug) return;
+      
+      
       Save();
 
       PlayerPrefs.SetString(ProgressKey, _progressService.Player.ToJson());

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using WC.Runtime.Data;
 
 namespace WC.Runtime.Infrastructure.AssetManagement
 {
@@ -26,24 +28,28 @@ namespace WC.Runtime.Infrastructure.AssetManagement
         cacheKey: assetRef.AssetGUID);
     }
 
-    public async Task<T> Load<T>(string address) where T : class
+    public async Task<TAsset> Load<TAsset>(string address) where TAsset : class
     {
       if (_completedHandles.TryGetValue(address, out AsyncOperationHandle completedOperation))
-        return completedOperation.Result as T;
+        return completedOperation.Result as TAsset;
       
       
       return await RunWithCacheOnComplete(
-        Addressables.LoadAssetAsync<T>(address), 
+        Addressables.LoadAssetAsync<TAsset>(address), 
         cacheKey: address);
     }
 
-    public Task<GameObject> InstantiateAsync(string address) => 
+    public TWrapper LoadConfig<TWrapper>(string name) where TWrapper : class => File
+        .ReadAllText(Path.Combine(AssetDirectory.Config.Root, name))
+        .ToDeserialized<TWrapper>();
+
+    public Task<GameObject> Instantiate(string address) => 
       Addressables.InstantiateAsync(address).Task; 
 
-    public Task<GameObject> InstantiateAsync(string address, Vector3 at) => 
+    public Task<GameObject> Instantiate(string address, Vector3 at) => 
       Addressables.InstantiateAsync(address, at, Quaternion.identity).Task;
     
-    public Task<GameObject> InstantiateAsync(string address, Transform under) => 
+    public Task<GameObject> Instantiate(string address, Transform under) => 
       Addressables.InstantiateAsync(address, under).Task;
 
     public void CleanUp()

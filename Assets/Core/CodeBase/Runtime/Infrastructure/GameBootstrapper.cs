@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
 using WC.Runtime.UI.Screens;
 using Zenject;
@@ -11,7 +13,7 @@ namespace WC.Runtime.Infrastructure
     public CoroutineRunner CoroutineRunner => _coroutineRunner;
     public LoadingScreen LoadingScreen => _loadingScreen;
 
-    [SerializeField] private BootstrapType _type;
+    [SerializeField] private BootstrapType _type = BootstrapType.Default;
     
     [Header("Links")]
     [SerializeField] private CoroutineRunner _coroutineRunner;
@@ -26,7 +28,19 @@ namespace WC.Runtime.Infrastructure
     void IInitializable.Initialize()
     {
       DontDestroyOnLoad(this);
-      _stateMachine.Enter<BootstrapState, BootstrapType>(_type);
+      
+      BootstrapMode.SetType(_type);
+
+      _stateMachine.Enter<BootstrapState, BootstrapConfig>(CreateBootstrapConfig());
     }
+
+    
+    private BootstrapConfig CreateBootstrapConfig() => new()
+      {
+        Type = _type,
+        StartScene = _type == BootstrapType.Default 
+          ? AssetName.Scene.MainMenu 
+          : SceneManager.GetActiveScene().name 
+      };
   }
 }

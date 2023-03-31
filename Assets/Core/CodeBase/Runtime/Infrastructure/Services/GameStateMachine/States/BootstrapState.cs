@@ -1,10 +1,9 @@
 ﻿using System;
-using WC.Runtime.Infrastructure.AssetManagement;
 using Zenject;
 
 namespace WC.Runtime.Infrastructure.Services
 {
-  public class BootstrapState : PayloadGameStateBase<BootstrapType>
+  public class BootstrapState : PayloadGameStateBase<BootstrapConfig>
   {
     private readonly ISaveLoadService _saveLoadService;
     private readonly IPersistentProgressService _progressService;
@@ -16,11 +15,9 @@ namespace WC.Runtime.Infrastructure.Services
     }
 
 
-    public override void Enter(BootstrapType type, Action onExit = null)
+    public override void Enter(BootstrapConfig bootstrapConfig, Action onExit = null)
     {
-      base.Enter(type, onExit);
-      
-      switch (type)
+      switch (bootstrapConfig.Type)
       {
         case BootstrapType.Default:
         {
@@ -28,17 +25,18 @@ namespace WC.Runtime.Infrastructure.Services
          
           if (_progressService.Player == null) 
             _progressService.NewProgress();
-          
-          StateMachine.Enter<LoadSceneState, string>(AssetName.Scene.MainMenu);
         }
           break;
-        case BootstrapType.Level:
+        case BootstrapType.Debug:
         {
           _progressService.NewProgress();
-          StateMachine.Enter<LoadSceneState, string>(AssetName.Scene.Level.Flat1);
         }
           break;
       }
+      
+      base.Enter(bootstrapConfig, onExit);
+      
+      StateMachine.Enter<LoadSceneState, string>(bootstrapConfig.StartScene);
     }
   }
 }

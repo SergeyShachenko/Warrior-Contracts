@@ -59,7 +59,7 @@ namespace WC.Runtime.Infrastructure.Services
 
     protected async Task<GameObject> InstantiateAsync(string address)
     {
-      GameObject gameObject = await p_AssetsProvider.InstantiateAsync(address);
+      GameObject gameObject = await p_AssetsProvider.Instantiate(address);
       
       RegisterProgressWatchers(gameObject);
       return gameObject;
@@ -67,7 +67,7 @@ namespace WC.Runtime.Infrastructure.Services
     
     protected async Task<GameObject> InstantiateAsync(string address, Transform under)
     {
-      GameObject gameObject = await p_AssetsProvider.InstantiateAsync(address, under);
+      GameObject gameObject = await p_AssetsProvider.Instantiate(address, under);
       
       RegisterProgressWatchers(gameObject);
       return gameObject;
@@ -75,7 +75,7 @@ namespace WC.Runtime.Infrastructure.Services
 
     protected async Task<GameObject> InstantiateAsync(string address, Vector3 at)
     {
-      GameObject gameObject = await p_AssetsProvider.InstantiateAsync(address, at);
+      GameObject gameObject = await p_AssetsProvider.Instantiate(address, at);
       
       RegisterProgressWatchers(gameObject);
       return gameObject;

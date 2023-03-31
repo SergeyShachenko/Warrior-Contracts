@@ -2,6 +2,7 @@
 {
   public class ConfigName
   {
-    public string IAP => "IAP_Products";
+    public string IAP => "Config_IAP_Products.json";
+    public string Bootstrap => "Config_Bootstrap.json";
   }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using WC.Runtime.Data;
+using WC.Runtime.Data.IAP;
 using WC.Runtime.Infrastructure.AssetManagement;
 
 namespace WC.Runtime.Infrastructure.Services
@@ -16,10 +17,13 @@ namespace WC.Runtime.Infrastructure.Services
     public Dictionary<string, ProductConfig> Configs { get; private set; }
     public Dictionary<string, Product> Products { get; private set; }
 
+    private readonly IAssetsProvider _assetsProvider;
+    
     private IStoreController _controller;
     private IExtensionProvider _extensions;
     private IIAPService _iapService;
 
+    public IAPProvider(IAssetsProvider assetsProvider) => _assetsProvider = assetsProvider;
 
     public void Init(IIAPService iapService)
     {
@@ -76,9 +80,9 @@ namespace WC.Runtime.Infrastructure.Services
 
     private void LoadConfigs()
     {
-      Configs = Resources
-        .Load<TextAsset>(AssetDirectory.Config.Root + AssetName.Config.IAP).text
-        .ToDeserialized<ProductConfigWrapper>().Configs
+      Configs = _assetsProvider
+        .LoadConfig<ProductConfigWrapper>(AssetName.Config.IAP)
+        .Configs
         .ToDictionary(x => x.ID, x => x);
     }
   }

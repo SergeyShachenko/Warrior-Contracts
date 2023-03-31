@@ -1,7 +1,8 @@
 ﻿using System;
 using UnityEngine.Purchasing;
+using WC.Runtime.Infrastructure.Services;
 
-namespace WC.Runtime.Infrastructure.Services
+namespace WC.Runtime.Data.IAP
 {
   [Serializable]
   public class ProductConfig

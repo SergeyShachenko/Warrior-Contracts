@@ -9,9 +9,12 @@ namespace WC.Runtime.Infrastructure.AssetManagement
   {
     Task<T> Load<T>(AssetReference assetRef) where T : class;
     Task<T> Load<T>(string address) where T : class;
-    Task<GameObject> InstantiateAsync(string address);
-    Task<GameObject> InstantiateAsync(string address, Vector3 at);
-    Task<GameObject> InstantiateAsync(string address, Transform under);
+    TWrapper LoadConfig<TWrapper>(string name) where TWrapper : class;
+    
+    Task<GameObject> Instantiate(string address);
+    Task<GameObject> Instantiate(string address, Vector3 at);
+    Task<GameObject> Instantiate(string address, Transform under);
+    
     void CleanUp();
   }
 }
