@@ -3,6 +3,7 @@ using WC.Runtime.Data;
 using WC.Runtime.Gameplay.Services;
 using WC.Runtime.Infrastructure.Services;
 using WC.Runtime.Logic.Characters;
+using Zenject;
 
 namespace WC.Runtime.Logic.Loot
 {
@@ -14,26 +15,25 @@ namespace WC.Runtime.Logic.Loot
     private ILootFactory _lootFactory;
     private IRandomService _randomService;
     
-    private int _minLootGold, _maxLootGold;
+    private int _minGold, _maxGold;
 
-    public void Construct(ILootFactory lootFactory, IRandomService randomService)
+    [Inject]
+    private void Construct(ILootFactory lootFactory, IRandomService randomService)
     {
       _lootFactory = lootFactory;
       _randomService = randomService;
-      
-      Init();
     }
 
-    private void Init() => 
-      _enemy.Death.Happened += OnEnemyDead;
 
-
-    public void SetLootExp(int min, int max)
+    public void Init(int minGold, int maxGold)
     {
-      _minLootGold = min;
-      _maxLootGold = max;
+      _minGold = minGold;
+      _maxGold = maxGold;
+      
+      _enemy.Death.Happened += OnEnemyDead;
     }
 
+    
     private void OnEnemyDead() => 
       DropLoot();
 
@@ -42,7 +42,7 @@ namespace WC.Runtime.Logic.Loot
       LootPiece loot = await _lootFactory.CreateGold();
       
       loot.transform.position = transform.position;
-      LootData lootExp = new(value: _randomService.Next(_minLootGold, _maxLootGold));
+      LootData lootExp = new(value: _randomService.Next(_minGold, _maxGold));
       loot.Init(lootExp);
       
       // TODO Сделать механику сохранения лута

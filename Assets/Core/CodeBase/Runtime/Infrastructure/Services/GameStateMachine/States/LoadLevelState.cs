@@ -16,43 +16,42 @@ namespace WC.Runtime.Infrastructure.Services
 {
   public class LoadLevelState : PayloadGameStateBase<DiContainer>
   {
-    private readonly IPersistentProgressService _progressService;
+    private readonly ISaveLoadService _saveLoadService;
     private readonly ILoadingScreen _loadingScreen;
     private readonly IStaticDataService _staticData;
-    private readonly IUIFactory _uiFactory;
 
-    private IHUDFactory _hudFactory;
-    private ILootFactory _lootFactory;
+    private ICharacterRegistry _characterRegistry;
+    
     private ICharacterFactory _characterFactory;
     private ILevelFactory _levelFactory;
+    private ILootFactory _lootFactory;
 
-    private Player _player;
+    private IUIFactory _uiFactory;
+    private IHUDFactory _hudFactory;
 
     public LoadLevelState(GameStateMachine stateMachine, DiContainer container) : base(stateMachine, container)
     {
-      _loadingScreen = Container.Resolve<ILoadingScreen>();
-      _progressService = Container.Resolve<IPersistentProgressService>();
-      _staticData = Container.Resolve<IStaticDataService>();
-      _uiFactory = Container.Resolve<IUIFactory>();
+      _loadingScreen = container.Resolve<ILoadingScreen>();
+      _saveLoadService = container.Resolve<ISaveLoadService>();
+      _staticData = container.Resolve<IStaticDataService>();
     }
 
 
     public override async void Enter(DiContainer subContainer, Action onExit = null)
     {
       BindSubServices(subContainer);
-      
-      WarmUpServices();
+      WarmUp();
       
       await CreateGameWorld();
       await CreateUI();
       await CreateHUD();
-
-      LoadProgress();
-      InitCamera(_player.gameObject);
+      InitCamera();
+      
+      _saveLoadService.LoadProgress();
 
       base.Enter(subContainer, onExit);
       
-      StateMachine.Enter<GameLoopState, DiContainer>(subContainer);
+      p_StateMachine.Enter<GameLoopState, DiContainer>(subContainer);
     }
 
     public override void Exit()
@@ -62,12 +61,17 @@ namespace WC.Runtime.Infrastructure.Services
       base.Exit();
     }
 
+    
     private void BindSubServices(DiContainer subContainer)
     {
-      _hudFactory = subContainer.Resolve<IHUDFactory>();
-      _lootFactory = subContainer.Resolve<ILootFactory>();
+      _characterRegistry = subContainer.Resolve<ICharacterRegistry>();
+      
       _characterFactory = subContainer.Resolve<ICharacterFactory>();
       _levelFactory = subContainer.Resolve<ILevelFactory>();
+      _lootFactory = subContainer.Resolve<ILootFactory>();
+      
+      _uiFactory = subContainer.Resolve<IUIFactory>();
+      _hudFactory = subContainer.Resolve<IHUDFactory>();
     }
 
     private async Task CreateUI()
@@ -78,18 +82,17 @@ namespace WC.Runtime.Infrastructure.Services
 
     private async Task CreateHUD()
     {
-      await _hudFactory.CreateHUD(_player);
+      await _hudFactory.CreateHUD();
     }
 
     private async Task CreateGameWorld()
     {
       LevelStaticData levelData = _staticData.GetLevel(SceneManager.GetActiveScene().name);;
       await CreateSpawners(levelData);
- 
+      await CreatePlayer(levelData);
+
       // TODO Сделать механику сохранения лута
       //await InitDroppedLoot();
-      
-      _player = await CreatePlayer(levelData);
     }
 
     private async Task CreateSpawners(LevelStaticData levelData)
@@ -98,8 +101,8 @@ namespace WC.Runtime.Infrastructure.Services
         await _levelFactory.CreateSpawnPoint(spawner.ID, spawner.Position, spawner.WarriorType);
     }
 
-    private async Task<Player> CreatePlayer(LevelStaticData levelData) => 
-      await _characterFactory.CreatePlayer(WarriorType.Sword, levelData.InitPlayerPos);
+    private async Task CreatePlayer(LevelStaticData levelData) => 
+      await _characterFactory.CreatePlayer(WarriorID.Sword, levelData.InitPlayerPos);
 
     // private async Task InitDroppedLoot()
     // {
@@ -113,36 +116,22 @@ namespace WC.Runtime.Infrastructure.Services
     //   }
     // }
 
-    private void WarmUpServices()
+    private void WarmUp()
     {
+      _characterFactory.WarmUp();
+      _lootFactory.WarmUp();
+      _levelFactory.WarmUp();
+      
       _uiFactory.WarmUp();
       _hudFactory.WarmUp();
-      _lootFactory.WarmUp();
-      _characterFactory.WarmUp();
-      _levelFactory.WarmUp();
     }
 
-    private void LoadProgress()
+    private void InitCamera()
     {
-      PlayerProgressData progress = _progressService.Player.Copy();
+      if (Camera.main == null) return;
       
-      foreach (ILoaderProgress progressLoader in _uiFactory.ProgressLoaders)
-        progressLoader.LoadProgress(progress);
       
-      foreach (ILoaderProgress progressLoader in _hudFactory.ProgressLoaders)
-        progressLoader.LoadProgress(progress);
-      
-      foreach (ILoaderProgress progressLoader in _lootFactory.ProgressLoaders)
-        progressLoader.LoadProgress(progress);
-      
-      foreach (ILoaderProgress progressLoader in _characterFactory.ProgressLoaders)
-        progressLoader.LoadProgress(progress);
-      
-      foreach (ILoaderProgress progressLoader in _levelFactory.ProgressLoaders)
-        progressLoader.LoadProgress(progress);
+      Camera.main.GetComponent<CameraMover>().Follow(_characterRegistry.Player.gameObject);
     }
-
-    private void InitCamera(GameObject target) =>
-      Camera.main.GetComponent<CameraMover>().Follow(target);
   }
 }

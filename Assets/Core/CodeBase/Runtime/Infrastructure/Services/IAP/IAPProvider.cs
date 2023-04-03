@@ -17,14 +17,15 @@ namespace WC.Runtime.Infrastructure.Services
     public Dictionary<string, ProductConfig> Configs { get; private set; }
     public Dictionary<string, Product> Products { get; private set; }
 
-    private readonly IAssetsProvider _assetsProvider;
+    private readonly IConfigService _configService;
     
     private IStoreController _controller;
     private IExtensionProvider _extensions;
     private IIAPService _iapService;
 
-    public IAPProvider(IAssetsProvider assetsProvider) => _assetsProvider = assetsProvider;
+    public IAPProvider(IConfigService configService) => _configService = configService;
 
+    
     public void Init(IIAPService iapService)
     {
       _iapService = iapService;
@@ -80,7 +81,7 @@ namespace WC.Runtime.Infrastructure.Services
 
     private void LoadConfigs()
     {
-      Configs = _assetsProvider
+      Configs = _configService
         .LoadConfig<ProductConfigWrapper>(AssetName.Config.IAP)
         .Configs
         .ToDictionary(x => x.ID, x => x);

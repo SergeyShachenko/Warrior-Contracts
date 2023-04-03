@@ -11,7 +11,7 @@ namespace WC.Runtime.Logic.Characters
     protected IDeath p_PlayerDeath;
 
 
-    public void Construct(GameObject player)
+    public void Init(GameObject player)
     {
       p_Player = player;
       p_PlayerDeath = p_Player.GetComponent<Player>().Death;

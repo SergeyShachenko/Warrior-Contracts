@@ -6,17 +6,18 @@ namespace WC.Runtime.Infrastructure.Services
 {
   public class GameStateBase : IDefaultState
   {
-    protected readonly GameStateMachine StateMachine;
-    protected readonly DiContainer Container;
+    protected readonly GameStateMachine p_StateMachine;
+    protected readonly DiContainer p_Container;
     
     private Action _onExit;
 
     protected GameStateBase(GameStateMachine stateMachine, DiContainer container)
     {
-      StateMachine = stateMachine;
-      Container = container;
+      p_StateMachine = stateMachine;
+      p_Container = container;
     }
 
+    
     public virtual void Enter(Action onExit = null)
     {
       _onExit = onExit;

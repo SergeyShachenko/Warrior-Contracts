@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using WC.Runtime.Data;
 using WC.Runtime.Data.Characters;
+using WC.Runtime.Extensions;
 using WC.Runtime.Infrastructure.Services;
 using Zenject;
 

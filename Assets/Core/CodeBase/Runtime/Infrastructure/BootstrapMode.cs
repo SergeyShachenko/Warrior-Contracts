@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using WC.Runtime.Data;
+using WC.Runtime.Extensions;
 using WC.Runtime.Infrastructure.AssetManagement;
 
 namespace WC.Runtime.Infrastructure

@@ -2,7 +2,6 @@
 using UnityEngine;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
-using WC.Runtime.Logic.Characters;
 
 namespace WC.Runtime.UI.Services
 {
@@ -10,28 +9,23 @@ namespace WC.Runtime.UI.Services
     IHUDFactory
   {
     private readonly IUIRegistry _registry;
-    private readonly IPersistentProgressService _progress;
-    private readonly IWindowService _windowService;
 
     private Transform _windowsParent, _panelsParent;
 
     public HUDFactory(
       IAssetsProvider assetsProvider,
-      ISaveLoadService saveLoadService,
-      IUIRegistry registry,
-      IPersistentProgressService progress,
-      IWindowService windowService)
-      : base(assetsProvider, saveLoadService)
+      ISaveLoadRegistry saveLoadRegistry,
+      IUIRegistry registry)
+      : base(assetsProvider, saveLoadRegistry)
     {
       _registry = registry;
-      _progress = progress;
-      _windowService = windowService;
     }
 
     
-    public async Task<GameplayHUD> CreateHUD(Player player)
+    public async Task<GameplayHUD> CreateHUD()
     {
-      GameObject hudObj = await InstantiateAsync(AssetAddress.UI.HUD.GameplayHUD);
+      GameObject hudObj = await p_AssetsProvider.InstantiateAsync(AssetAddress.UI.HUD.GameplayHUD);
+      RegisterProgressWatcher(hudObj);
 
       if (hudObj != null)
       {
@@ -44,11 +38,8 @@ namespace WC.Runtime.UI.Services
         _panelsParent.parent = hudParent;
       }
       
-      if (hudObj.TryGetComponent(out GameplayHUD gameplayHUD))
-      {
-        gameplayHUD.Construct(player, _progress, _windowService);
-        _registry.HUD = gameplayHUD;
-      }
+      if (hudObj.TryGetComponent(out GameplayHUD gameplayHUD)) 
+        _registry.Register(gameplayHUD);
       //TODO Логгер
       // else
       //   LogService.Log<UIFactory>("Отсутствует компонент - GameplayHUD!", LogLevel.Error);
@@ -102,7 +93,9 @@ namespace WC.Runtime.UI.Services
       return _registry.Get(id);
     }
 
-    public override Task WarmUp() =>
-      Task.CompletedTask;
+    public override async Task WarmUp()
+    {
+      await p_AssetsProvider.Load<GameObject>(AssetAddress.UI.HUD.GameplayHUD);
+    }
   }
 }

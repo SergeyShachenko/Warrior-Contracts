@@ -36,7 +36,7 @@ namespace WC.Runtime.Infrastructure.Services
       
       base.Enter(bootstrapConfig, onExit);
       
-      StateMachine.Enter<LoadSceneState, string>(bootstrapConfig.StartScene);
+      p_StateMachine.Enter<LoadSceneState, string>(bootstrapConfig.StartScene);
     }
   }
 }

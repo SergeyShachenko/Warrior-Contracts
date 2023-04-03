@@ -2,38 +2,39 @@
 using WC.Runtime.Data.Characters;
 using WC.Runtime.Gameplay.Services;
 using WC.Runtime.Infrastructure.Services;
+using Zenject;
 
 namespace WC.Runtime.Logic.Characters
 {
   public class EnemySpawnPoint : MonoBehaviour,
     ISaverProgress
   {
-    public WarriorType WarriorType;
+    [SerializeField] private WarriorID _warriorType;
     
-    [HideInInspector] public string ID;
-
     private ICharacterFactory _characterFactory;
     private PlayerProgressData _progress;
     private EnemyDeath _enemyDeath;
+    
+    private string _id;
     private bool _isCleared;
 
-    public void Construct(ICharacterFactory characterFactory) => 
+    [Inject]
+    private void Construct(ICharacterFactory characterFactory) => 
       _characterFactory = characterFactory;
 
-    private void Init()
+    
+    public void Init(WarriorID warriorType, string id)
     {
-      if (_progress.Kill.ClearedSpawners.Contains(ID)) 
-        _isCleared = true;
-      else
-        Spawn();
+      _warriorType = warriorType;
+      _id = id;
     }
 
 
     private async void Spawn()
     {
-      GameObject enemyWarrior = await _characterFactory.CreateEnemy(WarriorType, transform);
+      Enemy enemy = await _characterFactory.CreateEnemy(_warriorType, transform);
       
-      _enemyDeath = (EnemyDeath)enemyWarrior.GetComponent<Enemy>().Death;
+      _enemyDeath = (EnemyDeath)enemy.Death;
       _enemyDeath.Happened += OnEnemyDead;
     }
 
@@ -48,13 +49,17 @@ namespace WC.Runtime.Logic.Characters
     void ILoaderProgress.LoadProgress(PlayerProgressData progressData)
     {
       _progress = progressData;
-      Init();
+      
+      if (_progress.Kill.ClearedSpawners.Contains(_id)) 
+        _isCleared = true;
+      else
+        Spawn();
     }
 
     void ISaverProgress.SaveProgress(PlayerProgressData progressData)
     {
       if (_isCleared) 
-        progressData.Kill.ClearedSpawners.Add(ID);
+        progressData.Kill.ClearedSpawners.Add(_id);
     }
   }
 }

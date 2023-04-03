@@ -7,7 +7,7 @@ namespace WC.Runtime.UI.Services
 {
   public interface IHUDFactory : IFactory
   {
-    Task<GameplayHUD> CreateHUD(Player player);
+    Task<GameplayHUD> CreateHUD();
     Task<WindowBase> Create(HUDWindowID id);
     Task<PanelBase> Create(HUDPanelID id);
   }

@@ -5,17 +5,16 @@ namespace WC.Runtime.Logic.Characters
 {
   public class Enemy : CharacterBase
   {
+    public WarriorID ID { get; private set; }
+    
     private Player _player;
 
-    private float _currentHP;
-    private float _maxHP;
-    private float _damage;
-    private float _attackDistance;
-    private float _hitRadius;
-    private float _cooldown;
+    private float _currentHP, _maxHP;
+    private float _damage, _attackDistance, _hitRadius, _cooldown;
 
     public void Construct(
       Player player,
+      WarriorID id,
       float currentHP,
       float maxHP,
       float damage,
@@ -23,6 +22,8 @@ namespace WC.Runtime.Logic.Characters
       float hitRadius,
       float cooldown)
     {
+      ID = id;
+      
       _player = player;
       
       _currentHP = currentHP;

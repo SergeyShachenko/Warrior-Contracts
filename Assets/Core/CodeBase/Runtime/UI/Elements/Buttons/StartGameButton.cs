@@ -24,8 +24,7 @@ namespace WC.Runtime.UI.Elements
       Init();
     }
 
-    private void Init() => 
-      _button.onClick.AddListener(OnPressed);
+    private void Init() => _button.onClick.AddListener(OnPressed);
 
     
     private void OnPressed()

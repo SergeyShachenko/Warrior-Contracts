@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
 using WC.Runtime.UI.Screens;
-using WC.Runtime.UI.Services;
 using Zenject;
 
 namespace WC.Runtime.Infrastructure.Installers
@@ -18,7 +16,6 @@ namespace WC.Runtime.Infrastructure.Installers
       BindMonoServices();
       BindBaseServices();
       BindBusinessServices();
-      BindUIServices();
       BindGameStateMachine();
     }
 
@@ -49,8 +46,8 @@ namespace WC.Runtime.Infrastructure.Installers
     private void BindBaseServices()
     {
       Container
-        .Bind<IAssetsProvider>()
-        .To<AssetProvider>()
+        .Bind<IConfigService>()
+        .To<ConfigService>()
         .AsSingle();
       
       Container
@@ -61,6 +58,11 @@ namespace WC.Runtime.Infrastructure.Installers
       Container
         .Bind<IPersistentProgressService>()
         .To<PersistentProgressService>()
+        .AsSingle();
+      
+      Container
+        .Bind<ISaveLoadRegistry>()
+        .To<SaveLoadRegistry>()
         .AsSingle();
       
       Container
@@ -98,29 +100,6 @@ namespace WC.Runtime.Infrastructure.Installers
       Container
         .Bind<IAdsService>()
         .To<AdsService>()
-        .AsSingle();
-    }
-
-    private void BindUIServices()
-    {
-      Container
-        .Bind<IUIRegistry>()
-        .To<UIRegistry>()
-        .AsSingle();
-      
-      Container
-        .Bind<IUIFactory>()
-        .To<UIFactory>()
-        .AsSingle();
-
-      Container
-        .Bind<IWindowService>()
-        .To<WindowService>()
-        .AsSingle();
-      
-      Container
-        .Bind<IPanelService>()
-        .To<PanelService>()
         .AsSingle();
     }
 

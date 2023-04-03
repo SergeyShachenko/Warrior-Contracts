@@ -2,6 +2,7 @@
 using UnityEngine;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
+using Zenject;
 
 namespace WC.Runtime.UI
 {
@@ -13,7 +14,8 @@ namespace WC.Runtime.UI
 
     private IPersistentProgressService _progress;
 
-    public void Construct(
+    [Inject]
+    private void Construct(
       IAdsService adsService,
       IPersistentProgressService progress,
       IIAPService iapService, 

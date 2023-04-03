@@ -9,30 +9,22 @@ namespace WC.Runtime.Gameplay.Services
   public class LevelFactory : FactoryBase,
     ILevelFactory
   {
-    private readonly IPersistentProgressService _progress;
-    private readonly ICharacterFactory _characterFactory;
-
     public LevelFactory(
       IAssetsProvider assetsProvider,
-      ISaveLoadService saveLoadService,
-      IPersistentProgressService progress,
-      ICharacterFactory characterFactory) 
-      : base(assetsProvider, saveLoadService)
+      ISaveLoadRegistry saveLoadRegistry) 
+      : base(assetsProvider, saveLoadRegistry)
     {
-      _progress = progress;
-      _characterFactory = characterFactory;
+      
     }
 
 
-    public async Task CreateSpawnPoint(string spawnerID, Vector3 at, WarriorType warriorType)
+    public async Task CreateSpawnPoint(string spawnerID, Vector3 at, WarriorID warriorType)
     {
-      var spawnerObj = await p_AssetsProvider.Load<GameObject>(AssetAddress.SpawnPoint);
+      GameObject spawnerObj = await p_AssetsProvider.InstantiateAsync(AssetAddress.SpawnPoint, at);
+      RegisterProgressWatcher(spawnerObj);
       
-      var spawnPoint = Instantiate(spawnerObj, at).GetComponent<EnemySpawnPoint>();
-      spawnPoint.Construct(_characterFactory);
-      
-      spawnPoint.ID = spawnerID;
-      spawnPoint.WarriorType = warriorType;
+      var spawnPoint = spawnerObj.GetComponent<EnemySpawnPoint>();
+      spawnPoint.Init(warriorType, spawnerID);
     }
 
     public override async Task WarmUp() => 

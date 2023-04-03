@@ -6,15 +6,15 @@ namespace WC.Runtime.Infrastructure.Services
 {
   public abstract class PayloadGameStateBase<T> : IPayloadState<T>
   {
-    protected readonly GameStateMachine StateMachine;
-    protected readonly DiContainer Container;
+    protected readonly GameStateMachine p_StateMachine;
+    protected readonly DiContainer p_Container;
     
     private Action _onExit;
 
     protected PayloadGameStateBase(GameStateMachine stateMachine, DiContainer container)
     {
-      StateMachine = stateMachine;
-      Container = container;
+      p_StateMachine = stateMachine;
+      p_Container = container;
     }
 
     

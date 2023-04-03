@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using WC.Runtime.Infrastructure.Services;
 
 namespace WC.Runtime.Infrastructure.AssetManagement
 {
@@ -9,11 +8,21 @@ namespace WC.Runtime.Infrastructure.AssetManagement
   {
     Task<T> Load<T>(AssetReference assetRef) where T : class;
     Task<T> Load<T>(string address) where T : class;
-    TWrapper LoadConfig<TWrapper>(string name) where TWrapper : class;
+
+    GameObject Instantiate(GameObject prefab);
+    GameObject Instantiate(GameObject prefab, Vector3 at);
+    GameObject Instantiate(GameObject prefab, Transform under);
+    GameObject Instantiate(GameObject prefab, Vector3 at, Transform under);
     
-    Task<GameObject> Instantiate(string address);
-    Task<GameObject> Instantiate(string address, Vector3 at);
-    Task<GameObject> Instantiate(string address, Transform under);
+    Task<GameObject> InstantiateAsync(AssetReference assetRef);
+    Task<GameObject> InstantiateAsync(AssetReference assetRef, Vector3 at);
+    Task<GameObject> InstantiateAsync(AssetReference assetRef, Transform under);
+    Task<GameObject> InstantiateAsync(AssetReference assetRef, Vector3 at, Transform under);
+    
+    Task<GameObject> InstantiateAsync(string address);
+    Task<GameObject> InstantiateAsync(string address, Vector3 at);
+    Task<GameObject> InstantiateAsync(string address, Transform under);
+    Task<GameObject> InstantiateAsync(string address, Vector3 at, Transform under);
     
     void CleanUp();
   }

@@ -7,7 +7,7 @@ namespace WC.Runtime.StaticData
   [CreateAssetMenu(menuName = "Dev/StaticData/Character/Enemy/Warrior", fileName = "Enemy_Warrior_TYPE_NAME")]
   public class EnemyWarriorStaticData : ScriptableObject
   {
-    public WarriorType Type;
+    public WarriorID Type;
     
     [Range(1f, 100f)] public float HP = 20f;
     [Range(1f, 30f)] public float Damage = 10f;

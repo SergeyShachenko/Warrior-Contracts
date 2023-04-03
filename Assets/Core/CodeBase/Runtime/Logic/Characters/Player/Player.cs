@@ -1,16 +1,21 @@
 ﻿using UnityEngine.SceneManagement;
 using WC.Runtime.Data;
 using WC.Runtime.Data.Characters;
+using WC.Runtime.Extensions;
 using WC.Runtime.Infrastructure.Services;
+using Zenject;
 
 namespace WC.Runtime.Logic.Characters
 {
   public class Player : CharacterBase
   {
-    private IInputService _inputService;
+    //TODO Переписать создание
+    public WarriorID ID { get; private set; }
     
-    public void Construct(IInputService inputService) => 
-      _inputService = inputService;
+    private IInputService _inputService;
+
+    [Inject]
+    private void Construct(IInputService inputService) => _inputService = inputService;
 
     protected override void Init()
     {

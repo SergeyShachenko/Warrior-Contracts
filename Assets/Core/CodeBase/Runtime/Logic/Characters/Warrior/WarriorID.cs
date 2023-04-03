@@ -1,6 +1,6 @@
 ﻿namespace WC.Runtime.Logic.Characters
 {
-  public enum WarriorType
+  public enum WarriorID
   {
     None = 0,
     Sword = 1,

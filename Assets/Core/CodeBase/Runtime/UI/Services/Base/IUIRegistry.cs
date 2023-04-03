@@ -1,12 +1,12 @@
-using WC.Runtime.UI;
-
 namespace WC.Runtime.UI.Services
 {
   public interface IUIRegistry
   {
-    MainUI UI { get; set; }
-    GameplayHUD HUD { get; set; }
+    MainUI UI { get; }
+    GameplayHUD HUD { get; }
 
+    void Register(MainUI ui);
+    void Register(GameplayHUD hud);
     void Register(UIWindowID id, WindowBase window);
     void Register(HUDWindowID id, WindowBase window);
     void Register(UIPanelID id, PanelBase panel);

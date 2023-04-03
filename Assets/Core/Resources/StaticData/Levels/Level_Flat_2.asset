@@ -20,4 +20,4 @@ MonoBehaviour:
   - ID: Level_Flat_2-d0c71938-afda-487a-83f6-d60137eacafa
     WarriorType: 3
     Position: {x: 0.98, y: 0, z: 6.8799996}
-  InitPlayerPos: {x: 0, y: 0, z: -1.65}
+  InitPlayerPos: {x: 0, y: 0, z: 23}

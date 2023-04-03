@@ -7,20 +7,23 @@ namespace WC.Runtime.Infrastructure.Services
 {
   public class GameLoopState : PayloadGameStateBase<DiContainer>
   {
+    private readonly ISaveLoadRegistry _saveLoadRegistry;
     private readonly ISaveLoadService _saveLoadService;
-    private readonly IUIFactory _uiFactory;
-    private readonly IUIRegistry _uiRegistry;
+
+    private ICharacterRegistry _characterRegistry;
+    private IUIRegistry _uiRegistry;
 
     private ICharacterFactory _characterFactory;
     private ILevelFactory _levelFactory;
     private ILootFactory _lootFactory;
+
+    private IUIFactory _uiFactory;
     private IHUDFactory _hudFactory;
 
     public GameLoopState(GameStateMachine stateMachine, DiContainer container) : base(stateMachine, container)
     {
-      _saveLoadService = Container.Resolve<ISaveLoadService>();
-      _uiFactory = Container.Resolve<IUIFactory>();
-      _uiRegistry = Container.Resolve<IUIRegistry>();
+      _saveLoadRegistry = container.Resolve<ISaveLoadRegistry>();
+      _saveLoadService = container.Resolve<ISaveLoadService>();
     }
 
 
@@ -35,7 +38,7 @@ namespace WC.Runtime.Infrastructure.Services
 
     public override void Exit()
     {
-      CleanUpServices();
+      CleanUp();
       
       base.Exit();
     }
@@ -43,20 +46,29 @@ namespace WC.Runtime.Infrastructure.Services
     
     private void BindSubServices(DiContainer subContainer)
     {
-      _hudFactory = subContainer.Resolve<IHUDFactory>();
+      _characterRegistry = subContainer.Resolve<ICharacterRegistry>();
+      _uiRegistry = subContainer.Resolve<IUIRegistry>();
+
       _characterFactory = subContainer.Resolve<ICharacterFactory>();
       _levelFactory = subContainer.Resolve<ILevelFactory>();
       _lootFactory = subContainer.Resolve<ILootFactory>();
+      
+      _uiFactory = subContainer.Resolve<IUIFactory>();
+      _hudFactory = subContainer.Resolve<IHUDFactory>();
     }
 
-    private void CleanUpServices()
+    private void CleanUp()
     {
+      _saveLoadRegistry.CleanUp();
+      _characterRegistry.CleanUp();
       _uiRegistry.CleanUp();
-      _uiFactory.CleanUp();
-      _hudFactory.CleanUp();
+      
       _lootFactory.CleanUp();
       _characterFactory.CleanUp();
       _levelFactory.CleanUp();
+      
+      _uiFactory.CleanUp();
+      _hudFactory.CleanUp();
     }
   }
 }

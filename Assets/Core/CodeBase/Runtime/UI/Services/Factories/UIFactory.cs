@@ -9,32 +9,23 @@ namespace WC.Runtime.UI.Services
     IUIFactory
   {
     private readonly IUIRegistry _registry;
-    private readonly IPersistentProgressService _progress;
-    private readonly IAdsService _adsService;
-    private readonly IIAPService _iapService;
 
     private Transform _windowsParent, _panelsParent;
-    
 
     public UIFactory(
       IAssetsProvider assetsProvider,
-      ISaveLoadService saveLoadService,
-      IUIRegistry registry,
-      IPersistentProgressService progress, 
-      IAdsService adsService, 
-      IIAPService iapService) 
-      : base(assetsProvider, saveLoadService)
+      ISaveLoadRegistry saveLoadRegistry,
+      IUIRegistry registry) 
+      : base(assetsProvider, saveLoadRegistry)
     {
       _registry = registry;
-      _progress = progress;
-      _adsService = adsService;
-      _iapService = iapService;
     }
-
-
+    
+    
     public async Task<MainUI> CreateUI()
     {
-      GameObject uiObj = await p_AssetsProvider.Instantiate(AssetAddress.UI.MainUI);
+      GameObject uiObj = await p_AssetsProvider.InstantiateAsync(AssetAddress.UI.MainUI);
+      RegisterProgressWatcher(uiObj);
       
       if (uiObj != null)
       {
@@ -48,7 +39,7 @@ namespace WC.Runtime.UI.Services
       }
       
       if (uiObj.TryGetComponent(out MainUI mainUI))
-        _registry.UI = mainUI;
+        _registry.Register(mainUI);
       //TODO Логгер
       // else
       //   LogService.Log<UIFactory>("Отсутствует компонент - MainUI!", LogLevel.Error);
@@ -64,12 +55,10 @@ namespace WC.Runtime.UI.Services
       {
         case UIWindowID.Shop:
         {
-          GameObject windowObj = await InstantiateAsync(AssetAddress.UI.HUD.Windows.Shop, _windowsParent);
+          GameObject windowObj = await p_AssetsProvider.InstantiateAsync(AssetAddress.UI.HUD.Windows.Shop, _windowsParent);
+          RegisterProgressWatcher(windowObj);
 
-          var shopWindow = windowObj.GetComponent<ShopWindow>();
-          shopWindow.Construct(_adsService, _progress, _iapService, p_AssetsProvider);
-
-          window = shopWindow;
+          window = windowObj.GetComponent<ShopWindow>();
         }
           break;
       }
@@ -102,7 +91,10 @@ namespace WC.Runtime.UI.Services
       return _registry.Get(id);
     }
 
-    public override Task WarmUp() => 
-      Task.CompletedTask;
+    public override async Task WarmUp()
+    {
+      await p_AssetsProvider.Load<GameObject>(AssetAddress.UI.MainUI);
+      await p_AssetsProvider.Load<GameObject>(AssetAddress.UI.HUD.Windows.Shop);
+    }
   }
 }

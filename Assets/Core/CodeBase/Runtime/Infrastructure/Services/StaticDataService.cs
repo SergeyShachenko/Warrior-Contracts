@@ -9,8 +9,8 @@ namespace WC.Runtime.Infrastructure.Services
 {
   public class StaticDataService : IStaticDataService
   {
-    private Dictionary<WarriorType, PlayerWarriorStaticData> _playerWarriors;
-    private Dictionary<WarriorType, EnemyWarriorStaticData> _enemyWarriors;
+    private Dictionary<WarriorID, PlayerWarriorStaticData> _playerWarriors;
+    private Dictionary<WarriorID, EnemyWarriorStaticData> _enemyWarriors;
     private Dictionary<string, LevelStaticData> _levels;
 
     public StaticDataService() => 
@@ -32,12 +32,12 @@ namespace WC.Runtime.Infrastructure.Services
         .ToDictionary(x => x.LevelKey, x => x);
     }
 
-    public PlayerWarriorStaticData GetPlayerWarrior(WarriorType type) => 
+    public PlayerWarriorStaticData GetPlayerWarrior(WarriorID type) => 
       _playerWarriors.TryGetValue(type, out PlayerWarriorStaticData staticData) 
         ? staticData
         : null;
     
-    public EnemyWarriorStaticData GetEnemyWarrior(WarriorType type) => 
+    public EnemyWarriorStaticData GetEnemyWarrior(WarriorID type) => 
       _enemyWarriors.TryGetValue(type, out EnemyWarriorStaticData staticData) 
         ? staticData 
         : null;

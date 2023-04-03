@@ -11,7 +11,7 @@ namespace WC.Runtime.Infrastructure.Services
 
     public LoadSceneState(GameStateMachine stateMachine, DiContainer container) : base(stateMachine, container)
     {
-      _sceneLoader = Container.Resolve<ISceneLoader>();
+      _sceneLoader = container.Resolve<ISceneLoader>();
       _loadingScreen = container.Resolve<ILoadingScreen>();
     }
 

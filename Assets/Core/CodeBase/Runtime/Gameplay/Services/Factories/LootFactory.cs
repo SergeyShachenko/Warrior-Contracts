@@ -13,9 +13,9 @@ namespace WC.Runtime.Gameplay.Services
 
     public LootFactory(
       IAssetsProvider assetsProvider, 
-      ISaveLoadService saveLoadService,
+      ISaveLoadRegistry saveLoadRegistry,
       IPersistentProgressService progress)
-      : base(assetsProvider, saveLoadService)
+      : base(assetsProvider, saveLoadRegistry)
     {
       _progress = progress;
     }
@@ -23,11 +23,11 @@ namespace WC.Runtime.Gameplay.Services
 
     public async Task<LootPiece> CreateGold()
     {
-      var lootObj = await p_AssetsProvider.Load<GameObject>(AssetAddress.Loot.Gold);
+      GameObject lootObj = await p_AssetsProvider.InstantiateAsync(AssetAddress.Loot.Gold);
+      RegisterProgressWatcher(lootObj);
       
-      var lootPiece = Instantiate(lootObj).GetComponent<LootPiece>();
-      lootPiece.Construct(_progress.Player.World);
-      
+      var lootPiece = lootObj.GetComponent<LootPiece>();
+
       return lootPiece; 
     }
 

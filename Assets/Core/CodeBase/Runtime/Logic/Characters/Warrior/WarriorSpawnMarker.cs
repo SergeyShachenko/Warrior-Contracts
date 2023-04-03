@@ -4,6 +4,6 @@ namespace WC.Runtime.Logic.Characters
 {
   public class WarriorSpawnMarker : MonoBehaviour
   {
-    public WarriorType WarriorType;
+    public WarriorID WarriorType;
   }
 }

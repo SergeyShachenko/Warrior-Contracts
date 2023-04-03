@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using WC.Runtime.Data;
 
-namespace WC.Runtime.Data
+namespace WC.Runtime.Extensions
 {
   public static class DataExtensions
   {

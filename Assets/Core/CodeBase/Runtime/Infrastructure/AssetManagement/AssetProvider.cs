@@ -1,27 +1,30 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using WC.Runtime.Data;
+using Zenject;
 
 namespace WC.Runtime.Infrastructure.AssetManagement
 {
   public class AssetProvider : IAssetsProvider
   {
+    private readonly DiContainer _container;
     private readonly Dictionary<string, AsyncOperationHandle> _completedHandles = new();
     private readonly Dictionary<string, List<AsyncOperationHandle>> _resourceHandles = new();
 
-    public AssetProvider() => 
+    public AssetProvider(DiContainer container)
+    {
+      _container = container;
       Addressables.InitializeAsync();
+    }
 
 
     public async Task<T> Load<T>(AssetReference assetRef) where T : class
     {
       if (_completedHandles.TryGetValue(assetRef.AssetGUID, out AsyncOperationHandle completedOperation))
         return completedOperation.Result as T;
-
+      
       
       return await RunWithCacheOnComplete(
         Addressables.LoadAssetAsync<T>(assetRef), 
@@ -39,18 +42,97 @@ namespace WC.Runtime.Infrastructure.AssetManagement
         cacheKey: address);
     }
 
-    public TWrapper LoadConfig<TWrapper>(string name) where TWrapper : class => File
-        .ReadAllText(Path.Combine(AssetDirectory.Config.Root, name))
-        .ToDeserialized<TWrapper>();
+    public GameObject Instantiate(GameObject prefab) => _container.InstantiatePrefab(prefab);
 
-    public Task<GameObject> Instantiate(string address) => 
-      Addressables.InstantiateAsync(address).Task; 
-
-    public Task<GameObject> Instantiate(string address, Vector3 at) => 
-      Addressables.InstantiateAsync(address, at, Quaternion.identity).Task;
+    public GameObject Instantiate(GameObject prefab, Vector3 at)
+    {
+      GameObject gameObject = Instantiate(prefab);
+      gameObject.transform.position = at;
+      
+      return gameObject;
+    }
     
-    public Task<GameObject> Instantiate(string address, Transform under) => 
-      Addressables.InstantiateAsync(address, under).Task;
+    public GameObject Instantiate(GameObject prefab, Transform under)
+    {
+      GameObject gameObject = Instantiate(prefab);
+      gameObject.transform.SetParent(under);
+      gameObject.transform.position = under.position;
+      
+      return gameObject;
+    }
+    
+    public GameObject Instantiate(GameObject prefab, Vector3 at, Transform under)
+    {
+      GameObject gameObject = Instantiate(prefab, under);
+      gameObject.transform.position = at;
+      
+      return gameObject;
+    }
+
+    public async Task<GameObject> InstantiateAsync(AssetReference assetRef)
+    {
+      var loadedAsset = await Load<GameObject>(assetRef);
+      
+      return Instantiate(loadedAsset);
+    }
+
+    public async Task<GameObject> InstantiateAsync(AssetReference assetRef, Vector3 at)
+    {
+      GameObject gameObject = await InstantiateAsync(assetRef);
+      gameObject.transform.position = at;
+      
+      return gameObject;
+    }
+
+    public async Task<GameObject> InstantiateAsync(AssetReference assetRef, Transform under)
+    {
+      GameObject gameObject = await InstantiateAsync(assetRef);
+      gameObject.transform.SetParent(under);
+      gameObject.transform.position = under.position;
+      gameObject.transform.rotation = under.rotation;
+      
+      return gameObject;
+    }
+    
+    public async Task<GameObject> InstantiateAsync(AssetReference assetRef, Vector3 at, Transform under)
+    {
+      GameObject gameObject = await InstantiateAsync(assetRef, under);
+      gameObject.transform.position = at;
+      
+      return gameObject;
+    }
+    
+    public async Task<GameObject> InstantiateAsync(string address)
+    {
+      var loadedAsset = await Load<GameObject>(address);
+
+      return _container.InstantiatePrefab(loadedAsset);
+    }
+
+    public async Task<GameObject> InstantiateAsync(string address, Vector3 at)
+    {
+      GameObject gameObject = await InstantiateAsync(address);
+      gameObject.transform.position = at;
+      
+      return gameObject;
+    }
+
+    public async Task<GameObject> InstantiateAsync(string address, Transform under)
+    {
+      GameObject gameObject = await InstantiateAsync(address);
+      gameObject.transform.SetParent(under);
+      gameObject.transform.position = under.position;
+      
+      return gameObject;
+    }
+    
+    public async Task<GameObject> InstantiateAsync(string address, Vector3 at, Transform under)
+    {
+      GameObject gameObject = await InstantiateAsync(address, under);
+      gameObject.transform.position = at;
+      
+      return gameObject;
+    }
 
     public void CleanUp()
     {

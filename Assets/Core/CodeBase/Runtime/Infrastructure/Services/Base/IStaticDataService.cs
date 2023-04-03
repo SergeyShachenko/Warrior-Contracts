@@ -5,8 +5,8 @@ namespace WC.Runtime.Infrastructure.Services
 {
   public interface IStaticDataService
   {
-    PlayerWarriorStaticData GetPlayerWarrior(WarriorType type);
-    EnemyWarriorStaticData GetEnemyWarrior(WarriorType type);
+    PlayerWarriorStaticData GetPlayerWarrior(WarriorID type);
+    EnemyWarriorStaticData GetEnemyWarrior(WarriorID type);
     LevelStaticData GetLevel(string sceneKey);
   }
 }

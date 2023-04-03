@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using WC.Runtime.Gameplay.Services;
 using WC.Runtime.Infrastructure.Services;
 using WC.Runtime.Logic.Characters;
 using WC.Runtime.UI.Elements;
 using WC.Runtime.UI.Services;
 using WC.Runtime.UI;
+using Zenject;
 
 namespace WC.Runtime.UI
 {
@@ -17,15 +19,20 @@ namespace WC.Runtime.UI
     private IPersistentProgressService _progress;
     private IWindowService _windowService;
 
-    public void Construct(Player player, IPersistentProgressService progress, IWindowService windowService)
+    [Inject]
+    private void Construct(
+      ICharacterRegistry characterRegistry, 
+      IPersistentProgressService progress, 
+      IWindowService windowService)
     {
-      _player = player;
+      _player = characterRegistry.Player;
       _progress = progress;
       _windowService = windowService;
       
       _player.Initialized += Init;
     }
 
+    
     private void Init()
     {
       UpdateHealthView();
@@ -36,6 +43,7 @@ namespace WC.Runtime.UI
       _openWindowButton.Click += OpenWindowButtonOnClick;
     }
 
+    
     private void OpenWindowButtonOnClick(UIWindowID id) => 
       _windowService.Open(id);
 

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using WC.Runtime.Infrastructure.AssetManagement;
@@ -7,92 +6,33 @@ namespace WC.Runtime.Infrastructure.Services
 {
   public abstract class FactoryBase
   {
-    public List<ISaverProgress> ProgressSavers { get; } = new();
-    public List<ILoaderProgress> ProgressLoaders { get; } = new();
-
     protected readonly IAssetsProvider p_AssetsProvider;
-    
-    private readonly ISaveLoadService _saveLoadService;
 
-    protected FactoryBase(IAssetsProvider assetsProvider, ISaveLoadService saveLoadService)
+    private readonly ISaveLoadRegistry _saveLoadRegistry;
+
+    protected FactoryBase(IAssetsProvider assetsProvider, ISaveLoadRegistry saveLoadRegistry)
     {
       p_AssetsProvider = assetsProvider;
-      _saveLoadService = saveLoadService;
-      
-      _saveLoadService.AddSaverProgress(this);
+      _saveLoadRegistry = saveLoadRegistry;
     }
+    
 
-
-    public void Register(ILoaderProgress progressLoader)
+    protected void RegisterProgressWatcher(GameObject gameObject)
     {
-      if(progressLoader is ISaverProgress progressSaver)
-        ProgressSavers.Add(progressSaver);
-      
-      ProgressLoaders.Add(progressLoader);
+      foreach (ILoaderProgress loader in gameObject.GetComponentsInChildren<ILoaderProgress>())
+        RegisterProgressWatcher(loader);
     }
 
     public abstract Task WarmUp();
 
-    public virtual void CleanUp()
-    {
-      ProgressSavers.Clear();
-      ProgressLoaders.Clear();
-      p_AssetsProvider.CleanUp();
-      _saveLoadService.RemoveSaverProgress(this);
-    }
+    public virtual void CleanUp() => p_AssetsProvider.CleanUp();
     
-    protected GameObject Instantiate(GameObject prefab)
+    private void RegisterProgressWatcher(ILoaderProgress loader)
     {
-      GameObject gameObject = Object.Instantiate(prefab);
-      
-      RegisterProgressWatchers(gameObject);
-      return gameObject;
-    }
-    
-    protected GameObject Instantiate(GameObject prefab, Vector3 at)
-    {
-      GameObject gameObject = Object.Instantiate(prefab, position: at, Quaternion.identity);
-      
-      RegisterProgressWatchers(gameObject);
-      return gameObject;
-    }
+      if (loader is ISaverProgress saver) 
+        _saveLoadRegistry.Register(saver);
 
-    protected async Task<GameObject> InstantiateAsync(string address)
-    {
-      GameObject gameObject = await p_AssetsProvider.Instantiate(address);
-      
-      RegisterProgressWatchers(gameObject);
-      return gameObject;
-    }
-    
-    protected async Task<GameObject> InstantiateAsync(string address, Transform under)
-    {
-      GameObject gameObject = await p_AssetsProvider.Instantiate(address, under);
-      
-      RegisterProgressWatchers(gameObject);
-      return gameObject;
-    }
-
-    protected async Task<GameObject> InstantiateAsync(string address, Vector3 at)
-    {
-      GameObject gameObject = await p_AssetsProvider.Instantiate(address, at);
-      
-      RegisterProgressWatchers(gameObject);
-      return gameObject;
-    }
-
-    private void RegisterProgressWatchers(GameObject gameObject)
-    {
-      foreach (ILoaderProgress progressLoader in gameObject.GetComponentsInChildren<ILoaderProgress>())
-        RegisterProgressWatcher(progressLoader);
-    }
-
-    private void RegisterProgressWatcher(ILoaderProgress progressLoader)
-    {
-      if (progressLoader is ISaverProgress progressSaver) 
-        ProgressSavers.Add(progressSaver);
-
-      ProgressLoaders.Add(progressLoader);
+      _saveLoadRegistry.Register(loader);
     }
   }
 }

@@ -12,48 +12,41 @@ namespace WC.Runtime.Gameplay.Services
   public class CharacterFactory : FactoryBase, 
     ICharacterFactory
   {
+    private readonly ICharacterRegistry _registry;
     private readonly IStaticDataService _staticData;
-    private readonly ILootFactory _lootFactory;
-    private readonly IInputService _inputService;
-    private readonly IRandomService _randomService;
 
     public CharacterFactory(
       IAssetsProvider assetsProvider,
-      ISaveLoadService saveLoadService,
-      IStaticDataService staticData,
-      ILootFactory lootFactory,
-      IInputService inputService,
-      IRandomService randomService) 
-      : base(assetsProvider, saveLoadService)
+      ISaveLoadRegistry saveLoadRegistry,
+      ICharacterRegistry registry,
+      IStaticDataService staticData) 
+      : base(assetsProvider, saveLoadRegistry)
     {
+      _registry = registry;
       _staticData = staticData;
-      _lootFactory = lootFactory;
-      _inputService = inputService;
-      _randomService = randomService;
     }
 
-    public Player Player { get; private set; }
     
-    public async Task<Player> CreatePlayer(WarriorType warriorType, Vector3 at)
+    public async Task<Player> CreatePlayer(WarriorID id, Vector3 at)
     {
-      GameObject player = await InstantiateAsync(AssetAddress.Character.PlayerSword, at);
-      Player = player.GetComponent<Player>();
-      Player.Construct(_inputService);
+      GameObject playerObj = await p_AssetsProvider.InstantiateAsync(AssetAddress.Character.PlayerSword, at);
+      RegisterProgressWatcher(playerObj);
       
-      return Player;
+      _registry.Register(playerObj.GetComponent<Player>());
+      return _registry.Player;
     }
 
-    public async Task<GameObject> CreateEnemy(WarriorType warriorType, Transform parent)
+    public async Task<Enemy> CreateEnemy(WarriorID id, Transform under)
     {
-      EnemyWarriorStaticData warriorData = _staticData.GetEnemyWarrior(warriorType);
-      var warriorPref = await p_AssetsProvider.Load<GameObject>(warriorData.PrefabRef);
+      EnemyWarriorStaticData warriorData = _staticData.GetEnemyWarrior(id);
+      GameObject warriorObj = await p_AssetsProvider.InstantiateAsync(warriorData.PrefabRef, under);
+      RegisterProgressWatcher(warriorObj);
       
-      
-      GameObject warrior = Object.Instantiate(warriorPref, parent.position, parent.rotation, parent);
-      var enemy = warrior.GetComponent<Enemy>();
-      
+      var enemy = warriorObj.GetComponent<Enemy>();
+
       enemy.Construct(
-        player: Player,
+        player: _registry.Player,
+        id: id,
         currentHP: warriorData.HP, 
         maxHP: warriorData.HP, 
         damage: warriorData.Damage, 
@@ -61,25 +54,30 @@ namespace WC.Runtime.Gameplay.Services
         hitRadius: warriorData.HitRadius, 
         cooldown: warriorData.AttackCooldown);
 
-      if (warrior.TryGetComponent(out RotateToPlayerAI rotateToPlayer))
+      if (warriorObj.TryGetComponent(out RotateToPlayerAI rotateToPlayer))
       {
-        rotateToPlayer.Construct(Player.gameObject);
+        rotateToPlayer.Init(_registry.Player.gameObject);
         rotateToPlayer.Speed = warriorData.Speed;
       }
       
-      if (warrior.TryGetComponent(out MoveToPlayerAI moveToPlayerAI)) 
-        moveToPlayerAI.Construct(Player.gameObject);
+      if (warriorObj.TryGetComponent(out MoveToPlayerAI moveToPlayerAI)) 
+        moveToPlayerAI.Init(_registry.Player.gameObject);
       
-      warrior.GetComponent<NavMeshAgent>().speed = warriorData.Speed;
+      warriorObj
+        .GetComponent<NavMeshAgent>()
+        .speed = warriorData.Speed;
       
-      var lootSpawner = warrior.GetComponentInChildren<LootSpawner>();
-      lootSpawner.Construct(_lootFactory, _randomService);
-      lootSpawner.SetLootExp(warriorData.MinLootExp, warriorData.MaxLootExp);
+      var lootSpawner = warriorObj.GetComponentInChildren<LootSpawner>();
+      lootSpawner.Init(warriorData.MinLootExp, warriorData.MaxLootExp);
 
-      return warrior;
+      _registry.Register(enemy);
+      return enemy;
     }
 
-    public override Task WarmUp() => 
-      Task.CompletedTask;
+    public override async Task WarmUp()
+    {
+      await p_AssetsProvider.Load<GameObject>(AssetAddress.Character.PlayerSword);
+      //await p_AssetsProvider.Load<GameObject>(warriorData.PrefabRef);
+    }
   }
 }

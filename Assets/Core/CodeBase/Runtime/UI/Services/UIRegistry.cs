@@ -4,15 +4,17 @@ namespace WC.Runtime.UI.Services
 {
   public class UIRegistry : IUIRegistry
   {
-    public MainUI UI { get; set; }
-    public GameplayHUD HUD { get; set; }
-    
+    public MainUI UI { get; private set; }
+    public GameplayHUD HUD { get; private set; }
+
     private readonly Dictionary<UIWindowID, WindowBase> _uiWindows = new();
     private readonly Dictionary<HUDWindowID, WindowBase> _hudWindows = new();
     private readonly Dictionary<UIPanelID, PanelBase> _uiPanels = new();
     private readonly Dictionary<HUDPanelID, PanelBase> _hudPanels = new();
     
     
+    public void Register(MainUI ui) => UI = ui;
+    public void Register(GameplayHUD hud) => HUD = hud;
     public void Register(UIWindowID id, WindowBase window) => _uiWindows.Add(id, window);
     public void Register(HUDWindowID id, WindowBase window) => _hudWindows.Add(id, window);
     public void Register(UIPanelID id, PanelBase panel) => _uiPanels.Add(id, panel);
