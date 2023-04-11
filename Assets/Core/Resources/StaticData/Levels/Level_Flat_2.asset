@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45c5923a89314784b445776a67995d00, type: 3}
   m_Name: Level_Flat_2
   m_EditorClassIdentifier: 
-  LevelKey: Level_Flat_2
+  Name: Level_Flat_2
   EnemySpawners:
   - ID: Level_Flat_2-a35422db-02e4-43f4-9968-76b79e33a6c3
     WarriorType: 2
@@ -20,4 +20,4 @@ MonoBehaviour:
   - ID: Level_Flat_2-d0c71938-afda-487a-83f6-d60137eacafa
     WarriorType: 3
     Position: {x: 0.98, y: 0, z: 6.8799996}
-  InitPlayerPos: {x: 0, y: 0, z: 23}
+  StartPlayerPos: {x: 0, y: 0, z: 23.11}

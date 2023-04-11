@@ -19,14 +19,14 @@ namespace WC.Runtime.Infrastructure.Installers
       if (_gameStateMachine.BootstrapHasOccurred == false) return;
       
       
-      BindMainServices();
+      BindBaseServices();
       BindUIServices();
       
       _gameStateMachine.Enter<MainMenuState, DiContainer>(Container);
     }
 
     
-    private void BindMainServices()
+    private void BindBaseServices()
     {
       Container
         .Bind<IAssetsProvider>()
@@ -36,11 +36,6 @@ namespace WC.Runtime.Infrastructure.Installers
 
     private void BindUIServices()
     {
-      Container
-        .Bind<IUIRegistry>()
-        .To<UIRegistry>()
-        .AsSingle();
-      
       Container
         .Bind<IUIFactory>()
         .To<UIFactory>()

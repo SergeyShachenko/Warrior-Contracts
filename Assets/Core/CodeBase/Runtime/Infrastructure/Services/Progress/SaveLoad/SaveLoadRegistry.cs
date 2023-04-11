@@ -2,10 +2,10 @@
 
 namespace WC.Runtime.Infrastructure.Services
 {
-  public class SaveLoadRegistry : ISaveLoadRegistry
+  public class SaveLoadRegistry : IRegistry
   {
-    public IReadOnlyList<ISaverProgress> Savers => _savers;
-    public IReadOnlyList<ILoaderProgress> Loaders => _loaders;
+    public IReadOnlyList<ISaverProgress> Savers => new List<ISaverProgress>(_savers);
+    public IReadOnlyList<ILoaderProgress> Loaders => new List<ILoaderProgress>(_loaders);
     
     private readonly List<ISaverProgress> _savers = new();
     private readonly List<ILoaderProgress> _loaders = new();

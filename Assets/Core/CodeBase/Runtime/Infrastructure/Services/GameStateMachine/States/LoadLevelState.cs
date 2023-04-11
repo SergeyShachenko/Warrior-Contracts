@@ -20,10 +20,8 @@ namespace WC.Runtime.Infrastructure.Services
     private readonly ILoadingScreen _loadingScreen;
     private readonly IStaticDataService _staticData;
 
-    private ICharacterRegistry _characterRegistry;
-    
     private ICharacterFactory _characterFactory;
-    private ILevelFactory _levelFactory;
+    private ILevelToolsFactory _levelToolsFactory;
     private ILootFactory _lootFactory;
 
     private IUIFactory _uiFactory;
@@ -64,10 +62,8 @@ namespace WC.Runtime.Infrastructure.Services
     
     private void BindSubServices(DiContainer subContainer)
     {
-      _characterRegistry = subContainer.Resolve<ICharacterRegistry>();
-      
       _characterFactory = subContainer.Resolve<ICharacterFactory>();
-      _levelFactory = subContainer.Resolve<ILevelFactory>();
+      _levelToolsFactory = subContainer.Resolve<ILevelToolsFactory>();
       _lootFactory = subContainer.Resolve<ILootFactory>();
       
       _uiFactory = subContainer.Resolve<IUIFactory>();
@@ -87,7 +83,7 @@ namespace WC.Runtime.Infrastructure.Services
 
     private async Task CreateGameWorld()
     {
-      LevelStaticData levelData = _staticData.GetLevel(SceneManager.GetActiveScene().name);;
+      LevelStaticData levelData = _staticData.Levels[SceneManager.GetActiveScene().name];
       await CreateSpawners(levelData);
       await CreatePlayer(levelData);
 
@@ -98,11 +94,11 @@ namespace WC.Runtime.Infrastructure.Services
     private async Task CreateSpawners(LevelStaticData levelData)
     {
       foreach (EnemySpawnerData spawner in levelData.EnemySpawners)
-        await _levelFactory.CreateSpawnPoint(spawner.ID, spawner.Position, spawner.WarriorType);
+        await _levelToolsFactory.CreateEnemySpawnPoint(spawner.ID, spawner.Position, spawner.WarriorType);
     }
 
     private async Task CreatePlayer(LevelStaticData levelData) => 
-      await _characterFactory.CreatePlayer(WarriorID.Sword, levelData.InitPlayerPos);
+      await _characterFactory.CreatePlayer(WarriorID.Sword, levelData.StartPlayerPos);
 
     // private async Task InitDroppedLoot()
     // {
@@ -120,7 +116,7 @@ namespace WC.Runtime.Infrastructure.Services
     {
       _characterFactory.WarmUp();
       _lootFactory.WarmUp();
-      _levelFactory.WarmUp();
+      _levelToolsFactory.WarmUp();
       
       _uiFactory.WarmUp();
       _hudFactory.WarmUp();
@@ -131,7 +127,7 @@ namespace WC.Runtime.Infrastructure.Services
       if (Camera.main == null) return;
       
       
-      Camera.main.GetComponent<CameraMover>().Follow(_characterRegistry.Player.gameObject);
+      Camera.main.GetComponent<CameraMover>().Follow(_characterFactory.Registry.Player.gameObject);
     }
   }
 }

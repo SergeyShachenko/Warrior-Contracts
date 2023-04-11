@@ -5,20 +5,15 @@ using WC.Runtime.Infrastructure.Services;
 
 namespace WC.Runtime.UI.Services
 {
-  public class HUDFactory : FactoryBase,
+  public class HUDFactory : FactoryBase<HUDRegistry>,
     IHUDFactory
   {
-    private readonly IUIRegistry _registry;
-
     private Transform _windowsParent, _panelsParent;
 
-    public HUDFactory(
-      IAssetsProvider assetsProvider,
-      ISaveLoadRegistry saveLoadRegistry,
-      IUIRegistry registry)
-      : base(assetsProvider, saveLoadRegistry)
+    public HUDFactory(IAssetsProvider assetsProvider, ISaveLoadService saveLoadService)
+      : base(assetsProvider, saveLoadService)
     {
-      _registry = registry;
+      
     }
 
     
@@ -39,12 +34,12 @@ namespace WC.Runtime.UI.Services
       }
       
       if (hudObj.TryGetComponent(out GameplayHUD gameplayHUD)) 
-        _registry.Register(gameplayHUD);
+        Registry.Register(gameplayHUD);
       //TODO Логгер
       // else
       //   LogService.Log<UIFactory>("Отсутствует компонент - GameplayHUD!", LogLevel.Error);
 
-      return _registry.HUD;
+      return Registry.HUD;
     }
     
     public async Task<WindowBase> Create(HUDWindowID id)
@@ -65,9 +60,9 @@ namespace WC.Runtime.UI.Services
       //     break;
       // }
       
-      _registry.Register(id, window);
+      Registry.Register(id, window);
 
-      return _registry.Get(id);
+      return Registry.Windows[id];
     }
     
     public async Task<PanelBase> Create(HUDPanelID id)
@@ -88,9 +83,9 @@ namespace WC.Runtime.UI.Services
       //     break;
       // }
       
-      _registry.Register(id, panel);
+      Registry.Register(id, panel);
 
-      return _registry.Get(id);
+      return Registry.Panels[id];
     }
 
     public override async Task WarmUp()

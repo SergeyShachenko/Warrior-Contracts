@@ -15,10 +15,11 @@ namespace WC.Runtime.Infrastructure.Services
       _loadingScreen = container.Resolve<ILoadingScreen>();
     }
 
+    
     public override void Enter(string sceneName, Action onExit = null)
     {
       _loadingScreen.Show();
-      _sceneLoader.HotLoad(sceneName);
+      _sceneLoader.Load(sceneName);
       
       base.Enter(sceneName, onExit);
     }

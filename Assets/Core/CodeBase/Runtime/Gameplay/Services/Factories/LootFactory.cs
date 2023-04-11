@@ -6,18 +6,17 @@ using WC.Runtime.Logic.Loot;
 
 namespace WC.Runtime.Gameplay.Services
 {
-  public class LootFactory : FactoryBase,
+  public class LootFactory : FactoryBase<LootRegistry>,
     ILootFactory
   {
-    private readonly IPersistentProgressService _progress;
-
+    public LootRegistry Registry { get; } = new();
+    
     public LootFactory(
       IAssetsProvider assetsProvider, 
-      ISaveLoadRegistry saveLoadRegistry,
-      IPersistentProgressService progress)
-      : base(assetsProvider, saveLoadRegistry)
+      ISaveLoadService saveLoadService)
+      : base(assetsProvider, saveLoadService)
     {
-      _progress = progress;
+      
     }
 
 
@@ -28,6 +27,7 @@ namespace WC.Runtime.Gameplay.Services
       
       var lootPiece = lootObj.GetComponent<LootPiece>();
 
+      Registry.Register(lootPiece);
       return lootPiece; 
     }
 

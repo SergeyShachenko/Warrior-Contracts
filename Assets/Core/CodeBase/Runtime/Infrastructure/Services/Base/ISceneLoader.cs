@@ -4,9 +4,7 @@ namespace WC.Runtime.Infrastructure.Services
 {
   public interface ISceneLoader
   {
-    void Load(string name, Action onLoaded = null);
-    void HotLoad(string name, Action onLoaded = null);
-    void ReloadCurrent(Action onReload = null);
-    void HotReloadCurrent(Action onReload = null);
+    void Load(string name, bool withLoadingScreen = false, Action onLoaded = null);
+    void ReloadCurrent(bool withLoadingScreen = false, Action onReload = null);
   }
 }

@@ -4,14 +4,14 @@ using WC.Runtime.Logic.Characters;
 
 namespace WC.Editor
 {
-  [CustomEditor(typeof(WarriorSpawnMarker))]
+  [CustomEditor(typeof(EnemySpawnMarker))]
   public class SpawnMarkerEditor : UnityEditor.Editor
   {
     [DrawGizmo(GizmoType.Active | GizmoType.Pickable | GizmoType.NonSelected)]
-    public static void RenderCustomGizmo(WarriorSpawnMarker warriorSpawnPoint, GizmoType gizmo)
+    public static void RenderCustomGizmo(EnemySpawnMarker spawnMarker, GizmoType gizmo)
     {
       Gizmos.color = Color.red;
-      Gizmos.DrawSphere(warriorSpawnPoint.transform.position, 0.5f);
+      Gizmos.DrawSphere(spawnMarker.transform.position, 0.5f);
     }
   }
 }

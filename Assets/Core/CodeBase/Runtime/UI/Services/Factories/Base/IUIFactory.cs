@@ -4,7 +4,7 @@ using WC.Runtime.UI;
 
 namespace WC.Runtime.UI.Services
 {
-  public interface IUIFactory : IFactory
+  public interface IUIFactory : IFactory<UIRegistry>
   {
     Task<MainUI> CreateUI();
 

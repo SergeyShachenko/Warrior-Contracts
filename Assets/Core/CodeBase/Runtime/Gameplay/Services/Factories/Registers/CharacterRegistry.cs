@@ -1,14 +1,16 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using WC.Runtime.Infrastructure.Services;
 using WC.Runtime.Logic.Characters;
 
 namespace WC.Runtime.Gameplay.Services
 {
-  public class CharacterRegistry : ICharacterRegistry
+  public class CharacterRegistry : IRegistry
   {
     public Player Player { get; private set; }
 
-    private List<Enemy> _enemies = new();
+    public IReadOnlyList<Enemy> Enemies => new List<Enemy>(_enemies);
+
+    private readonly List<Enemy> _enemies = new();
 
     
     public void Register(Player player) => Player = player;
@@ -16,8 +18,6 @@ namespace WC.Runtime.Gameplay.Services
 
     public void Unregister(Player player) => Player = null;
     public void Unregister(Enemy enemy) => _enemies.Remove(enemy);
-
-    public IEnumerable<Enemy> GetEnemies(WarriorID id) => _enemies.Where(x => x.ID == id);
 
     public void CleanUp()
     {

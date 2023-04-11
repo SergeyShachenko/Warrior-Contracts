@@ -5,7 +5,7 @@ using WC.Runtime.Logic.Characters;
 
 namespace WC.Runtime.Gameplay.Services
 {
-  public interface ICharacterFactory : IFactory
+  public interface ICharacterFactory : IFactory<CharacterRegistry>
   {
     Task<Player> CreatePlayer(WarriorID id, Vector3 at);
     Task<Enemy> CreateEnemy(WarriorID id, Transform under);

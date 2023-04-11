@@ -1,36 +1,38 @@
-﻿using WC.Runtime.UI;
-
-namespace WC.Runtime.UI.Services
+﻿namespace WC.Runtime.UI.Services
 {
   public class WindowService : IWindowService
   {
-    private readonly IUIRegistry _registry;
+    private readonly IUIFactory _uiFactory;
+    private readonly IHUDFactory _hudFactory;
 
-    public WindowService(IUIRegistry registry) => 
-      _registry = registry;
+    public WindowService(IUIFactory uiFactory, IHUDFactory hudFactory)
+    {
+      _uiFactory = uiFactory;
+      _hudFactory = hudFactory;
+    }
 
-    
+
     public void Open(UIWindowID id)
     {
-      if (_registry.TryGet(id, out WindowBase window) && window.IsVisible == false) 
+      if (_uiFactory.Registry.Windows.TryGetValue(id, out WindowBase window) && window.IsVisible == false) 
         window.Open();
     }
 
     public void Open(HUDWindowID id)
     {
-      if (_registry.TryGet(id, out WindowBase window) && window.IsVisible == false) 
+      if (_hudFactory.Registry.Windows.TryGetValue(id, out WindowBase window) && window.IsVisible == false) 
         window.Open();
     }
 
     public void Close(UIWindowID id)
     {
-      if (_registry.TryGet(id, out WindowBase window) && window.IsVisible) 
+      if (_uiFactory.Registry.Windows.TryGetValue(id, out WindowBase window) && window.IsVisible) 
         window.Close();
     }
 
     public void Close(HUDWindowID id)
     {
-      if (_registry.TryGet(id, out WindowBase window) && window.IsVisible) 
+      if (_hudFactory.Registry.Windows.TryGetValue(id, out WindowBase window) && window.IsVisible) 
         window.Close();
     }
   }

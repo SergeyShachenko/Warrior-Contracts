@@ -5,8 +5,8 @@ using WC.Runtime.Logic.Characters;
 
 namespace WC.Runtime.Gameplay.Services
 {
-  public interface ILevelFactory : IFactory
+  public interface ILevelToolsFactory : IFactory<LevelToolsRegistry>
   {
-    Task CreateSpawnPoint(string spawnerID, Vector3 at, WarriorID warriorType);
+    Task<EnemySpawnPoint> CreateEnemySpawnPoint(string spawnerID, Vector3 at, WarriorID warriorType);
   }
 }

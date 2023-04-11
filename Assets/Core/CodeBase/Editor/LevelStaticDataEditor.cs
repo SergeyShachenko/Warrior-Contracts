@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using WC.Runtime.Logic.Characters;
 using WC.Runtime.Logic.Tools;
 using WC.Runtime.Data.Characters;
+using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.StaticData;
 
 namespace WC.Editor
@@ -12,9 +13,6 @@ namespace WC.Editor
   [CustomEditor(typeof(LevelStaticData))]
   public class LevelStaticDataEditor : UnityEditor.Editor
   {
-    private const string PlayerSpawnPointTag = "PlayerSpawnPoint";
-    
-    
     public override void OnInspectorGUI()
     {
       base.OnInspectorGUI();
@@ -24,12 +22,12 @@ namespace WC.Editor
       if (GUILayout.Button("Collect"))
       {
         levelData.EnemySpawners =
-          FindObjectsOfType<WarriorSpawnMarker>()
+          FindObjectsOfType<EnemySpawnMarker>()
             .Select(x => new EnemySpawnerData(x.GetComponent<UniqueID>().ID, x.WarriorType, x.transform.position))
             .ToList();
 
-        levelData.LevelKey = SceneManager.GetActiveScene().name;
-        levelData.InitPlayerPos = GameObject.FindWithTag(PlayerSpawnPointTag).transform.position;
+        levelData.Name = SceneManager.GetActiveScene().name;
+        levelData.StartPlayerPos = GameObject.FindWithTag(AssetTag.PlayerSpawnMarker).transform.position;
       }
       
       EditorUtility.SetDirty(target);

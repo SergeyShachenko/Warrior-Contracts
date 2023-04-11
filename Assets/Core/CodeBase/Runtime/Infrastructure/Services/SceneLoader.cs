@@ -19,26 +19,17 @@ namespace WC.Runtime.Infrastructure
     }
 
 
-    public void Load(string name, Action onLoaded = null)
+    public void Load(string name, bool withLoadingScreen = false, Action onLoaded = null) => 
+      _coroutineRunner.StartCoroutine(LoadScene(name, withLoadingScreen, onLoaded));
+
+    public void ReloadCurrent(bool withLoadingScreen = false, Action onReload = null) => 
+      _coroutineRunner.StartCoroutine(LoadScene(SceneManager.GetActiveScene().name, withLoadingScreen, onReload));
+
+    private IEnumerator LoadScene(string nextScene, bool withCurtain, Action onLoaded = null)
     {
-      _loadingScreen.Show();
-      _coroutineRunner.StartCoroutine(LoadScene(hotLoad: false, name, onLoaded));
-    }
-
-    public void HotLoad(string name, Action onLoaded = null) => 
-      _coroutineRunner.StartCoroutine(LoadScene(hotLoad: true, name, onLoaded));
-
-    public void ReloadCurrent(Action onReload = null)
-    {
-      _loadingScreen.Show();
-      _coroutineRunner.StartCoroutine(LoadScene(hotLoad: false, SceneManager.GetActiveScene().name, onReload));
-    }
-
-    public void HotReloadCurrent(Action onReload = null) => 
-      _coroutineRunner.StartCoroutine(LoadScene(hotLoad: true, SceneManager.GetActiveScene().name, onReload));
-
-    private IEnumerator LoadScene(bool hotLoad, string nextScene, Action onLoaded = null)
-    {
+      if (withCurtain) 
+        _loadingScreen.Show();
+      
       AsyncOperation waitNextScene = SceneManager.LoadSceneAsync(nextScene);
       
       while (waitNextScene.isDone == false)
@@ -46,7 +37,7 @@ namespace WC.Runtime.Infrastructure
 
       onLoaded?.Invoke();
       
-      if (hotLoad == false) 
+      if (withCurtain) 
         _loadingScreen.Hide();
     }
   }

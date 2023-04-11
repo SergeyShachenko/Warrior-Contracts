@@ -20,49 +20,24 @@ namespace WC.Runtime.Infrastructure.Installers
       if (_gameStateMachine.BootstrapHasOccurred == false) return;
       
       
-      BindMainServices();
+      BindBaseServices();
       BindUIServices();
+      BindAdditionalServices();
       
       _gameStateMachine.Enter<LoadLevelState, DiContainer>(Container);
     }
-
     
-    private void BindMainServices()
+
+    private void BindBaseServices()
     {
       Container
         .Bind<IAssetsProvider>()
         .To<AssetProvider>()
         .AsSingle();
-
-      Container
-        .Bind<ILootFactory>()
-        .To<LootFactory>()
-        .AsSingle();
-
-      Container
-        .Bind<ICharacterRegistry>()
-        .To<CharacterRegistry>()
-        .AsSingle();
-      
-      Container
-        .Bind<ICharacterFactory>()
-        .To<CharacterFactory>()
-        .AsSingle();
-
-      Container
-        .Bind<ILevelFactory>()
-        .To<LevelFactory>()
-        .AsSingle();
     }
-
 
     private void BindUIServices()
     {
-      Container
-        .Bind<IUIRegistry>()
-        .To<UIRegistry>()
-        .AsSingle();
-      
       Container
         .Bind<IUIFactory>()
         .To<UIFactory>()
@@ -81,6 +56,24 @@ namespace WC.Runtime.Infrastructure.Installers
       Container
         .Bind<IPanelService>()
         .To<PanelService>()
+        .AsSingle();
+    }
+    
+    private void BindAdditionalServices()
+    {
+      Container
+        .Bind<ILootFactory>()
+        .To<LootFactory>()
+        .AsSingle();
+
+      Container
+        .Bind<ICharacterFactory>()
+        .To<CharacterFactory>()
+        .AsSingle();
+
+      Container
+        .Bind<ILevelToolsFactory>()
+        .To<LevelToolsFactory>()
         .AsSingle();
     }
   }

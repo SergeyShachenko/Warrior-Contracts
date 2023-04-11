@@ -4,16 +4,19 @@ using WC.Runtime.Infrastructure.AssetManagement;
 
 namespace WC.Runtime.Infrastructure.Services
 {
-  public abstract class FactoryBase
+  public abstract class FactoryBase<TRegistry> 
+    where TRegistry : class, IRegistry, new()
   {
+    public TRegistry Registry { get; } = new();
+    
     protected readonly IAssetsProvider p_AssetsProvider;
 
-    private readonly ISaveLoadRegistry _saveLoadRegistry;
+    private readonly ISaveLoadService _saveLoadService;
 
-    protected FactoryBase(IAssetsProvider assetsProvider, ISaveLoadRegistry saveLoadRegistry)
+    protected FactoryBase(IAssetsProvider assetsProvider, ISaveLoadService saveLoadService)
     {
       p_AssetsProvider = assetsProvider;
-      _saveLoadRegistry = saveLoadRegistry;
+      _saveLoadService = saveLoadService;
     }
     
 
@@ -25,14 +28,14 @@ namespace WC.Runtime.Infrastructure.Services
 
     public abstract Task WarmUp();
 
-    public virtual void CleanUp() => p_AssetsProvider.CleanUp();
-    
+    public virtual void CleanUp() => Registry.CleanUp();
+
     private void RegisterProgressWatcher(ILoaderProgress loader)
     {
       if (loader is ISaverProgress saver) 
-        _saveLoadRegistry.Register(saver);
+        _saveLoadService.Registry.Register(saver);
 
-      _saveLoadRegistry.Register(loader);
+      _saveLoadService.Registry.Register(loader);
     }
   }
 }

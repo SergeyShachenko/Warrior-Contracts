@@ -2,8 +2,10 @@
 
 namespace WC.Runtime.Infrastructure.Services
 {
-  public interface IFactory
+  public interface IFactory<TRegistry> where TRegistry : class, IRegistry
   {
+    TRegistry Registry { get; }
+
     Task WarmUp();
     void CleanUp();
   }

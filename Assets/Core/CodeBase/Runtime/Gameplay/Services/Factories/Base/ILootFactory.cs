@@ -4,7 +4,7 @@ using WC.Runtime.Logic.Loot;
 
 namespace WC.Runtime.Gameplay.Services
 {
-  public interface ILootFactory : IFactory
+  public interface ILootFactory : IFactory<LootRegistry>
   {
     Task<LootPiece> CreateGold();
   }

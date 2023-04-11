@@ -23,7 +23,7 @@ namespace WC.Runtime.Infrastructure.AssetManagement
     Task<GameObject> InstantiateAsync(string address, Vector3 at);
     Task<GameObject> InstantiateAsync(string address, Transform under);
     Task<GameObject> InstantiateAsync(string address, Vector3 at, Transform under);
-    
+
     void CleanUp();
   }
 }

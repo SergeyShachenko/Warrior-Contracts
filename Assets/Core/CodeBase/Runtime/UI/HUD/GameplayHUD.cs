@@ -21,11 +21,11 @@ namespace WC.Runtime.UI
 
     [Inject]
     private void Construct(
-      ICharacterRegistry characterRegistry, 
-      IPersistentProgressService progress, 
+      IPersistentProgressService progress,
+      ICharacterFactory characterFactory,
       IWindowService windowService)
     {
-      _player = characterRegistry.Player;
+      _player = characterFactory.Registry.Player;
       _progress = progress;
       _windowService = windowService;
       

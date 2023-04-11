@@ -9,12 +9,15 @@ namespace WC.Runtime.Infrastructure.Services
 {
   public class StaticDataService : IStaticDataService
   {
+    public IReadOnlyDictionary<WarriorID, PlayerWarriorStaticData> PlayerWarriors => _playerWarriors;
+    public IReadOnlyDictionary<WarriorID, EnemyWarriorStaticData> EnemyWarriors => _enemyWarriors;
+    public IReadOnlyDictionary<string, LevelStaticData> Levels => _levels;
+
     private Dictionary<WarriorID, PlayerWarriorStaticData> _playerWarriors;
     private Dictionary<WarriorID, EnemyWarriorStaticData> _enemyWarriors;
     private Dictionary<string, LevelStaticData> _levels;
 
-    public StaticDataService() => 
-      LoadData();
+    public StaticDataService() => LoadData();
 
 
     private void LoadData()
@@ -29,22 +32,7 @@ namespace WC.Runtime.Infrastructure.Services
       
       _levels = Resources
         .LoadAll<LevelStaticData>(AssetDirectory.StaticData.Levels)
-        .ToDictionary(x => x.LevelKey, x => x);
+        .ToDictionary(x => x.Name, x => x);
     }
-
-    public PlayerWarriorStaticData GetPlayerWarrior(WarriorID type) => 
-      _playerWarriors.TryGetValue(type, out PlayerWarriorStaticData staticData) 
-        ? staticData
-        : null;
-    
-    public EnemyWarriorStaticData GetEnemyWarrior(WarriorID type) => 
-      _enemyWarriors.TryGetValue(type, out EnemyWarriorStaticData staticData) 
-        ? staticData 
-        : null;
-
-    public LevelStaticData GetLevel(string sceneKey) => 
-      _levels.TryGetValue(sceneKey, out LevelStaticData staticData) 
-        ? staticData 
-        : null;
   }
 }

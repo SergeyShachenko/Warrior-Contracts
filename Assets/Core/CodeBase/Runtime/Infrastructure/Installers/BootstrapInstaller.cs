@@ -61,11 +61,6 @@ namespace WC.Runtime.Infrastructure.Installers
         .AsSingle();
       
       Container
-        .Bind<ISaveLoadRegistry>()
-        .To<SaveLoadRegistry>()
-        .AsSingle();
-      
-      Container
         .Bind<ISaveLoadService>()
         .To<SaveLoadService>()
         .AsSingle();

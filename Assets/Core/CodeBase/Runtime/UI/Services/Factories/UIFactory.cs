@@ -5,20 +5,15 @@ using WC.Runtime.Infrastructure.Services;
 
 namespace WC.Runtime.UI.Services
 {
-  public class UIFactory : FactoryBase,
+  public class UIFactory : FactoryBase<UIRegistry>,
     IUIFactory
   {
-    private readonly IUIRegistry _registry;
-
     private Transform _windowsParent, _panelsParent;
 
-    public UIFactory(
-      IAssetsProvider assetsProvider,
-      ISaveLoadRegistry saveLoadRegistry,
-      IUIRegistry registry) 
-      : base(assetsProvider, saveLoadRegistry)
+    public UIFactory(IAssetsProvider assetsProvider, ISaveLoadService saveLoadService) 
+      : base(assetsProvider, saveLoadService)
     {
-      _registry = registry;
+      
     }
     
     
@@ -39,12 +34,12 @@ namespace WC.Runtime.UI.Services
       }
       
       if (uiObj.TryGetComponent(out MainUI mainUI))
-        _registry.Register(mainUI);
+        Registry.Register(mainUI);
       //TODO Логгер
       // else
       //   LogService.Log<UIFactory>("Отсутствует компонент - MainUI!", LogLevel.Error);
 
-      return _registry.UI;
+      return Registry.UI;
     }
 
     public async Task<WindowBase> Create(UIWindowID id)
@@ -63,9 +58,8 @@ namespace WC.Runtime.UI.Services
           break;
       }
       
-      _registry.Register(id, window);
-
-      return _registry.Get(id);
+      Registry.Register(id, window);
+      return Registry.Windows[id];
     }
     
     public async Task<PanelBase> Create(UIPanelID id)
@@ -86,9 +80,8 @@ namespace WC.Runtime.UI.Services
       //     break;
       // }
       
-      _registry.Register(id, panel);
-
-      return _registry.Get(id);
+      Registry.Register(id, panel);
+      return Registry.Panels[id];
     }
 
     public override async Task WarmUp()

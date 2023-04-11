@@ -9,20 +9,17 @@ using WC.Runtime.StaticData;
 
 namespace WC.Runtime.Gameplay.Services
 {
-  public class CharacterFactory : FactoryBase, 
+  public class CharacterFactory : FactoryBase<CharacterRegistry>, 
     ICharacterFactory
   {
-    private readonly ICharacterRegistry _registry;
     private readonly IStaticDataService _staticData;
 
     public CharacterFactory(
       IAssetsProvider assetsProvider,
-      ISaveLoadRegistry saveLoadRegistry,
-      ICharacterRegistry registry,
+      ISaveLoadService saveLoadService,
       IStaticDataService staticData) 
-      : base(assetsProvider, saveLoadRegistry)
+      : base(assetsProvider, saveLoadService)
     {
-      _registry = registry;
       _staticData = staticData;
     }
 
@@ -32,20 +29,20 @@ namespace WC.Runtime.Gameplay.Services
       GameObject playerObj = await p_AssetsProvider.InstantiateAsync(AssetAddress.Character.PlayerSword, at);
       RegisterProgressWatcher(playerObj);
       
-      _registry.Register(playerObj.GetComponent<Player>());
-      return _registry.Player;
+      Registry.Register(playerObj.GetComponent<Player>());
+      return Registry.Player;
     }
 
     public async Task<Enemy> CreateEnemy(WarriorID id, Transform under)
     {
-      EnemyWarriorStaticData warriorData = _staticData.GetEnemyWarrior(id);
+      EnemyWarriorStaticData warriorData = _staticData.EnemyWarriors[id];
       GameObject warriorObj = await p_AssetsProvider.InstantiateAsync(warriorData.PrefabRef, under);
       RegisterProgressWatcher(warriorObj);
       
       var enemy = warriorObj.GetComponent<Enemy>();
 
       enemy.Construct(
-        player: _registry.Player,
+        player: Registry.Player,
         id: id,
         currentHP: warriorData.HP, 
         maxHP: warriorData.HP, 
@@ -56,13 +53,9 @@ namespace WC.Runtime.Gameplay.Services
 
       if (warriorObj.TryGetComponent(out RotateToPlayerAI rotateToPlayer))
       {
-        rotateToPlayer.Init(_registry.Player.gameObject);
         rotateToPlayer.Speed = warriorData.Speed;
       }
-      
-      if (warriorObj.TryGetComponent(out MoveToPlayerAI moveToPlayerAI)) 
-        moveToPlayerAI.Init(_registry.Player.gameObject);
-      
+
       warriorObj
         .GetComponent<NavMeshAgent>()
         .speed = warriorData.Speed;
@@ -70,7 +63,7 @@ namespace WC.Runtime.Gameplay.Services
       var lootSpawner = warriorObj.GetComponentInChildren<LootSpawner>();
       lootSpawner.Init(warriorData.MinLootExp, warriorData.MaxLootExp);
 
-      _registry.Register(enemy);
+      Registry.Register(enemy);
       return enemy;
     }
 

@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using WC.Runtime.Gameplay.Services;
+using Zenject;
 
 namespace WC.Runtime.Logic.Characters
 {
@@ -7,14 +9,12 @@ namespace WC.Runtime.Logic.Characters
     [Header("Links")]
     [SerializeField] protected Enemy p_Enemy;
     
-    protected GameObject p_Player;
-    protected IDeath p_PlayerDeath;
+    protected Player p_Player;
 
-
-    public void Init(GameObject player)
+    [Inject]
+    private void Construct(ICharacterFactory characterFactory)
     {
-      p_Player = player;
-      p_PlayerDeath = p_Player.GetComponent<Player>().Death;
+      p_Player = characterFactory.Registry.Player;
     }
   }
 }
