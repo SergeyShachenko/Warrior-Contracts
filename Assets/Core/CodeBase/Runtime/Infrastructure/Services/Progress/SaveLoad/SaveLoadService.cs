@@ -6,7 +6,8 @@ using WC.Runtime.UI.Services;
 
 namespace WC.Runtime.Infrastructure.Services
 {
-  public class SaveLoadService : ISaveLoadService
+  public class SaveLoadService : ISaveLoadService,
+    IHaveCache
   {
     public SaveLoadRegistry Registry { get; } = new();
     
@@ -17,7 +18,11 @@ namespace WC.Runtime.Infrastructure.Services
     private readonly ICharacterFactory _characterFactory;
     private readonly ILevelToolsFactory _levelToolsFactory;
 
-    public SaveLoadService(IPersistentProgressService progressService) => _progressService = progressService;
+    public SaveLoadService(IServiceManager serviceManager, IPersistentProgressService progressService)
+    {
+      _progressService = progressService;
+      serviceManager.Register(this);
+    }
 
 
     public void SaveProgress()

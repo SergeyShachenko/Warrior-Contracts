@@ -46,6 +46,11 @@ namespace WC.Runtime.Infrastructure.Installers
     private void BindBaseServices()
     {
       Container
+        .Bind<IServiceManager>()
+        .To<ServiceManager>()
+        .AsSingle();
+      
+      Container
         .Bind<IConfigService>()
         .To<ConfigService>()
         .AsSingle();

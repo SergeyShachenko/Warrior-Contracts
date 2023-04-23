@@ -19,6 +19,7 @@ namespace WC.Runtime.Infrastructure.Services
     private readonly ISaveLoadService _saveLoadService;
     private readonly ILoadingScreen _loadingScreen;
     private readonly IStaticDataService _staticData;
+    private readonly IServiceManager _serviceManager;
 
     private ICharacterFactory _characterFactory;
     private ILevelToolsFactory _levelToolsFactory;
@@ -32,14 +33,15 @@ namespace WC.Runtime.Infrastructure.Services
       _loadingScreen = container.Resolve<ILoadingScreen>();
       _saveLoadService = container.Resolve<ISaveLoadService>();
       _staticData = container.Resolve<IStaticDataService>();
+      _serviceManager = container.Resolve<IServiceManager>();
     }
 
 
     public override async void Enter(DiContainer subContainer, Action onExit = null)
     {
       BindSubServices(subContainer);
-      WarmUp();
       
+      await _serviceManager.WarmUp();
       await CreateGameWorld();
       await CreateUI();
       await CreateHUD();
@@ -111,16 +113,6 @@ namespace WC.Runtime.Infrastructure.Services
     //     loot.Init(drop.Loot);
     //   }
     // }
-
-    private void WarmUp()
-    {
-      _characterFactory.WarmUp();
-      _lootFactory.WarmUp();
-      _levelToolsFactory.WarmUp();
-      
-      _uiFactory.WarmUp();
-      _hudFactory.WarmUp();
-    }
 
     private void InitCamera()
     {

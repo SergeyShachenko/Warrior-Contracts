@@ -15,10 +15,11 @@ namespace WC.Runtime.Gameplay.Services
     private readonly IStaticDataService _staticData;
 
     public CharacterFactory(
+      IServiceManager serviceManager,
       IAssetsProvider assetsProvider,
       ISaveLoadService saveLoadService,
       IStaticDataService staticData) 
-      : base(assetsProvider, saveLoadService)
+      : base(serviceManager, assetsProvider, saveLoadService)
     {
       _staticData = staticData;
     }

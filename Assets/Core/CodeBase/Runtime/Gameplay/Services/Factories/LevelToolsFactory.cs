@@ -10,9 +10,10 @@ namespace WC.Runtime.Gameplay.Services
     ILevelToolsFactory
   {
     public LevelToolsFactory(
+      IServiceManager serviceManager,
       IAssetsProvider assetsProvider,
       ISaveLoadService saveLoadService) 
-      : base(assetsProvider, saveLoadService)
+      : base(serviceManager, assetsProvider, saveLoadService)
     {
       
     }

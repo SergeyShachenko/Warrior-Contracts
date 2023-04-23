@@ -4,7 +4,7 @@ using WC.Runtime.Infrastructure.AssetManagement;
 
 namespace WC.Runtime.Infrastructure.Services
 {
-  public abstract class FactoryBase<TRegistry> 
+  public abstract class FactoryBase<TRegistry>
     where TRegistry : class, IRegistry, new()
   {
     public TRegistry Registry { get; } = new();
@@ -13,10 +13,13 @@ namespace WC.Runtime.Infrastructure.Services
 
     private readonly ISaveLoadService _saveLoadService;
 
-    protected FactoryBase(IAssetsProvider assetsProvider, ISaveLoadService saveLoadService)
+    protected FactoryBase(IServiceManager serviceManager, IAssetsProvider assetsProvider, ISaveLoadService saveLoadService)
     {
       p_AssetsProvider = assetsProvider;
       _saveLoadService = saveLoadService;
+      
+      serviceManager.Register((IHaveCache)this);
+      serviceManager.Register((IWarmUp)this);
     }
     
 

@@ -12,9 +12,10 @@ namespace WC.Runtime.Gameplay.Services
     public LootRegistry Registry { get; } = new();
     
     public LootFactory(
+      IServiceManager serviceManager,
       IAssetsProvider assetsProvider, 
       ISaveLoadService saveLoadService)
-      : base(assetsProvider, saveLoadService)
+      : base(serviceManager, assetsProvider, saveLoadService)
     {
       
     }

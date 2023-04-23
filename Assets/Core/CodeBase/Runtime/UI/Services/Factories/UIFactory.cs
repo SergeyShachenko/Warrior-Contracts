@@ -10,8 +10,11 @@ namespace WC.Runtime.UI.Services
   {
     private Transform _windowsParent, _panelsParent;
 
-    public UIFactory(IAssetsProvider assetsProvider, ISaveLoadService saveLoadService) 
-      : base(assetsProvider, saveLoadService)
+    public UIFactory(
+      IServiceManager serviceManager,
+      IAssetsProvider assetsProvider,
+      ISaveLoadService saveLoadService) 
+      : base(serviceManager, assetsProvider, saveLoadService)
     {
       
     }
