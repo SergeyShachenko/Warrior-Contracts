@@ -9,6 +9,6 @@ namespace WC.Runtime.UI.Services
     Task<MainUI> CreateUI();
 
     Task<WindowBase> Create(UIWindowID id);
-    Task<PanelBase> Create(UIPanelID id);
+    Task<ScreenBase> Create(UIScreenID id);
   }
 }

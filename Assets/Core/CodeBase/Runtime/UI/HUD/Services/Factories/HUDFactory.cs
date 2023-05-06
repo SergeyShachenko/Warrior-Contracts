@@ -8,7 +8,7 @@ namespace WC.Runtime.UI.Services
   public class HUDFactory : FactoryBase<HUDRegistry>,
     IHUDFactory
   {
-    private Transform _windowsParent, _panelsParent;
+    private Transform _windowsParent, _screensParent;
 
     public HUDFactory(
       IServiceManager serviceManager,
@@ -32,8 +32,8 @@ namespace WC.Runtime.UI.Services
         _windowsParent = new GameObject("Windows").transform;
         _windowsParent.parent = hudParent;
         
-        _panelsParent = new GameObject("Panels").transform;
-        _panelsParent.parent = hudParent;
+        _screensParent = new GameObject("Sreens").transform;
+        _screensParent.parent = hudParent;
       }
       
       if (hudObj.TryGetComponent(out GameplayHUD gameplayHUD)) 
@@ -68,9 +68,9 @@ namespace WC.Runtime.UI.Services
       return Registry.Windows[id];
     }
     
-    public async Task<PanelBase> Create(HUDPanelID id)
+    public async Task<ScreenBase> Create(HUDScreenID id)
     {
-      PanelBase panel = null;
+      ScreenBase screen = null;
       
       // switch (id)
       // {
@@ -86,9 +86,9 @@ namespace WC.Runtime.UI.Services
       //     break;
       // }
       
-      Registry.Register(id, panel);
+      Registry.Register(id, screen);
 
-      return Registry.Panels[id];
+      return Registry.Screens[id];
     }
 
     public override async Task WarmUp()

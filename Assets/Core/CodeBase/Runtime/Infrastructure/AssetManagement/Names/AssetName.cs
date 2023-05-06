@@ -2,10 +2,10 @@
 {
   public static class AssetName
   {
-    public static ConfigName Config { get; } = new();
-    public static StaticDataName StaticData { get; } = new();
-    public static SceneName Scene { get; } = new();
-    public static UIName UI { get; } = new();
-    public static UIStaticDataName UIStaticData { get; } = new();
+    public static ConfigName Config => new();
+    public static StaticDataName StaticData => new();
+    public static SceneName Scene => new();
+    public static UIName UI => new();
+    public static UIStaticDataName UIStaticData => new();
   }
 }

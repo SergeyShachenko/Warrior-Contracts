@@ -5,6 +5,6 @@ namespace WC.Runtime.Infrastructure.AssetManagement
     public string MainMenu => "MainMenu";
     public string Bootstrap => "Bootstrap";
     
-    public LevelName Level { get; } = new();
+    public LevelName Level => new();
   }
 }

@@ -18,22 +18,26 @@ namespace WC.Runtime.Infrastructure.Services
   {
     private readonly ISaveLoadService _saveLoadService;
     private readonly ILoadingScreen _loadingScreen;
-    private readonly IStaticDataService _staticData;
+    private readonly IStaticDataService _staticDataService;
     private readonly IServiceManager _serviceManager;
 
     private ICharacterFactory _characterFactory;
     private ILevelToolsFactory _levelToolsFactory;
-    private ILootFactory _lootFactory;
-
     private IUIFactory _uiFactory;
     private IHUDFactory _hudFactory;
 
-    public LoadLevelState(GameStateMachine stateMachine, DiContainer container) : base(stateMachine, container)
+    public LoadLevelState(
+      IGameStateMachine gameStateMachine,
+      ILoadingScreen loadingScreen,
+      ISaveLoadService saveLoadService,
+      IStaticDataService staticDataService,
+      IServiceManager serviceManager)
+    : base(gameStateMachine)
     {
-      _loadingScreen = container.Resolve<ILoadingScreen>();
-      _saveLoadService = container.Resolve<ISaveLoadService>();
-      _staticData = container.Resolve<IStaticDataService>();
-      _serviceManager = container.Resolve<IServiceManager>();
+      _loadingScreen = loadingScreen;
+      _saveLoadService = saveLoadService;
+      _staticDataService = staticDataService;
+      _serviceManager = serviceManager;
     }
 
 
@@ -51,7 +55,7 @@ namespace WC.Runtime.Infrastructure.Services
 
       base.Enter(subContainer, onExit);
       
-      p_StateMachine.Enter<GameLoopState, DiContainer>(subContainer);
+      p_GameStateMachine.Enter<GameLoopState, DiContainer>(subContainer);
     }
 
     public override void Exit()
@@ -66,8 +70,6 @@ namespace WC.Runtime.Infrastructure.Services
     {
       _characterFactory = subContainer.Resolve<ICharacterFactory>();
       _levelToolsFactory = subContainer.Resolve<ILevelToolsFactory>();
-      _lootFactory = subContainer.Resolve<ILootFactory>();
-      
       _uiFactory = subContainer.Resolve<IUIFactory>();
       _hudFactory = subContainer.Resolve<IHUDFactory>();
     }
@@ -85,7 +87,7 @@ namespace WC.Runtime.Infrastructure.Services
 
     private async Task CreateGameWorld()
     {
-      LevelStaticData levelData = _staticData.Levels[SceneManager.GetActiveScene().name];
+      LevelStaticData levelData = _staticDataService.Levels[SceneManager.GetActiveScene().name];
       await CreateSpawners(levelData);
       await CreatePlayer(levelData);
 

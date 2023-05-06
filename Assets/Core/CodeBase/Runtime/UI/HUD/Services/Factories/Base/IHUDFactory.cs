@@ -7,6 +7,6 @@ namespace WC.Runtime.UI.Services
   {
     Task<GameplayHUD> CreateHUD();
     Task<WindowBase> Create(HUDWindowID id);
-    Task<PanelBase> Create(HUDPanelID id);
+    Task<ScreenBase> Create(HUDScreenID id);
   }
 }

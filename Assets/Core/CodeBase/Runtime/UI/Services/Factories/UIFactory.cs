@@ -8,7 +8,7 @@ namespace WC.Runtime.UI.Services
   public class UIFactory : FactoryBase<UIRegistry>,
     IUIFactory
   {
-    private Transform _windowsParent, _panelsParent;
+    private Transform _windowsParent, _screensParent;
 
     public UIFactory(
       IServiceManager serviceManager,
@@ -32,8 +32,8 @@ namespace WC.Runtime.UI.Services
         _windowsParent = new GameObject("Windows").transform;
         _windowsParent.parent = uiParent;
         
-        _panelsParent = new GameObject("Panels").transform;
-        _panelsParent.parent = uiParent;
+        _screensParent = new GameObject("Screens").transform;
+        _screensParent.parent = uiParent;
       }
       
       if (uiObj.TryGetComponent(out MainUI mainUI))
@@ -65,9 +65,9 @@ namespace WC.Runtime.UI.Services
       return Registry.Windows[id];
     }
     
-    public async Task<PanelBase> Create(UIPanelID id)
+    public async Task<ScreenBase> Create(UIScreenID id)
     {
-      PanelBase panel = null;
+      ScreenBase screen = null;
       
       // switch (id)
       // {
@@ -83,8 +83,8 @@ namespace WC.Runtime.UI.Services
       //     break;
       // }
       
-      Registry.Register(id, panel);
-      return Registry.Panels[id];
+      Registry.Register(id, screen);
+      return Registry.Screens[id];
     }
 
     public override async Task WarmUp()

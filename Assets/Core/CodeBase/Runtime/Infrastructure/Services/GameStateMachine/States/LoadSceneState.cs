@@ -1,6 +1,5 @@
 ﻿using System;
 using WC.Runtime.UI.Screens;
-using Zenject;
 
 namespace WC.Runtime.Infrastructure.Services
 {
@@ -9,10 +8,14 @@ namespace WC.Runtime.Infrastructure.Services
     private readonly ISceneLoader _sceneLoader;
     private readonly ILoadingScreen _loadingScreen;
 
-    public LoadSceneState(GameStateMachine stateMachine, DiContainer container) : base(stateMachine, container)
+    public LoadSceneState(
+      IGameStateMachine gameStateMachine,
+      ISceneLoader sceneLoader, 
+      ILoadingScreen loadingScreen)
+    : base(gameStateMachine)
     {
-      _sceneLoader = container.Resolve<ISceneLoader>();
-      _loadingScreen = container.Resolve<ILoadingScreen>();
+      _sceneLoader = sceneLoader;
+      _loadingScreen = loadingScreen;
     }
 
     

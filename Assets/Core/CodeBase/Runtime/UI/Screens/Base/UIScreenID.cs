@@ -1,8 +1,8 @@
 namespace WC.Runtime.UI
 {
-  public enum UIPanelID
+  public enum UIScreenID
   {
     None = 0,
-    Resources = 1
+    Settings = 1
   }
 }

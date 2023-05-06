@@ -1,8 +1,8 @@
 namespace WC.Runtime.UI
 {
-  public enum HUDPanelID
+  public enum HUDScreenID
   {
     None = 0,
-    Stats = 1
+    Inventory = 1
   }
 }

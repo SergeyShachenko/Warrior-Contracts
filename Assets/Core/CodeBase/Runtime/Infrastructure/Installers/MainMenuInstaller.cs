@@ -1,6 +1,4 @@
-﻿using WC.Runtime.Infrastructure.AssetManagement;
-using WC.Runtime.Infrastructure.Services;
-using WC.Runtime.UI.Services;
+﻿using WC.Runtime.Infrastructure.Services;
 using Zenject;
 
 namespace WC.Runtime.Infrastructure.Installers
@@ -16,40 +14,7 @@ namespace WC.Runtime.Infrastructure.Installers
     
     public override void InstallBindings()
     {
-      if (_gameStateMachine.BootstrapHasOccurred == false) return;
-      
-      
-      BindBaseServices();
-      BindUIServices();
-      
       _gameStateMachine.Enter<MainMenuState, DiContainer>(Container);
-    }
-
-    
-    private void BindBaseServices()
-    {
-      Container
-        .Bind<IAssetsProvider>()
-        .To<AssetProvider>()
-        .AsSingle();
-    }
-
-    private void BindUIServices()
-    {
-      Container
-        .Bind<IUIFactory>()
-        .To<UIFactory>()
-        .AsSingle();
-
-      Container
-        .Bind<IWindowService>()
-        .To<WindowService>()
-        .AsSingle();
-      
-      Container
-        .Bind<IPanelService>()
-        .To<PanelService>()
-        .AsSingle();
     }
   }
 }

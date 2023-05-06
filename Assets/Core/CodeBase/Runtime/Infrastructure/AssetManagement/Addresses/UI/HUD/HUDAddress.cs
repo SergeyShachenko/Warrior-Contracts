@@ -4,7 +4,7 @@
   {
     public string GameplayHUD => "HUD_Gameplay";
     
-    public HUDWindowAddress Windows { get; } = new();
-    public HUDPanelAddress Panels { get; } = new();
+    public HUDWindowAddress Windows => new();
+    public HUDScreenAddress Screens => new();
   }
 }

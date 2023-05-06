@@ -1,7 +1,8 @@
 ﻿namespace WC.Runtime.UI.Screens
 {
-  public interface ILoadingScreen : IScreen
+  public interface ILoadingScreen
   {
-    
+    void Show();
+    void Hide();
   }
 }

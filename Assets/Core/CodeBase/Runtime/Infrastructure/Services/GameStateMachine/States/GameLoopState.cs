@@ -8,10 +8,14 @@ namespace WC.Runtime.Infrastructure.Services
     private readonly IServiceManager _serviceManager;
     private readonly ISaveLoadService _saveLoadService;
 
-    public GameLoopState(GameStateMachine stateMachine, DiContainer container) : base(stateMachine, container)
+    public GameLoopState(
+      IGameStateMachine gameStateMachine,
+      IServiceManager serviceManager,
+      ISaveLoadService saveLoadService)
+    : base(gameStateMachine)
     {
-      _serviceManager = container.Resolve<IServiceManager>();
-      _saveLoadService = container.Resolve<ISaveLoadService>();
+      _serviceManager = serviceManager;
+      _saveLoadService = saveLoadService;
     }
 
 

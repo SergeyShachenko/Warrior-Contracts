@@ -1,31 +1,27 @@
 using System;
 using UnityEngine;
-using Zenject;
 
 namespace WC.Runtime.Infrastructure.Services
 {
   public class GameStateBase : IDefaultState
   {
-    protected readonly GameStateMachine p_StateMachine;
-    protected readonly DiContainer p_Container;
+    protected readonly IGameStateMachine p_GameStateMachine;
     
     private Action _onExit;
 
-    protected GameStateBase(GameStateMachine stateMachine, DiContainer container)
+    public GameStateBase(IGameStateMachine gameStateMachine)
     {
-      p_StateMachine = stateMachine;
-      p_Container = container;
+      p_GameStateMachine = gameStateMachine;
+      p_GameStateMachine.Register(this);
     }
 
-    
+
     public virtual void Enter(Action onExit = null)
     {
       _onExit = onExit;
-
       Debug.Log($"Игра перешла в {GetType().Name}");
     }
 
-    public virtual void Exit() => 
-      _onExit?.Invoke();
+    public virtual void Exit() => _onExit?.Invoke();
   }
 }

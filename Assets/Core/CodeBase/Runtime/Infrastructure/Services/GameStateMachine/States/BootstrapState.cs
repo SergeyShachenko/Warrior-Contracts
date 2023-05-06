@@ -1,17 +1,20 @@
 ﻿using System;
-using Zenject;
 
 namespace WC.Runtime.Infrastructure.Services
 {
   public class BootstrapState : PayloadGameStateBase<BootstrapConfig>
   {
-    private readonly ISaveLoadService _saveLoadService;
     private readonly IPersistentProgressService _progressService;
+    private readonly ISaveLoadService _saveLoadService;
 
-    public BootstrapState(GameStateMachine stateMachine, DiContainer container) : base(stateMachine, container)
+    public BootstrapState(
+      IGameStateMachine gameStateMachine, 
+      IPersistentProgressService progressService,
+      ISaveLoadService saveLoadService)
+    : base(gameStateMachine)
     {
-      _progressService = container.Resolve<IPersistentProgressService>();
-      _saveLoadService = container.Resolve<ISaveLoadService>();
+      _progressService = progressService;
+      _saveLoadService = saveLoadService;
     }
 
 
@@ -36,7 +39,7 @@ namespace WC.Runtime.Infrastructure.Services
       
       base.Enter(bootstrapConfig, onExit);
       
-      p_StateMachine.Enter<LoadSceneState, string>(bootstrapConfig.StartScene);
+      p_GameStateMachine.Enter<LoadSceneState, string>(bootstrapConfig.StartScene);
     }
   }
 }

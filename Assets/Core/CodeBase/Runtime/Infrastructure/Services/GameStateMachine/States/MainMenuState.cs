@@ -10,9 +10,12 @@ namespace WC.Runtime.Infrastructure.Services
 
     private DiContainer _subContainer;
 
-    public MainMenuState(GameStateMachine stateMachine, DiContainer container) : base(stateMachine, container)
+    public MainMenuState(
+      IGameStateMachine gameStateMachine,
+      ILoadingScreen loadingScreen)
+    : base(gameStateMachine)
     {
-      _loadingScreen = container.Resolve<ILoadingScreen>();
+      _loadingScreen = loadingScreen;
     }
 
 

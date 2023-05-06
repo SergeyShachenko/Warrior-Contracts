@@ -16,7 +16,6 @@ namespace WC.Runtime.Infrastructure.Installers
       BindMonoServices();
       BindBaseServices();
       BindBusinessServices();
-      BindGameStateMachine();
     }
 
     
@@ -100,14 +99,6 @@ namespace WC.Runtime.Infrastructure.Installers
       Container
         .Bind<IAdsService>()
         .To<AdsService>()
-        .AsSingle();
-    }
-
-    private void BindGameStateMachine()
-    {
-      Container
-        .Bind<IGameStateMachine>()
-        .To<GameStateMachine>()
         .AsSingle();
     }
   }

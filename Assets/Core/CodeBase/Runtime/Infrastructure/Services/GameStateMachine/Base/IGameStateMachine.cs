@@ -4,7 +4,7 @@ namespace WC.Runtime.Infrastructure.Services
 {
   public interface IGameStateMachine
   {
-    bool BootstrapHasOccurred { get; }
+    void Register(IState state);
     
     void Enter<TState>(Action onExit = null) where TState : class, IDefaultState;
     void Enter<TState, TParam>(TParam param, Action onExit = null) where TState : class, IPayloadState<TParam>;

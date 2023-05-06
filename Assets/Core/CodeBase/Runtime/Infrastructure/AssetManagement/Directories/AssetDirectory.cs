@@ -2,7 +2,7 @@
 {
   public static class AssetDirectory
   {
-    public static ConfigDirectory Config { get; } = new();
-    public static StaticDataDirectory StaticData { get; } = new();
+    public static ConfigDirectory Config => new();
+    public static StaticDataDirectory StaticData => new();
   }
 }

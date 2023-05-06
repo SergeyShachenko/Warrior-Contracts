@@ -5,6 +5,6 @@ namespace WC.Runtime.Infrastructure.AssetManagement
     public string Root => "StaticData/";
     public string Levels => "StaticData/Levels/";
 
-    public CharacterStaticDataDirectory Character { get; } = new();
+    public CharacterStaticDataDirectory Character => new();
   }
 }
