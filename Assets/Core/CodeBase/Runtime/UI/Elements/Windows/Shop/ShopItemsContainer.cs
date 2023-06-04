@@ -4,7 +4,7 @@ using UnityEngine;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
 
-namespace WC.Runtime.UI
+namespace WC.Runtime.UI.Elements
 {
   public class ShopItemsContainer : MonoBehaviour
   {
@@ -24,25 +24,22 @@ namespace WC.Runtime.UI
       _assetsProvider = assetsProviderProvider;
     }
 
-    public void Init() => 
-      RefreshAvailableItems();
-
     
-    public void Subscribe()
+    public void SubscribeUpdates()
     {
-      _iapService.Initizlized += RefreshAvailableItems;
-      _progressService.Player.Purchase.Changed += RefreshAvailableItems;
+      _iapService.Initizlized += Refresh;
+      _progressService.Player.Purchase.Changed += Refresh;
+    }
+    
+    public void UnsubscribeUpdates()
+    {
+      _iapService.Initizlized -= Refresh;
+      _progressService.Player.Purchase.Changed -= Refresh;
     }
 
-    public void CleanUp()
+    public async void Refresh()
     {
-      _iapService.Initizlized -= RefreshAvailableItems;
-      _progressService.Player.Purchase.Changed -= RefreshAvailableItems;
-    }
-
-    private async void RefreshAvailableItems()
-    {
-      UpdateUnavailableObjs();
+      RefreshUnavailableObjs();
 
       if (_iapService.IsInitialized == false) return;
 
@@ -51,10 +48,17 @@ namespace WC.Runtime.UI
       await FillShopItems();
     }
 
+    
     private void ClearShopItems()
     {
       foreach (GameObject shopItemObj in _shopItemObjs)
         Destroy(shopItemObj);
+    }
+    
+    private void RefreshUnavailableObjs()
+    {
+      foreach (GameObject obj in _unavailableObjs)
+        obj.SetActive(_iapService.IsInitialized == false);
     }
 
     private async Task FillShopItems()
@@ -69,12 +73,6 @@ namespace WC.Runtime.UI
 
         _shopItemObjs.Add(shopItemObj);
       }
-    }
-
-    private void UpdateUnavailableObjs()
-    {
-      foreach (GameObject obj in _unavailableObjs)
-        obj.SetActive(_iapService.IsInitialized == false);
     }
   }
 }

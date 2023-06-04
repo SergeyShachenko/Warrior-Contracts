@@ -371,13 +371,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8d79bdc6fe40bf888218bc4d8f58e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fadeInDuration: 0.15
+  _fadeOutDuration: 0.15
   _canvases:
   - {fileID: 8706503452718390327}
   - {fileID: 1277870341634847059}
   - {fileID: 189346823642750366}
   - {fileID: 5662645618392815272}
-  _closeButton: {fileID: 6764680638444737355}
+  _canvasGroup: {fileID: 9079193257425592993}
   _moneyLabel: {fileID: 5322043745898224851}
+  _closeButton: {fileID: 6764680638444737355}
   _adItem: {fileID: 363587143223110927}
   _itemsContainer: {fileID: 1026665395132231944}
 --- !u!1 &792953628936452066

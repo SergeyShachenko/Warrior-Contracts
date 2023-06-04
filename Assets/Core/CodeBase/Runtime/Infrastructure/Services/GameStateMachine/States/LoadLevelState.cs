@@ -3,13 +3,12 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using WC.Runtime.UI.Services;
-using WC.Runtime.UI.Screens;
 using WC.Runtime.Logic.Camera;
 using WC.Runtime.Logic.Characters;
 using WC.Runtime.Data.Characters;
 using WC.Runtime.Gameplay.Services;
 using WC.Runtime.StaticData;
-using WC.Runtime.UI;
+using WC.Runtime.UI.Elements;
 using Zenject;
 
 namespace WC.Runtime.Infrastructure.Services
@@ -17,7 +16,6 @@ namespace WC.Runtime.Infrastructure.Services
   public class LoadLevelState : PayloadGameStateBase<DiContainer>
   {
     private readonly ISaveLoadService _saveLoadService;
-    private readonly ILoadingScreen _loadingScreen;
     private readonly IStaticDataService _staticDataService;
     private readonly IServiceManager _serviceManager;
 
@@ -28,13 +26,11 @@ namespace WC.Runtime.Infrastructure.Services
 
     public LoadLevelState(
       IGameStateMachine gameStateMachine,
-      ILoadingScreen loadingScreen,
       ISaveLoadService saveLoadService,
       IStaticDataService staticDataService,
       IServiceManager serviceManager)
     : base(gameStateMachine)
     {
-      _loadingScreen = loadingScreen;
       _saveLoadService = saveLoadService;
       _staticDataService = staticDataService;
       _serviceManager = serviceManager;
@@ -43,7 +39,7 @@ namespace WC.Runtime.Infrastructure.Services
 
     public override async void Enter(DiContainer subContainer, Action onExit = null)
     {
-      BindSubServices(subContainer);
+      ResolveSubServices(subContainer);
       
       await _serviceManager.WarmUp();
       await CreateGameWorld();
@@ -58,15 +54,8 @@ namespace WC.Runtime.Infrastructure.Services
       p_GameStateMachine.Enter<GameLoopState, DiContainer>(subContainer);
     }
 
-    public override void Exit()
-    {
-      _loadingScreen.Hide();
-      
-      base.Exit();
-    }
 
-    
-    private void BindSubServices(DiContainer subContainer)
+    private void ResolveSubServices(DiContainer subContainer)
     {
       _characterFactory = subContainer.Resolve<ICharacterFactory>();
       _levelToolsFactory = subContainer.Resolve<ILevelToolsFactory>();
@@ -119,7 +108,6 @@ namespace WC.Runtime.Infrastructure.Services
     private void InitCamera()
     {
       if (Camera.main == null) return;
-      
       
       Camera.main.GetComponent<CameraMover>().Follow(_characterFactory.Registry.Player.gameObject);
     }

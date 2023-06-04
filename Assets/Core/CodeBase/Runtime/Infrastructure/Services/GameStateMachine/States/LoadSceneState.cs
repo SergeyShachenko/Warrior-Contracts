@@ -1,5 +1,6 @@
 ﻿using System;
-using WC.Runtime.UI.Screens;
+using WC.Runtime.UI;
+using WC.Runtime.UI.Elements;
 
 namespace WC.Runtime.Infrastructure.Services
 {
@@ -7,6 +8,8 @@ namespace WC.Runtime.Infrastructure.Services
   {
     private readonly ISceneLoader _sceneLoader;
     private readonly ILoadingScreen _loadingScreen;
+    
+    private string _sceneName;
 
     public LoadSceneState(
       IGameStateMachine gameStateMachine,
@@ -21,10 +24,30 @@ namespace WC.Runtime.Infrastructure.Services
     
     public override void Enter(string sceneName, Action onExit = null)
     {
-      _loadingScreen.Show();
-      _sceneLoader.Load(sceneName);
+      _sceneName = sceneName;
       
+      SubscribeUpdates();
+      _loadingScreen.Show(smoothly: true);
+
       base.Enter(sceneName, onExit);
+    }
+
+    public override void Exit()
+    {
+      UnsubscribeUpdates();
+      
+      base.Exit();
+    }
+
+    
+    private void SubscribeUpdates() => _loadingScreen.ChangeView += OnLoadingScreenVisible;
+
+    private void UnsubscribeUpdates() => _loadingScreen.ChangeView -= OnLoadingScreenVisible;
+    
+    private void OnLoadingScreenVisible(UIViewType view)
+    {
+      if (view == UIViewType.Visible) 
+        _sceneLoader.Load(_sceneName);
     }
   }
 }

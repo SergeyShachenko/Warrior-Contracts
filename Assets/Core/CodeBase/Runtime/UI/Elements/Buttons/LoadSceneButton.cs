@@ -1,27 +1,23 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using WC.Runtime.Infrastructure.Services;
 using Zenject;
 
 namespace WC.Runtime.UI.Elements
 {
-  public class LoadSceneButton : MonoBehaviour
+  public class LoadSceneButton : UIButtonBase
   {
     [SerializeField] private string _scene;
-    
-    [Header("Links")]
-    [SerializeField] private Button _button;
 
     private IGameStateMachine _gameStateMachine;
 
     [Inject]
-    private void Construct(IGameStateMachine gameStateMachine)
-    {
-      _gameStateMachine = gameStateMachine;
-      Init();
-    }
+    private void Construct(IGameStateMachine gameStateMachine) => _gameStateMachine = gameStateMachine;
 
-    private void Init() => 
-      _button.onClick.AddListener(() => _gameStateMachine.Enter<LoadSceneState, string>(_scene));
+    
+    protected override void OnPressed()
+    {
+      base.OnPressed();
+      _gameStateMachine.Enter<LoadSceneState, string>(_scene);
+    }
   }
 }

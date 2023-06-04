@@ -1,14 +1,18 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using Zenject;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
-using Zenject;
 
-namespace WC.Runtime.UI
+namespace WC.Runtime.UI.Elements
 {
   public class ShopWindow : WindowBase
   {
     [SerializeField] private TextMeshProUGUI _moneyLabel;
+    [SerializeField] private Button _closeButton;
+
+    [Header("")]
     [SerializeField] private RewardedAdItem _adItem;
     [SerializeField] private ShopItemsContainer _itemsContainer;
 
@@ -25,37 +29,38 @@ namespace WC.Runtime.UI
       
       _adItem.Construct(adsService, progress);
       _itemsContainer.Construct(iapService, progress, assetProviderProvider);
-      
-      Init();
     }
-    
+
+
     protected override void Init()
     {
-      base.Init();
-      
-      _adItem.Init();
-      _itemsContainer.Init();
-      UpdateMoneyLabel();
+      Hide();
+      Refresh();
     }
 
-    
     protected override void SubscribeUpdates()
     {
-      _progress.Player.World.Loot.Changed += UpdateMoneyLabel;
-      _adItem.Subscribe();
-      _itemsContainer.Subscribe();
+      _closeButton.onClick.AddListener(OnCloseButtonPressed);
+      _progress.Player.World.Loot.Changed += Refresh;
+      _adItem.SubscribeUpdates();
+      _itemsContainer.SubscribeUpdates();
     }
 
-    protected override void CleanUp()
+    protected override void UnsubscribeUpdates()
     {
-      base.CleanUp();
-      
-      _progress.Player.World.Loot.Changed -= UpdateMoneyLabel;
-      _adItem.CleanUp();
-      _itemsContainer.CleanUp();
+      _closeButton.onClick.RemoveListener(OnCloseButtonPressed);
+      _progress.Player.World.Loot.Changed -= Refresh;
+      _adItem.UnsubscribeUpdates();
+      _itemsContainer.UnsubscribeUpdates();
     }
 
-    private void UpdateMoneyLabel() => 
+    protected override void Refresh()
+    {
       _moneyLabel.text = _progress.Player.World.Loot.Collected.ToString();
+      _adItem.Refresh();
+      _itemsContainer.Refresh();
+    }
+
+    private void OnCloseButtonPressed() => Hide(smoothly: true);
   }
 }

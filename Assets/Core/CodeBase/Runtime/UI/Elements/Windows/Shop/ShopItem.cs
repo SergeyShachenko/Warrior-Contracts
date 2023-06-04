@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
 
-namespace WC.Runtime.UI
+namespace WC.Runtime.UI.Elements
 {
   public class ShopItem : MonoBehaviour
   {

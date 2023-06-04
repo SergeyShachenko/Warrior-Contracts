@@ -71,7 +71,9 @@ namespace WC.Runtime.Gameplay.Services
     public override async Task WarmUp()
     {
       await p_AssetsProvider.Load<GameObject>(AssetAddress.Character.PlayerSword);
-      //await p_AssetsProvider.Load<GameObject>(warriorData.PrefabRef);
+
+      foreach (var warriorData in _staticData.EnemyWarriors.Values)
+        await p_AssetsProvider.Load<GameObject>(warriorData.PrefabRef);
     }
   }
 }

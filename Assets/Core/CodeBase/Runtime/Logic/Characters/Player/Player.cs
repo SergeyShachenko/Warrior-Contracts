@@ -7,39 +7,32 @@ using Zenject;
 
 namespace WC.Runtime.Logic.Characters
 {
-  public class Player : CharacterBase
+  public class Player : CharacterBase,
+    ISaverProgress
   {
-    //TODO Переписать создание
-    public WarriorID ID { get; private set; }
-    
     private IInputService _inputService;
 
     [Inject]
     private void Construct(IInputService inputService) => _inputService = inputService;
+    
 
-    protected override void Init()
+    private void InitComponents(PlayerProgressData progressData)
     {
-      Health = new PlayerHealth(p_Progress);
+      Health = new PlayerHealth(progressData);
       Death = new PlayerDeath();
-      Attack = new PlayerAttack(_inputService, p_Progress, _controller, transform);
+      Attack = new PlayerAttack(_inputService, progressData, _controller, transform);
       Animator = new PlayerAnimator(_controller, _animator);
-      Movement = new PlayerMovement(_inputService, p_Progress, _controller, transform);
-
-      base.Init();
+      Movement = new PlayerMovement(_inputService, progressData, _controller, transform);
     }
-
-
-    public override void LoadProgress(PlayerProgressData progressData)
+    
+    void ILoaderProgress.LoadProgress(PlayerProgressData progressData)
     {
-      base.LoadProgress(progressData);
-      
+      InitComponents(progressData);
       Init();
     }
 
-    public override void SaveProgress(PlayerProgressData progressData)
+    void ISaverProgress.SaveProgress(PlayerProgressData progressData)
     {
-      base.SaveProgress(progressData);
-      
       progressData.State.CurrentHP = Health.Current;
       progressData.State.MaxHP = Health.Max;
       progressData.World.LevelPos = new LevelPositionData(SceneManager.GetActiveScene().name, transform.position.ToVector3Data());

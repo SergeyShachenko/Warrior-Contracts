@@ -4,7 +4,6 @@ using WC.Runtime.Infrastructure.Services;
 using WC.Runtime.Logic.Characters;
 using WC.Runtime.UI.Elements;
 using WC.Runtime.UI.Services;
-using WC.Runtime.UI;
 using Zenject;
 
 namespace WC.Runtime.UI
@@ -17,40 +16,53 @@ namespace WC.Runtime.UI
 
     private Player _player;
     private IPersistentProgressService _progress;
-    private IWindowService _windowService;
+    private IUIFactory _uiFactory;
 
     [Inject]
     private void Construct(
       IPersistentProgressService progress,
       ICharacterFactory characterFactory,
-      IWindowService windowService)
+      IUIFactory uiFactory)
     {
       _player = characterFactory.Registry.Player;
       _progress = progress;
-      _windowService = windowService;
-      
+      _uiFactory = uiFactory;
+
       _player.Initialized += Init;
     }
 
     
     private void Init()
     {
-      UpdateHealthView();
-      UpdateLootView();
-      
-      _player.Health.Changed += UpdateHealthView;
-      _progress.Player.World.Loot.Changed += UpdateLootView;
-      _openWindowButton.Click += OpenWindowButtonOnClick;
+      Refresh();
+
+      _player.Health.Changed += RefreshHealthView;
+      _progress.Player.World.Loot.Changed += RefreshLootView;
+      _openWindowButton.Pressed += OnOpenWindowButtonPressed;
+    }
+
+    private void OnDestroy()
+    {
+      _player.Initialized -= Init;
+      _player.Health.Changed -= RefreshHealthView;
+      _progress.Player.World.Loot.Changed -= RefreshLootView;
+      _openWindowButton.Pressed -= OnOpenWindowButtonPressed;
     }
 
     
-    private void OpenWindowButtonOnClick(UIWindowID id) => 
-      _windowService.Open(id);
-
-    private void UpdateHealthView() => 
+    private void Refresh()
+    {
+      RefreshHealthView();
+      RefreshLootView();
+    }
+    
+    private void RefreshHealthView() => 
       _hpBar.SetProgress(_player.Health.Current, _player.Health.Max);
 
-    private void UpdateLootView() => 
+    private void RefreshLootView() => 
       _lootCounter.Set(_progress.Player.World.Loot.Collected);
+    
+    private void OnOpenWindowButtonPressed(UIButtonBase button) => 
+      _uiFactory.Registry.Windows[_openWindowButton.WindowID].Show(smoothly: true);
   }
 }

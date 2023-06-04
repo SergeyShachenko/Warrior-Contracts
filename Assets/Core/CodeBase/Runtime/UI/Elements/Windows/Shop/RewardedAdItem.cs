@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using WC.Runtime.Infrastructure.Services;
 
-namespace WC.Runtime.UI
+namespace WC.Runtime.UI.Elements
 {
   public class RewardedAdItem : MonoBehaviour
   {
@@ -20,21 +20,20 @@ namespace WC.Runtime.UI
       _progress = progress;
     }
     
-    public void Init()
+
+    public void SubscribeUpdates()
     {
       _showAdButton.onClick.AddListener(OnShowAdClick);
-
-      RefreshActiveAd();
+      _adsService.RewardedReady += Refresh;
     }
 
+    public void UnsubscribeUpdates()
+    {
+      _showAdButton.onClick.RemoveListener(OnShowAdClick);
+      _adsService.RewardedReady -= Refresh;
+    }
 
-    public void Subscribe() => 
-      _adsService.RewardedReady += RefreshActiveAd;
-
-    public void CleanUp() => 
-      _adsService.RewardedReady -= RefreshActiveAd;
-
-    private void RefreshActiveAd()
+    public void Refresh()
     {
       var isRewardedReady = _adsService.IsRewardedReady;
 

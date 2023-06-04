@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using WC.Runtime.Infrastructure.Services;
-using WC.Runtime.UI.Screens;
+using WC.Runtime.UI.Elements;
 
 namespace WC.Runtime.Infrastructure
 {
@@ -25,10 +25,10 @@ namespace WC.Runtime.Infrastructure
     public void ReloadCurrent(bool withLoadingScreen = false, Action onReload = null) => 
       _coroutineRunner.StartCoroutine(LoadScene(SceneManager.GetActiveScene().name, withLoadingScreen, onReload));
 
-    private IEnumerator LoadScene(string nextScene, bool withCurtain, Action onLoaded = null)
+    private IEnumerator LoadScene(string nextScene, bool withLoadingScreen, Action onLoaded = null)
     {
-      if (withCurtain) 
-        _loadingScreen.Show();
+      if (withLoadingScreen) 
+        _loadingScreen.Show(smoothly: true);
       
       AsyncOperation waitNextScene = SceneManager.LoadSceneAsync(nextScene);
       
@@ -37,8 +37,8 @@ namespace WC.Runtime.Infrastructure
 
       onLoaded?.Invoke();
       
-      if (withCurtain) 
-        _loadingScreen.Hide();
+      if (withLoadingScreen) 
+        _loadingScreen.Hide(smoothly: true);
     }
   }
 }

@@ -1,16 +1,12 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using WC.Runtime.Infrastructure.Services;
 using Zenject;
 
 namespace WC.Runtime.UI.Elements
 {
-  public class StartGameButton : MonoBehaviour
+  public class StartGameButton : UIButtonBase
   {
     [SerializeField] private StartGameType _type;
-    
-    [Header("Links")]
-    [SerializeField] private Button _button;
 
     private IGameStateMachine _gameStateMachine;
     private IPersistentProgressService _progressService;
@@ -20,15 +16,13 @@ namespace WC.Runtime.UI.Elements
     {
       _gameStateMachine = gameStateMachine;
       _progressService = progressService;
-
-      Init();
     }
 
-    private void Init() => _button.onClick.AddListener(OnPressed);
 
-    
-    private void OnPressed()
+    protected override void OnPressed()
     {
+      base.OnPressed();
+      
       if (_type == StartGameType.NewGame) 
         _progressService.NewProgress();
 

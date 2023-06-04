@@ -1,13 +1,10 @@
 ﻿using System;
 using UnityEngine;
-using WC.Runtime.Data.Characters;
-using WC.Runtime.Infrastructure.Services;
 
 namespace WC.Runtime.Logic.Characters
 {
   public abstract class CharacterBase : MonoBehaviour,
-    ICharacter,
-    ISaverProgress
+    ICharacter
   {
     public event Action Initialized;
     
@@ -21,18 +18,9 @@ namespace WC.Runtime.Logic.Characters
     [SerializeField] protected Animator _animator;
     [SerializeField] protected CharacterAnimationObserver _animObserver;
 
-    protected PlayerProgressData p_Progress;
-
     private bool _initialized;
 
-    protected virtual void Init()
-    {
-      SubscribeToEvents();
-      _initialized = true;
-      Initialized?.Invoke();
-    }
 
-    
     protected virtual void Update()
     {
       if (_initialized == false) return;
@@ -46,11 +34,17 @@ namespace WC.Runtime.Logic.Characters
       Movement?.Tick();
     }
 
-    protected virtual void OnDestroy() => 
-      UnsubscribeFromEvents();
+    protected virtual void OnDestroy() => UnsubscribeUpdates();
 
+    
+    protected virtual void Init()
+    {
+      SubscribeUpdates();
+      _initialized = true;
+      Initialized?.Invoke();
+    }
 
-    protected virtual void SubscribeToEvents()
+    protected virtual void SubscribeUpdates()
     {
       Health.TakingDamage += OnTakeDamage;
       Health.Changed += OnHealthChanged;
@@ -61,7 +55,7 @@ namespace WC.Runtime.Logic.Characters
       _animObserver.AttackEnd += OnAnimAttackEnd;
     }
 
-    protected virtual void UnsubscribeFromEvents()
+    protected virtual void UnsubscribeUpdates()
     {
       Health.TakingDamage -= OnTakeDamage;
       Health.Changed -= OnHealthChanged;
@@ -72,26 +66,11 @@ namespace WC.Runtime.Logic.Characters
       _animObserver.AttackEnd -= OnAnimAttackEnd;
     }
 
-    protected virtual void OnTakeDamage() => 
-      Animator.PlayHit();
-
-    protected virtual void OnHealthChanged() => 
-      Death.CheckDeath(Health.Current);
-
-    protected virtual void OnDeath() => 
-      Animator.PlayDeath();
-
-    protected virtual void OnAttack() => 
-      Animator.PlayAttack();
-
-    protected virtual void OnAnimAttack() => 
-      Attack.TakeDamage();
-
-    protected virtual void OnAnimAttackEnd() => 
-      Attack.StopAttack();
-
-    public virtual void LoadProgress(PlayerProgressData progressData) => 
-      p_Progress = progressData;
-    public virtual void SaveProgress(PlayerProgressData progressData) { }
+    protected virtual void OnTakeDamage() => Animator.PlayHit();
+    protected virtual void OnHealthChanged() => Death.CheckDeath(Health.Current);
+    protected virtual void OnDeath() => Animator.PlayDeath();
+    protected virtual void OnAttack() => Animator.PlayAttack();
+    protected virtual void OnAnimAttack() => Attack.TakeDamage();
+    protected virtual void OnAnimAttackEnd() => Attack.StopAttack();
   }
 }

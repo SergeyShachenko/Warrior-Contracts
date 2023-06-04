@@ -1,5 +1,5 @@
 ﻿using System;
-using WC.Runtime.UI.Screens;
+using WC.Runtime.UI.Elements;
 using Zenject;
 
 namespace WC.Runtime.Infrastructure.Services
@@ -7,8 +7,6 @@ namespace WC.Runtime.Infrastructure.Services
   public class MainMenuState : PayloadGameStateBase<DiContainer>
   {
     private readonly ILoadingScreen _loadingScreen;
-
-    private DiContainer _subContainer;
 
     public MainMenuState(
       IGameStateMachine gameStateMachine,
@@ -21,11 +19,12 @@ namespace WC.Runtime.Infrastructure.Services
 
     public override void Enter(DiContainer subContainer, Action onExit = null)
     {
-      _subContainer = subContainer;
-      
-      _loadingScreen.Hide();
+      ResolveSubServices(subContainer);
+      _loadingScreen.Hide(smoothly: true);
       
       base.Enter(subContainer, onExit);
     }
+
+    private void ResolveSubServices(DiContainer subContainer) { }
   }
 }

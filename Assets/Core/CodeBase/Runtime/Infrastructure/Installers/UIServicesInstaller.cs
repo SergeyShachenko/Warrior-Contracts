@@ -16,16 +16,6 @@ namespace WC.Runtime.Infrastructure.Installers
         .Bind<IHUDFactory>()
         .To<HUDFactory>()
         .AsSingle();
-
-      Container
-        .Bind<IWindowService>()
-        .To<WindowService>()
-        .AsSingle();
-      
-      Container
-        .Bind<IScreenService>()
-        .To<ScreenService>()
-        .AsSingle();
     }
   }
 }
