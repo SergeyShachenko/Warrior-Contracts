@@ -25,12 +25,12 @@ namespace WC.Runtime.Infrastructure.Services
 
     public override void Enter(DiContainer subContainer, Action onExit = null)
     {
-      ResolveSubServices(subContainer);
-      _saveLoadService.SaveProgress();
-      
-      _loadingScreen.Hide(smoothly: true);
-      
       base.Enter(subContainer, onExit);
+      
+      ResolveSubServices(subContainer);
+      
+      _saveLoadService.SaveProgress();
+      _loadingScreen.Hide(smoothly: true);
     }
 
     public override void Exit()

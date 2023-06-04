@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Enemy_Warrior_Sword
   m_EditorClassIdentifier: 
   Type: 1
-  HP: 5
+  <HP>k__BackingField: 20
   Damage: 10
-  MaxLootExp: 10
-  MinLootExp: 1
-  AttackDistance: 2
-  AttackCooldown: 1
-  HitRadius: 0.5
-  Speed: 5
-  PrefabRef:
+  <AttackDistance>k__BackingField: 2
+  <AttackCooldown>k__BackingField: 1
+  <HitRadius>k__BackingField: 0.5
+  <Speed>k__BackingField: 5
+  <MinLootExp>k__BackingField: 1
+  <MaxLootExp>k__BackingField: 10
+  <PrefabRef>k__BackingField:
     m_AssetGUID: 48c66c7874a9f414185223a38095a1ad
     m_SubObjectName: 
     m_SubObjectType: 

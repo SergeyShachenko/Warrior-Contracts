@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
@@ -7,23 +8,31 @@ using WC.Runtime.UI.Elements;
 namespace WC.Runtime.UI.Services
 {
   public class HUDFactory : FactoryBase<HUDRegistry>,
-    IHUDFactory
+    IHUDFactory,
+    IDisposable,
+    IWarmUp
   {
+    private readonly IAssetsProvider _assetsProvider;
+    private readonly IServiceManager _serviceManager;
+
     private Transform _windowsParent, _screensParent;
 
     public HUDFactory(
-      IServiceManager serviceManager,
+      ISaveLoadService saveLoadService,
       IAssetsProvider assetsProvider,
-      ISaveLoadService saveLoadService)
-      : base(serviceManager, assetsProvider, saveLoadService)
+      IServiceManager serviceManager)
+      : base(saveLoadService)
     {
+      _assetsProvider = assetsProvider;
+      _serviceManager = serviceManager;
       
+      serviceManager.Register(this);
     }
 
     
     public async Task<GameplayHUD> CreateHUD()
     {
-      GameObject hudObj = await p_AssetsProvider.InstantiateAsync(AssetAddress.UI.HUD.GameplayHUD);
+      GameObject hudObj = await _assetsProvider.InstantiateAsync(AssetAddress.UI.HUD.GameplayHUD);
       RegisterProgressWatcher(hudObj);
 
       if (hudObj != null)
@@ -39,6 +48,7 @@ namespace WC.Runtime.UI.Services
       
       if (hudObj.TryGetComponent(out GameplayHUD gameplayHUD)) 
         Registry.Register(gameplayHUD);
+      
       //TODO Логгер
       // else
       //   LogService.Log<UIFactory>("Отсутствует компонент - GameplayHUD!", LogLevel.Error);
@@ -55,10 +65,6 @@ namespace WC.Runtime.UI.Services
       //   case HUDWindowID.Inventory:
       //   {
       //     GameObject inventoryObj = await InstantiateAsync(AssetAddress.UI.Shop, _windowsParent);
-      //
-      //     var inventoryWindow = inventoryObj.GetComponent<ShopWindow>();
-      //     inventoryWindow.Construct();
-      //
       //     window = inventoryWindow;
       //   }
       //     break;
@@ -78,10 +84,6 @@ namespace WC.Runtime.UI.Services
       //   case UIPanelID.Resources:
       //   {
       //     GameObject panelObj = await InstantiateAsync(AssetAddress.UI.Shop, _panelsParent);
-      //
-      //     var resourcesPanel = panelObj.GetComponent<ResourcesPanel>();
-      //     resourcesPanel.Construct();
-      //
       //     panel = resourcesPanel;
       //   }
       //     break;
@@ -92,9 +94,9 @@ namespace WC.Runtime.UI.Services
       return Registry.Screens[id];
     }
 
-    public override async Task WarmUp()
-    {
-      await p_AssetsProvider.Load<GameObject>(AssetAddress.UI.HUD.GameplayHUD);
-    }
+    async Task IWarmUp.WarmUp() => 
+      await _assetsProvider.Load<GameObject>(AssetAddress.UI.HUD.GameplayHUD);
+
+    void IDisposable.Dispose() => _serviceManager.Unregister(this);
   }
 }

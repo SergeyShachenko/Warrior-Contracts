@@ -10,7 +10,8 @@ namespace WC.Runtime.Infrastructure.Installers
       Container
         .Bind<IGameStateMachine>()
         .To<GameStateMachine>()
-        .AsSingle();
+        .AsSingle()
+        .NonLazy();
       
       Container
         .Bind<BootstrapState>()

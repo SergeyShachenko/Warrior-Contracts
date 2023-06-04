@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Player_Warrior_Sword
   m_EditorClassIdentifier: 
   Type: 1
-  HP: 20
-  Damage: 10
-  AttackDistance: 2
-  AttackCooldown: 1
-  HitRadius: 0.5
-  Speed: 5
-  PrefabRef:
+  <HP>k__BackingField: 20
+  <Damage>k__BackingField: 10
+  <AttackDistance>k__BackingField: 2
+  <AttackCooldown>k__BackingField: 1
+  <HitRadius>k__BackingField: 0.5
+  <Speed>k__BackingField: 5
+  <PrefabRef>k__BackingField:
     m_AssetGUID: a249796836309ed4387b96c09248b3b8
     m_SubObjectName: 
     m_SubObjectType: 

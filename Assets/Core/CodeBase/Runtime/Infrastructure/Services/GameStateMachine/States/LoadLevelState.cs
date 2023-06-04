@@ -23,6 +23,7 @@ namespace WC.Runtime.Infrastructure.Services
     private ILevelToolsFactory _levelToolsFactory;
     private IUIFactory _uiFactory;
     private IHUDFactory _hudFactory;
+    private ILootFactory _lootFactory;
 
     public LoadLevelState(
       IGameStateMachine gameStateMachine,
@@ -39,6 +40,8 @@ namespace WC.Runtime.Infrastructure.Services
 
     public override async void Enter(DiContainer subContainer, Action onExit = null)
     {
+      base.Enter(subContainer, onExit);
+      
       ResolveSubServices(subContainer);
       
       await _serviceManager.WarmUp();
@@ -49,14 +52,13 @@ namespace WC.Runtime.Infrastructure.Services
       
       _saveLoadService.LoadProgress();
 
-      base.Enter(subContainer, onExit);
-      
       p_GameStateMachine.Enter<GameLoopState, DiContainer>(subContainer);
     }
 
 
     private void ResolveSubServices(DiContainer subContainer)
     {
+      _lootFactory = subContainer.Resolve<ILootFactory>();
       _characterFactory = subContainer.Resolve<ICharacterFactory>();
       _levelToolsFactory = subContainer.Resolve<ILevelToolsFactory>();
       _uiFactory = subContainer.Resolve<IUIFactory>();

@@ -1,4 +1,5 @@
-﻿using WC.Runtime.UI.Services;
+﻿using System;
+using WC.Runtime.UI.Services;
 using Zenject;
 
 namespace WC.Runtime.Infrastructure.Installers
@@ -8,12 +9,12 @@ namespace WC.Runtime.Infrastructure.Installers
     public override void InstallBindings()
     {
       Container
-        .Bind<IUIFactory>()
+        .Bind(typeof(IUIFactory), typeof(IDisposable))
         .To<UIFactory>()
         .AsSingle();
       
       Container
-        .Bind<IHUDFactory>()
+        .Bind(typeof(IHUDFactory), typeof(IDisposable))
         .To<HUDFactory>()
         .AsSingle();
     }

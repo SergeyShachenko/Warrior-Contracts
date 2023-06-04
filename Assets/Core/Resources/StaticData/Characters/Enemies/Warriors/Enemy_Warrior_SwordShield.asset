@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Enemy_Warrior_SwordShield
   m_EditorClassIdentifier: 
   Type: 2
-  HP: 7
+  <HP>k__BackingField: 20
   Damage: 10
-  MaxLootExp: 10
-  MinLootExp: 1
-  AttackDistance: 2
-  AttackCooldown: 1
-  HitRadius: 0.5
-  Speed: 3
-  PrefabRef:
+  <AttackDistance>k__BackingField: 2
+  <AttackCooldown>k__BackingField: 1
+  <HitRadius>k__BackingField: 0.5
+  <Speed>k__BackingField: 5
+  <MinLootExp>k__BackingField: 1
+  <MaxLootExp>k__BackingField: 10
+  <PrefabRef>k__BackingField:
     m_AssetGUID: afab53dfaa23d5145a316b30c1de1c5e
     m_SubObjectName: 
     m_SubObjectType: 

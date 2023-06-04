@@ -20,6 +20,8 @@ namespace WC.Runtime.Infrastructure.Services
 
     public override void Enter(BootstrapConfig bootstrapConfig, Action onExit = null)
     {
+      base.Enter(bootstrapConfig, onExit);
+      
       switch (bootstrapConfig.Type)
       {
         case BootstrapType.Default:
@@ -36,9 +38,7 @@ namespace WC.Runtime.Infrastructure.Services
         }
           break;
       }
-      
-      base.Enter(bootstrapConfig, onExit);
-      
+
       p_GameStateMachine.Enter<LoadSceneState, string>(bootstrapConfig.StartScene);
     }
   }

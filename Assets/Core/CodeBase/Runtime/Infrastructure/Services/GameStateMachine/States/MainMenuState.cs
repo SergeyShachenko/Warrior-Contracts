@@ -19,10 +19,10 @@ namespace WC.Runtime.Infrastructure.Services
 
     public override void Enter(DiContainer subContainer, Action onExit = null)
     {
+      base.Enter(subContainer, onExit);
+      
       ResolveSubServices(subContainer);
       _loadingScreen.Hide(smoothly: true);
-      
-      base.Enter(subContainer, onExit);
     }
 
     private void ResolveSubServices(DiContainer subContainer) { }

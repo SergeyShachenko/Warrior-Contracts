@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using WC.Runtime.Logic.Characters;
 using WC.Runtime.Infrastructure.AssetManagement;
@@ -7,21 +8,29 @@ using WC.Runtime.Infrastructure.Services;
 namespace WC.Runtime.Gameplay.Services
 {
   public class LevelToolsFactory : FactoryBase<LevelToolsRegistry>,
-    ILevelToolsFactory
+    ILevelToolsFactory,
+    IDisposable,
+    IWarmUp
   {
+    private readonly IAssetsProvider _assetsProvider;
+    private readonly IServiceManager _serviceManager;
+
     public LevelToolsFactory(
-      IServiceManager serviceManager,
+      ISaveLoadService saveLoadService,
       IAssetsProvider assetsProvider,
-      ISaveLoadService saveLoadService) 
-      : base(serviceManager, assetsProvider, saveLoadService)
+      IServiceManager serviceManager) 
+      : base(saveLoadService)
     {
+      _assetsProvider = assetsProvider;
+      _serviceManager = serviceManager;
       
+      serviceManager.Register(this);
     }
 
 
     public async Task<EnemySpawnPoint> CreateEnemySpawnPoint(string spawnerID, Vector3 at, WarriorID warriorType)
     {
-      GameObject spawnerObj = await p_AssetsProvider.InstantiateAsync(AssetAddress.SpawnPoint, at);
+      GameObject spawnerObj = await _assetsProvider.InstantiateAsync(AssetAddress.SpawnPoint, at);
       RegisterProgressWatcher(spawnerObj);
       
       var spawnPoint = spawnerObj.GetComponent<EnemySpawnPoint>();
@@ -31,7 +40,9 @@ namespace WC.Runtime.Gameplay.Services
       return spawnPoint;
     }
 
-    public override async Task WarmUp() => 
-      await p_AssetsProvider.Load<GameObject>(AssetAddress.SpawnPoint);
+    async Task IWarmUp.WarmUp() => 
+      await _assetsProvider.Load<GameObject>(AssetAddress.SpawnPoint);
+    
+    void IDisposable.Dispose() => _serviceManager.Unregister(this);
   }
 }

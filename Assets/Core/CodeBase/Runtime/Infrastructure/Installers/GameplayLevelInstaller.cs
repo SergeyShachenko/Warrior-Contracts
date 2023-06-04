@@ -1,4 +1,5 @@
-﻿using WC.Runtime.Gameplay.Services;
+﻿using System;
+using WC.Runtime.Gameplay.Services;
 using WC.Runtime.Infrastructure.Services;
 using Zenject;
 
@@ -16,17 +17,17 @@ namespace WC.Runtime.Infrastructure.Installers
     public override void InstallBindings()
     {
       Container
-        .Bind<ILootFactory>()
+        .Bind(typeof(ILootFactory), typeof(IDisposable))
         .To<LootFactory>()
         .AsSingle();
 
       Container
-        .Bind<ICharacterFactory>()
+        .Bind(typeof(ICharacterFactory), typeof(IDisposable))
         .To<CharacterFactory>()
         .AsSingle();
 
       Container
-        .Bind<ILevelToolsFactory>()
+        .Bind(typeof(ILevelToolsFactory), typeof(IDisposable))
         .To<LevelToolsFactory>()
         .AsSingle();
 

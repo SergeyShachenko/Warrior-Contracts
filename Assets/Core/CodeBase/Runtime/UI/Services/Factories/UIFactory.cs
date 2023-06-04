@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
@@ -7,23 +8,31 @@ using WC.Runtime.UI.Elements;
 namespace WC.Runtime.UI.Services
 {
   public class UIFactory : FactoryBase<UIRegistry>,
-    IUIFactory
+    IUIFactory,
+    IDisposable,
+    IWarmUp
   {
+    private readonly IAssetsProvider _assetsProvider;
+    private readonly IServiceManager _serviceManager;
+
     private Transform _windowsParent, _screensParent;
 
     public UIFactory(
-      IServiceManager serviceManager,
+      ISaveLoadService saveLoadService,
       IAssetsProvider assetsProvider,
-      ISaveLoadService saveLoadService) 
-      : base(serviceManager, assetsProvider, saveLoadService)
+      IServiceManager serviceManager) 
+      : base(saveLoadService)
     {
+      _assetsProvider = assetsProvider;
+      _serviceManager = serviceManager;
       
+      serviceManager.Register(this);
     }
     
     
     public async Task<MainUI> CreateUI()
     {
-      GameObject uiObj = await p_AssetsProvider.InstantiateAsync(AssetAddress.UI.MainUI);
+      GameObject uiObj = await _assetsProvider.InstantiateAsync(AssetAddress.UI.MainUI);
       RegisterProgressWatcher(uiObj);
       
       if (uiObj != null)
@@ -54,7 +63,7 @@ namespace WC.Runtime.UI.Services
       {
         case UIWindowID.Shop:
         {
-          GameObject windowObj = await p_AssetsProvider.InstantiateAsync(AssetAddress.UI.HUD.Windows.Shop, _windowsParent);
+          GameObject windowObj = await _assetsProvider.InstantiateAsync(AssetAddress.UI.HUD.Windows.Shop, _windowsParent);
           RegisterProgressWatcher(windowObj);
 
           window = windowObj.GetComponent<ShopWindow>();
@@ -88,10 +97,12 @@ namespace WC.Runtime.UI.Services
       return Registry.Screens[id];
     }
 
-    public override async Task WarmUp()
+    async Task IWarmUp.WarmUp()
     {
-      await p_AssetsProvider.Load<GameObject>(AssetAddress.UI.MainUI);
-      await p_AssetsProvider.Load<GameObject>(AssetAddress.UI.HUD.Windows.Shop);
+      await _assetsProvider.Load<GameObject>(AssetAddress.UI.MainUI);
+      await _assetsProvider.Load<GameObject>(AssetAddress.UI.HUD.Windows.Shop);
     }
+    
+    void IDisposable.Dispose() => _serviceManager.Unregister(this);
   }
 }

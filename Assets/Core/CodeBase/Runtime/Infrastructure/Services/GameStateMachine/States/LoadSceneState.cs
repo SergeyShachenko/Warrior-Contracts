@@ -24,12 +24,12 @@ namespace WC.Runtime.Infrastructure.Services
     
     public override void Enter(string sceneName, Action onExit = null)
     {
+      base.Enter(sceneName, onExit);
+      
       _sceneName = sceneName;
       
       SubscribeUpdates();
       _loadingScreen.Show(smoothly: true);
-
-      base.Enter(sceneName, onExit);
     }
 
     public override void Exit()

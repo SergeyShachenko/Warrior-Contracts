@@ -9,15 +9,15 @@ namespace WC.Runtime.StaticData
   {
     public WarriorID Type;
     
-    [Range(1f, 100f)] public float HP = 20f;
-    [Range(1f, 30f)] public float Damage = 10f;
-
-    [Range(0.5f, 3f)] public float AttackDistance = 2f;
-    [Range(0.5f, 3f)] public float AttackCooldown = 1f;
-    [Range(0.5f, 3f)] public float HitRadius = 0.5f;
+    [field: SerializeField, Range(1f, 100f), Header("Health")] public float HP { get; private set; } = 20f;
     
-    [Range(1f, 10f)] public float Speed = 5f;
+    [field: SerializeField, Range(1f, 30f), Header("Attack")] public float Damage { get; private set; } = 10f;
+    [field: SerializeField, Range(0.5f, 3f)] public float AttackDistance { get; private set; } = 2f;
+    [field: SerializeField, Range(0.5f, 3f)] public float AttackCooldown { get; private set; } = 1f;
+    [field: SerializeField, Range(0.5f, 3f)] public float HitRadius { get; private set; } = 0.5f;
+    
+    [field: SerializeField, Range(1f, 10f), Header("Movement")] public float Speed { get; private set; } = 5f;
 
-    public AssetReferenceGameObject PrefabRef;
+    [field: SerializeField, Header("")] public AssetReferenceGameObject PrefabRef { get; private set; }
   }
 }

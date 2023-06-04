@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
@@ -7,23 +8,29 @@ using WC.Runtime.Logic.Loot;
 namespace WC.Runtime.Gameplay.Services
 {
   public class LootFactory : FactoryBase<LootRegistry>,
-    ILootFactory
+    ILootFactory,
+    IDisposable,
+    IWarmUp
   {
-    public LootRegistry Registry { get; } = new();
-    
+    private readonly IAssetsProvider _assetsProvider;
+    private readonly IServiceManager _serviceManager;
+
     public LootFactory(
-      IServiceManager serviceManager,
-      IAssetsProvider assetsProvider, 
-      ISaveLoadService saveLoadService)
-      : base(serviceManager, assetsProvider, saveLoadService)
+      ISaveLoadService saveLoadService,
+      IAssetsProvider assetsProvider,
+      IServiceManager serviceManager)
+      : base(saveLoadService)
     {
+      _assetsProvider = assetsProvider;
+      _serviceManager = serviceManager;
       
+      serviceManager.Register(this);
     }
 
 
     public async Task<LootPiece> CreateGold()
     {
-      GameObject lootObj = await p_AssetsProvider.InstantiateAsync(AssetAddress.Loot.Gold);
+      GameObject lootObj = await _assetsProvider.InstantiateAsync(AssetAddress.Loot.Gold);
       RegisterProgressWatcher(lootObj);
       
       var lootPiece = lootObj.GetComponent<LootPiece>();
@@ -32,7 +39,9 @@ namespace WC.Runtime.Gameplay.Services
       return lootPiece; 
     }
 
-    public override async Task WarmUp() => 
-      await p_AssetsProvider.Load<GameObject>(AssetAddress.Loot.Gold);
+    async Task IWarmUp.WarmUp() => 
+      await _assetsProvider.Load<GameObject>(AssetAddress.Loot.Gold);
+    
+    void IDisposable.Dispose() => _serviceManager.Unregister(this);
   }
 }

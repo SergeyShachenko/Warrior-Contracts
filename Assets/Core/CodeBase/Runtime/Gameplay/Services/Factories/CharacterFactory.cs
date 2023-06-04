@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using WC.Runtime.Infrastructure.AssetManagement;
@@ -10,24 +11,32 @@ using WC.Runtime.StaticData;
 namespace WC.Runtime.Gameplay.Services
 {
   public class CharacterFactory : FactoryBase<CharacterRegistry>, 
-    ICharacterFactory
+    ICharacterFactory,
+    IDisposable,
+    IWarmUp
   {
     private readonly IStaticDataService _staticData;
+    private readonly IAssetsProvider _assetsProvider;
+    private readonly IServiceManager _serviceManager;
 
     public CharacterFactory(
-      IServiceManager serviceManager,
-      IAssetsProvider assetsProvider,
       ISaveLoadService saveLoadService,
+      IAssetsProvider assetsProvider,
+      IServiceManager serviceManager,
       IStaticDataService staticData) 
-      : base(serviceManager, assetsProvider, saveLoadService)
+      : base(saveLoadService)
     {
+      _assetsProvider = assetsProvider;
+      _serviceManager = serviceManager;
       _staticData = staticData;
+      
+      serviceManager.Register(this);
     }
 
     
     public async Task<Player> CreatePlayer(WarriorID id, Vector3 at)
     {
-      GameObject playerObj = await p_AssetsProvider.InstantiateAsync(AssetAddress.Character.PlayerSword, at);
+      GameObject playerObj = await _assetsProvider.InstantiateAsync(AssetAddress.Character.PlayerSword, at);
       RegisterProgressWatcher(playerObj);
       
       Registry.Register(playerObj.GetComponent<Player>());
@@ -37,7 +46,7 @@ namespace WC.Runtime.Gameplay.Services
     public async Task<Enemy> CreateEnemy(WarriorID id, Transform under)
     {
       EnemyWarriorStaticData warriorData = _staticData.EnemyWarriors[id];
-      GameObject warriorObj = await p_AssetsProvider.InstantiateAsync(warriorData.PrefabRef, under);
+      GameObject warriorObj = await _assetsProvider.InstantiateAsync(warriorData.PrefabRef, under);
       RegisterProgressWatcher(warriorObj);
       
       var enemy = warriorObj.GetComponent<Enemy>();
@@ -68,12 +77,14 @@ namespace WC.Runtime.Gameplay.Services
       return enemy;
     }
 
-    public override async Task WarmUp()
+    async Task IWarmUp.WarmUp()
     {
-      await p_AssetsProvider.Load<GameObject>(AssetAddress.Character.PlayerSword);
+      await _assetsProvider.Load<GameObject>(AssetAddress.Character.PlayerSword);
 
       foreach (var warriorData in _staticData.EnemyWarriors.Values)
-        await p_AssetsProvider.Load<GameObject>(warriorData.PrefabRef);
+        await _assetsProvider.Load<GameObject>(warriorData.PrefabRef);
     }
+    
+    void IDisposable.Dispose() => _serviceManager.Unregister(this);
   }
 }
