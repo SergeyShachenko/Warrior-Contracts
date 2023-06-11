@@ -17,14 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 69f70241df52ffa4fa99c45f4c88aa2a
   m_SerializeEntries:
-  - m_GUID: 804761d9324213648926a9515b4f579e
-    m_Address: HUD_Window_Shop
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 956ed20f0ab274349806a3928bd61a18
-    m_Address: HUD_Window_Shop_Item
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 60b6e9d0d800a054fa5acc72583ac601
     m_Address: HUD_Gameplay
     m_ReadOnly: 0

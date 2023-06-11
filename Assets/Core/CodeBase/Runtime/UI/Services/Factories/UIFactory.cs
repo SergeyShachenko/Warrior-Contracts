@@ -4,6 +4,7 @@ using UnityEngine;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
 using WC.Runtime.UI.Elements;
+using WC.Runtime.UI.Screens;
 
 namespace WC.Runtime.UI.Services
 {
@@ -14,18 +15,21 @@ namespace WC.Runtime.UI.Services
   {
     private readonly IAssetsProvider _assetsProvider;
     private readonly IServiceManager _serviceManager;
+    private readonly IStaticDataService _staticDataService;
 
     private Transform _windowsParent, _screensParent;
 
     public UIFactory(
       ISaveLoadService saveLoadService,
       IAssetsProvider assetsProvider,
-      IServiceManager serviceManager) 
+      IServiceManager serviceManager,
+      IStaticDataService staticDataService) 
       : base(saveLoadService)
     {
       _assetsProvider = assetsProvider;
       _serviceManager = serviceManager;
-      
+      _staticDataService = staticDataService;
+
       serviceManager.Register(this);
     }
     
@@ -48,59 +52,32 @@ namespace WC.Runtime.UI.Services
       
       if (uiObj.TryGetComponent(out MainUI mainUI))
         Registry.Register(mainUI);
-      //TODO Логгер
-      // else
-      //   LogService.Log<UIFactory>("Отсутствует компонент - MainUI!", LogLevel.Error);
 
       return Registry.UI;
     }
 
     public async Task<WindowBase> Create(UIWindowID id)
     {
-      WindowBase window = null;
-
-      switch (id)
-      {
-        case UIWindowID.Shop:
-        {
-          GameObject windowObj = await _assetsProvider.InstantiateAsync(AssetAddress.UI.HUD.Windows.Shop, _windowsParent);
-          RegisterProgressWatcher(windowObj);
-
-          window = windowObj.GetComponent<ShopWindow>();
-        }
-          break;
-      }
+      GameObject windowObj = await _assetsProvider.InstantiateAsync(_staticDataService.UIWindows[id], _windowsParent);
+      var window = windowObj.GetComponent<WindowBase>();
       
       Registry.Register(id, window);
-      return Registry.Windows[id];
+      return window;
     }
     
     public async Task<ScreenBase> Create(UIScreenID id)
     {
-      ScreenBase screen = null;
-      
-      // switch (id)
-      // {
-      //   case UIPanelID.Resources:
-      //   {
-      //     GameObject panelObj = await InstantiateAsync(AssetAddress.UI.Shop, _panelsParent);
-      //
-      //     var resourcesPanel = panelObj.GetComponent<ResourcesPanel>();
-      //     resourcesPanel.Construct();
-      //
-      //     panel = resourcesPanel;
-      //   }
-      //     break;
-      // }
+      GameObject screenObj = await _assetsProvider.InstantiateAsync(_staticDataService.UIScreens[id], _screensParent);
+      var screen = screenObj.GetComponent<ScreenBase>();
       
       Registry.Register(id, screen);
-      return Registry.Screens[id];
+      return screen;
     }
 
     async Task IWarmUp.WarmUp()
     {
       await _assetsProvider.Load<GameObject>(AssetAddress.UI.MainUI);
-      await _assetsProvider.Load<GameObject>(AssetAddress.UI.HUD.Windows.Shop);
+      await _assetsProvider.Load<GameObject>(AssetAddress.UI.Screen.Shop);
     }
     
     void IDisposable.Dispose() => _serviceManager.Unregister(this);

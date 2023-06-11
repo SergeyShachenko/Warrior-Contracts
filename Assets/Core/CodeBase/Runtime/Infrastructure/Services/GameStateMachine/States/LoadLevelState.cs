@@ -9,6 +9,7 @@ using WC.Runtime.Data.Characters;
 using WC.Runtime.Gameplay.Services;
 using WC.Runtime.StaticData;
 using WC.Runtime.UI.Elements;
+using WC.Runtime.UI.Screens;
 using Zenject;
 
 namespace WC.Runtime.Infrastructure.Services
@@ -68,7 +69,7 @@ namespace WC.Runtime.Infrastructure.Services
     private async Task CreateUI()
     {
       await _uiFactory.CreateUI();
-      await _uiFactory.Create(UIWindowID.Shop);
+      await _uiFactory.Create(UIScreenID.Shop);
     }
 
     private async Task CreateHUD()

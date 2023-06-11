@@ -12,9 +12,7 @@ namespace WC.Runtime.Infrastructure.Installers
       _gameStateMachine = gameStateMachine;
 
     
-    public override void InstallBindings()
-    {
+    public override void InstallBindings() => 
       _gameStateMachine.Enter<MainMenuState, DiContainer>(Container);
-    }
   }
 }

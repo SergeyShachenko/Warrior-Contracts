@@ -3,7 +3,7 @@ using WC.Runtime.Logic.Characters;
 using WC.Runtime.UI.Elements;
 using Zenject;
 
-namespace WC.Runtime.UI
+namespace WC.Runtime.UI.Elements
 {
   public class HUDAttackButton : UIButtonBase
   {

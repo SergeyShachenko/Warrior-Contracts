@@ -121,7 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hpBar: {fileID: 6800312693613460454}
   _lootCounter: {fileID: 6746903922560128792}
-  _openWindowButton: {fileID: 1298259807664801360}
+  _uiScreenButton: {fileID: 2333487556278716522}
 --- !u!1 &798822420434336517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1094,7 +1094,7 @@ GameObject:
   - component: {fileID: 2904851484737777768}
   - component: {fileID: 4225060106704298934}
   - component: {fileID: 3956538974766373241}
-  - component: {fileID: 1298259807664801360}
+  - component: {fileID: 2333487556278716522}
   m_Layer: 0
   m_Name: Button_Shop
   m_TagString: Untagged
@@ -1205,7 +1205,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1298259807664801360
+--- !u!114 &2333487556278716522
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1214,11 +1214,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7453056955555045466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cef40f6d71949318df9ebb9c5b02b31, type: 3}
+  m_Script: {fileID: 11500000, guid: d3f313ece63243b1b2b6f098ebba8148, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 3956538974766373241}
-  <WindowID>k__BackingField: 1
+  <ID>k__BackingField: 3
 --- !u!1 &8174780457718627462
 GameObject:
   m_ObjectHideFlags: 0

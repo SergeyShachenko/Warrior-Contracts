@@ -8,15 +8,9 @@ namespace WC.Runtime.Infrastructure.Installers
   {
     public override void InstallBindings()
     {
-      Container
-        .Bind(typeof(IUIFactory), typeof(IDisposable))
-        .To<UIFactory>()
-        .AsSingle();
       
-      Container
-        .Bind(typeof(IHUDFactory), typeof(IDisposable))
-        .To<HUDFactory>()
-        .AsSingle();
+      
+      
     }
   }
 }

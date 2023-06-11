@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace WC.Runtime.UI
+namespace WC.Runtime.UI.Character
 {
   public class HPBar : MonoBehaviour
   {

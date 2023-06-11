@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
-using WC.Runtime.UI.Elements;
+using WC.Runtime.UI.Screens;
 using Zenject;
 
 namespace WC.Runtime.Infrastructure

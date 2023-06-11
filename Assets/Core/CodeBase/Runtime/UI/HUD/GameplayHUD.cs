@@ -2,7 +2,9 @@
 using WC.Runtime.Gameplay.Services;
 using WC.Runtime.Infrastructure.Services;
 using WC.Runtime.Logic.Characters;
+using WC.Runtime.UI.Character;
 using WC.Runtime.UI.Elements;
+using WC.Runtime.UI.Screens;
 using WC.Runtime.UI.Services;
 using Zenject;
 
@@ -12,7 +14,7 @@ namespace WC.Runtime.UI
   {
     [SerializeField] private HPBar _hpBar;
     [SerializeField] private LootCounter _lootCounter;
-    [SerializeField] private OpenWindowButton _openWindowButton;
+    [SerializeField] private OpenUIScreenButton _uiScreenButton;
 
     private Player _player;
     private IPersistentProgressService _progress;
@@ -38,7 +40,7 @@ namespace WC.Runtime.UI
 
       _player.Health.Changed += RefreshHealthView;
       _progress.Player.World.Loot.Changed += RefreshLootView;
-      _openWindowButton.Pressed += OnOpenWindowButtonPressed;
+      _uiScreenButton.Opened += OnPressedUIScreenButton;
     }
 
     private void OnDestroy()
@@ -46,7 +48,7 @@ namespace WC.Runtime.UI
       _player.Initialized -= Init;
       _player.Health.Changed -= RefreshHealthView;
       _progress.Player.World.Loot.Changed -= RefreshLootView;
-      _openWindowButton.Pressed -= OnOpenWindowButtonPressed;
+      _uiScreenButton.Opened -= OnPressedUIScreenButton;
     }
 
     
@@ -56,13 +58,8 @@ namespace WC.Runtime.UI
       RefreshLootView();
     }
     
-    private void RefreshHealthView() => 
-      _hpBar.SetProgress(_player.Health.Current, _player.Health.Max);
-
-    private void RefreshLootView() => 
-      _lootCounter.Set(_progress.Player.World.Loot.Collected);
-    
-    private void OnOpenWindowButtonPressed(UIButtonBase button) => 
-      _uiFactory.Registry.Windows[_openWindowButton.WindowID].Show(smoothly: true);
+    private void RefreshHealthView() => _hpBar.SetProgress(_player.Health.Current, _player.Health.Max);
+    private void RefreshLootView() => _lootCounter.Set(_progress.Player.World.Loot.Collected);
+    private void OnPressedUIScreenButton(UIScreenID id) => _uiFactory.Registry.Screens[id].Show(smoothly: true);
   }
 }

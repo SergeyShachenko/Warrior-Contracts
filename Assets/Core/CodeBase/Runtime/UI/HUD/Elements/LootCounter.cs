@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace WC.Runtime.UI
+namespace WC.Runtime.UI.Elements
 {
   public class LootCounter : MonoBehaviour
   {

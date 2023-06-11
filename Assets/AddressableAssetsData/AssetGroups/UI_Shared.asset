@@ -21,8 +21,8 @@ MonoBehaviour:
     m_Address: UI_Main
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 68b66e318ff1dfc43b2e82bc6045709a
-    m_Address: UI_Window
+  - m_GUID: 804761d9324213648926a9515b4f579e
+    m_Address: UI_Screen_Shop
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 0c6a7669ff4fb474f90e220451f4497b
@@ -31,6 +31,14 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: ce6e26cce3bdaa14ea506cbacfdebda4
     m_Address: UI_Screen_MainMenu
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 956ed20f0ab274349806a3928bd61a18
+    m_Address: UI_Screen_Shop_Item
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3d0006b2cf3ab234ab29f8e726d64fb3
+    m_Address: UI_Screen_MainMenu_Button
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

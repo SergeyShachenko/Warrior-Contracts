@@ -1,4 +1,6 @@
-﻿using WC.Runtime.Infrastructure.AssetManagement;
+﻿using System;
+using WC.Runtime.Infrastructure.AssetManagement;
+using WC.Runtime.UI.Services;
 using Zenject;
 
 namespace WC.Runtime.Infrastructure.Installers
@@ -10,6 +12,11 @@ namespace WC.Runtime.Infrastructure.Installers
       Container
         .Bind<IAssetsProvider>()
         .To<AssetProvider>()
+        .AsSingle();
+      
+      Container
+        .Bind(typeof(IUIFactory), typeof(IDisposable))
+        .To<UIFactory>()
         .AsSingle();
     }
   }

@@ -1,6 +1,7 @@
 ﻿using System;
 using WC.Runtime.Gameplay.Services;
 using WC.Runtime.Infrastructure.Services;
+using WC.Runtime.UI.Services;
 using Zenject;
 
 namespace WC.Runtime.Infrastructure.Installers
@@ -16,6 +17,11 @@ namespace WC.Runtime.Infrastructure.Installers
     
     public override void InstallBindings()
     {
+      Container
+        .Bind(typeof(IHUDFactory), typeof(IDisposable))
+        .To<HUDFactory>()
+        .AsSingle();
+      
       Container
         .Bind(typeof(ILootFactory), typeof(IDisposable))
         .To<LootFactory>()

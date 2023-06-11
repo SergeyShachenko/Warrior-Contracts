@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using WC.Runtime.Logic.Characters;
 
-namespace WC.Runtime.UI
+namespace WC.Runtime.UI.Character
 {
   public class CharacterHUD : MonoBehaviour
   {
