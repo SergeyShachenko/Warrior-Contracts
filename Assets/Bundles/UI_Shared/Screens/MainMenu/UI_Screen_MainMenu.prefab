@@ -133,7 +133,11 @@ MonoBehaviour:
   _canvases:
   - {fileID: 996512210229810683}
   _canvasGroup: {fileID: 4132706886822297415}
-  _uiScreenButton: {fileID: 2100894631990441679}
+  _startGameButtons:
+  - {fileID: 4271124826425474694}
+  - {fileID: 5584849543346867863}
+  _uiScreenButtons:
+  - {fileID: 2100894631990441679}
 --- !u!1 &5630681121764854579
 GameObject:
   m_ObjectHideFlags: 0

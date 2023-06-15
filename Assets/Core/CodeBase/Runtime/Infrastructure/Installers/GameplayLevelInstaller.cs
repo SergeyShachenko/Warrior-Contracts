@@ -33,6 +33,11 @@ namespace WC.Runtime.Infrastructure.Installers
         .AsSingle();
 
       Container
+        .Bind<ICharacterInitService>()
+        .To<CharacterInitService>()
+        .AsSingle();
+
+      Container
         .Bind(typeof(ILevelToolsFactory), typeof(IDisposable))
         .To<LevelToolsFactory>()
         .AsSingle();

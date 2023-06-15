@@ -46,7 +46,7 @@ namespace WC.Runtime.Infrastructure.Installers
     {
       Container
         .Bind<IServiceManager>()
-        .To<ServiceManager>()
+        .To<ServicesManager>()
         .AsSingle();
       
       Container

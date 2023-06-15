@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine.AddressableAssets;
-using WC.Runtime.UI.Elements;
+using WC.Runtime.UI;
 
 namespace WC.Runtime.Data.UI
 {

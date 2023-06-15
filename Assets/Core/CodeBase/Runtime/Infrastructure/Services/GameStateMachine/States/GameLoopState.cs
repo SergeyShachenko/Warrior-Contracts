@@ -26,7 +26,6 @@ namespace WC.Runtime.Infrastructure.Services
     public override void Enter(DiContainer subContainer, Action onExit = null)
     {
       base.Enter(subContainer, onExit);
-      
       ResolveSubServices(subContainer);
       
       _saveLoadService.SaveProgress();
@@ -36,7 +35,6 @@ namespace WC.Runtime.Infrastructure.Services
     public override void Exit()
     {
       _serviceManager.CleanUp();
-      
       base.Exit();
     }
 

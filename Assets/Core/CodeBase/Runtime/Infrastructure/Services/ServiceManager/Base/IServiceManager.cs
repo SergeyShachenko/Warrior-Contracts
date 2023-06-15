@@ -7,9 +7,9 @@ namespace WC.Runtime.Infrastructure.Services
     IReadOnlyList<IHaveCache> HaveCacheServices { get; }
     IReadOnlyList<IWarmUp> WarmUpServices { get; }
     
-    void Register(IHaveCache haveCache);
-    void Register(IWarmUp warmUp);
-    void Unregister(IHaveCache haveCache);
-    void Unregister(IWarmUp warmUp);
+    void Register(IHaveCache service);
+    void Register(IWarmUp service);
+    void Unregister(IHaveCache service);
+    void Unregister(IWarmUp service);
   }
 }

@@ -8,7 +8,6 @@ using WC.Runtime.Logic.Characters;
 using WC.Runtime.Data.Characters;
 using WC.Runtime.Gameplay.Services;
 using WC.Runtime.StaticData;
-using WC.Runtime.UI.Elements;
 using WC.Runtime.UI.Screens;
 using Zenject;
 
@@ -25,6 +24,8 @@ namespace WC.Runtime.Infrastructure.Services
     private IUIFactory _uiFactory;
     private IHUDFactory _hudFactory;
     private ILootFactory _lootFactory;
+    private ICharacterInitService _characterInitService;
+    private IUIInitService _uiInitService;
 
     public LoadLevelState(
       IGameStateMachine gameStateMachine,
@@ -42,16 +43,12 @@ namespace WC.Runtime.Infrastructure.Services
     public override async void Enter(DiContainer subContainer, Action onExit = null)
     {
       base.Enter(subContainer, onExit);
-      
       ResolveSubServices(subContainer);
       
       await _serviceManager.WarmUp();
-      await CreateGameWorld();
-      await CreateUI();
-      await CreateHUD();
-      InitCamera();
-      
+      await CreateEntities();
       _saveLoadService.LoadProgress();
+      await InitEntities();
 
       p_GameStateMachine.Enter<GameLoopState, DiContainer>(subContainer);
     }
@@ -64,6 +61,30 @@ namespace WC.Runtime.Infrastructure.Services
       _levelToolsFactory = subContainer.Resolve<ILevelToolsFactory>();
       _uiFactory = subContainer.Resolve<IUIFactory>();
       _hudFactory = subContainer.Resolve<IHUDFactory>();
+      _characterInitService = subContainer.Resolve<ICharacterInitService>();
+      _uiInitService = subContainer.Resolve<IUIInitService>();
+    }
+
+    private async Task CreateEntities()
+    {
+      await CreateGameWorld(_staticDataService.Levels[SceneManager.GetActiveScene().name]);
+      await CreateUI();
+      await CreateHUD();
+    }
+    
+    private async Task InitEntities()
+    {
+      _characterInitService.DoInit();
+      _uiInitService.DoInit();
+      // TODO Сделать механику сохранения лута
+      //await InitDroppedLoot();
+      InitCamera();
+    }
+
+    private async Task CreateGameWorld(LevelStaticData levelData)
+    {
+      await CreateSpawners(levelData);
+      await CreatePlayer(levelData);
     }
 
     private async Task CreateUI()
@@ -75,16 +96,6 @@ namespace WC.Runtime.Infrastructure.Services
     private async Task CreateHUD()
     {
       await _hudFactory.CreateHUD();
-    }
-
-    private async Task CreateGameWorld()
-    {
-      LevelStaticData levelData = _staticDataService.Levels[SceneManager.GetActiveScene().name];
-      await CreateSpawners(levelData);
-      await CreatePlayer(levelData);
-
-      // TODO Сделать механику сохранения лута
-      //await InitDroppedLoot();
     }
 
     private async Task CreateSpawners(LevelStaticData levelData)

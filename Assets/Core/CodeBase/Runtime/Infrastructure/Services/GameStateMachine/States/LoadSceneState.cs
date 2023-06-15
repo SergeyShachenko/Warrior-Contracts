@@ -25,7 +25,6 @@ namespace WC.Runtime.Infrastructure.Services
     public override void Enter(string sceneName, Action onExit = null)
     {
       base.Enter(sceneName, onExit);
-      
       _sceneName = sceneName;
       
       SubscribeUpdates();

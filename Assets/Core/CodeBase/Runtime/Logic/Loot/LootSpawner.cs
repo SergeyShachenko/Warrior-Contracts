@@ -29,13 +29,14 @@ namespace WC.Runtime.Logic.Loot
     {
       _minGold = minGold;
       _maxGold = maxGold;
-      
-      _enemy.Death.Happened += OnEnemyDead;
+
+      _enemy.Initialized += PostInit;
     }
 
-    
-    private void OnEnemyDead() => 
-      DropLoot();
+    private void PostInit() => _enemy.Death.Happened += OnEnemyDead;
+
+
+    private void OnEnemyDead() => DropLoot();
 
     private async void DropLoot()
     {

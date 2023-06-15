@@ -33,27 +33,22 @@ namespace WC.Runtime.UI.Services
       serviceManager.Register(this);
     }
     
-    
+
     public async Task<MainUI> CreateUI()
     {
       GameObject uiObj = await _assetsProvider.InstantiateAsync(AssetAddress.UI.MainUI);
-      RegisterProgressWatcher(uiObj);
-      
-      if (uiObj != null)
-      {
-        Transform uiParent = uiObj.transform;
-        
-        _windowsParent = new GameObject("Windows").transform;
-        _windowsParent.parent = uiParent;
-        
-        _screensParent = new GameObject("Screens").transform;
-        _screensParent.parent = uiParent;
-      }
-      
-      if (uiObj.TryGetComponent(out MainUI mainUI))
-        Registry.Register(mainUI);
+      Transform uiParent = uiObj.transform;
+      var mainUI = uiObj.GetComponent<MainUI>();
 
-      return Registry.UI;
+      _windowsParent = new GameObject("Windows").transform;
+      _windowsParent.parent = uiParent;
+        
+      _screensParent = new GameObject("Screens").transform;
+      _screensParent.parent = uiParent;
+
+      RegisterProgressWatcher(uiObj);
+      Registry.Register(mainUI);
+      return mainUI;
     }
 
     public async Task<WindowBase> Create(UIWindowID id)

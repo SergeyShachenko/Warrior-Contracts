@@ -5,7 +5,7 @@ namespace WC.Runtime.UI.Elements
 {
   public class OpenUIWindowButton : UIButtonBase
   {
-    public event Action<UIWindowID> Opened;
+    public event Action<UIWindowID> Pressed;
     
     [field: SerializeField] public UIWindowID ID { get; private set; }
     
@@ -13,7 +13,7 @@ namespace WC.Runtime.UI.Elements
     protected override void OnPressed()
     {
       base.OnPressed();
-      Opened?.Invoke(ID);
+      Pressed?.Invoke(ID);
     }
   }
 }

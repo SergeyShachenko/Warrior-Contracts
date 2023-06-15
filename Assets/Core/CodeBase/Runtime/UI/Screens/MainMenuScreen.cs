@@ -7,20 +7,34 @@ namespace WC.Runtime.UI.Screens
 {
   public class MainMenuScreen : ScreenBase
   {
-    [SerializeField] private OpenUIScreenButton _uiScreenButton;
+    [Header("Buttons")] 
+    [SerializeField] private StartGameButton[] _startGameButtons;
+    [SerializeField] private OpenUIScreenButton[] _uiScreenButtons;
     
     private IUIFactory _uiFactory;
 
     [Inject]
     private void Construct(IUIFactory uiFactory) => _uiFactory = uiFactory;
 
-    
+
     protected override void Init() => Show();
-    protected override void SubscribeUpdates() => _uiScreenButton.Opened += OnPressedUIScreenButton;
-    protected override void UnsubscribeUpdates() => _uiScreenButton.Opened -= OnPressedUIScreenButton;
-    protected override void Refresh() { }
-    
-    
-    private void OnPressedUIScreenButton(UIScreenID id) => _uiFactory.Registry.Screens[id].Show(smoothly: true);
+
+    protected override void SubscribeUpdates()
+    {
+      foreach (StartGameButton button in _startGameButtons) 
+        button.Pressed += _uiFactory.Registry.UI.StartGame;
+
+      foreach (OpenUIScreenButton button in _uiScreenButtons) 
+        button.Pressed += _uiFactory.Registry.UI.Show;
+    }
+
+    protected override void UnsubscribeUpdates()
+    {
+      foreach (StartGameButton button in _startGameButtons) 
+        button.Pressed -= _uiFactory.Registry.UI.StartGame;
+
+      foreach (OpenUIScreenButton button in _uiScreenButtons) 
+        button.Pressed -= _uiFactory.Registry.UI.Show;
+    }
   }
 }

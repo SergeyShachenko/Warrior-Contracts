@@ -30,9 +30,7 @@ namespace WC.Runtime.UI.Screens
       _adItem.Construct(adsService, progress);
       _itemsContainer.Construct(iapService, progress, assetProviderProvider);
     }
-
-
-    protected override void Init() => Refresh();
+    
 
     protected override void SubscribeUpdates()
     {
@@ -57,6 +55,7 @@ namespace WC.Runtime.UI.Screens
       _itemsContainer.Refresh();
     }
 
+    
     private void OnCloseButtonPressed() => Hide(smoothly: true);
   }
 }

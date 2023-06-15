@@ -228,8 +228,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7522927950161676780}
   - component: {fileID: 7545831207659948444}
-  - component: {fileID: 6481875142104861523}
+  - component: {fileID: 6229925575731284317}
   - component: {fileID: 4860475025516133629}
+  - component: {fileID: 6481875142104861523}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -280,18 +281,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &6481875142104861523
-MonoBehaviour:
+--- !u!225 &6229925575731284317
+CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1457501627848798217}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3766eb111304c8d9fb23f7862b56602, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &4860475025516133629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,7 +305,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6823da65c1534306b36aec51a1dcd617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fadeInDuration: 0.15
+  _fadeOutDuration: 0.15
+  _canvases:
+  - {fileID: 7545831207659948444}
+  _canvasGroup: {fileID: 6229925575731284317}
   _hpBar: {fileID: 856316647670674618}
+  _character: {fileID: 0}
+--- !u!114 &6481875142104861523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457501627848798217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3766eb111304c8d9fb23f7862b56602, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2092958951485740090
 GameObject:
   m_ObjectHideFlags: 0

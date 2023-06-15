@@ -33,27 +33,22 @@ namespace WC.Runtime.UI.Services
 
       serviceManager.Register(this);
     }
-
     
+
     public async Task<GameplayHUD> CreateHUD()
     {
       GameObject hudObj = await _assetsProvider.InstantiateAsync(AssetAddress.UI.HUD.GameplayHUD);
-      RegisterProgressWatcher(hudObj);
-
-      if (hudObj != null)
-      {
-        Transform hudParent = hudObj.transform;
-        
-        _windowsParent = new GameObject("Windows").transform;
-        _windowsParent.parent = hudParent;
-        
-        _screensParent = new GameObject("Sreens").transform;
-        _screensParent.parent = hudParent;
-      }
+      Transform hudParent = hudObj.transform;
+      var gameplayHUD = hudObj.GetComponent<GameplayHUD>();
       
-      if (hudObj.TryGetComponent(out GameplayHUD gameplayHUD)) 
-        Registry.Register(gameplayHUD);
+      _windowsParent = new GameObject("Windows").transform;
+      _windowsParent.parent = hudParent;
+      
+      _screensParent = new GameObject("Screens").transform;
+      _screensParent.parent = hudParent;
 
+      RegisterProgressWatcher(hudObj);
+      Registry.Register(gameplayHUD);
       return Registry.HUD;
     }
     

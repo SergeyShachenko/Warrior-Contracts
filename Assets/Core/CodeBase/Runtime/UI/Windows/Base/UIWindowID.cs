@@ -1,4 +1,4 @@
-﻿namespace WC.Runtime.UI.Elements
+﻿namespace WC.Runtime.UI
 {
   public enum UIWindowID
   {

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3755542302635302664}
   - component: {fileID: 7179176044755676568}
   - component: {fileID: 975235586642305784}
+  - component: {fileID: 5867320110629061328}
   - component: {fileID: 1837967664067922008}
   - component: {fileID: 4195149580304918178}
   m_Layer: 0
@@ -90,6 +91,18 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
+--- !u!225 &5867320110629061328
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70671672650231791}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &1837967664067922008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,9 +132,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 022b0b13c07d4d70b7b6eaf340848beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fadeInDuration: 0.15
+  _fadeOutDuration: 0.15
+  _canvases:
+  - {fileID: 7179176044755676568}
+  _canvasGroup: {fileID: 5867320110629061328}
   _hpBar: {fileID: 6800312693613460454}
   _lootCounter: {fileID: 6746903922560128792}
-  _uiScreenButton: {fileID: 2333487556278716522}
+  _uiScreenButtons:
+  - {fileID: 2333487556278716522}
 --- !u!1 &798822420434336517
 GameObject:
   m_ObjectHideFlags: 0

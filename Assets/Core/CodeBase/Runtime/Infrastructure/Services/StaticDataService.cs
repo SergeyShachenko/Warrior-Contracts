@@ -6,7 +6,7 @@ using WC.Runtime.Data.UI;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Logic.Characters;
 using WC.Runtime.StaticData;
-using WC.Runtime.UI.Elements;
+using WC.Runtime.UI;
 using WC.Runtime.UI.Screens;
 using WC.Runtime.UI.Windows;
 

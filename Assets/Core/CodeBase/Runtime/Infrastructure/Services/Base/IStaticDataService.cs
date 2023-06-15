@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine.AddressableAssets;
 using WC.Runtime.Logic.Characters;
 using WC.Runtime.StaticData;
-using WC.Runtime.UI.Elements;
+using WC.Runtime.UI;
 using WC.Runtime.UI.Screens;
 using WC.Runtime.UI.Windows;
 

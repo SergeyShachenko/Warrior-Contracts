@@ -29,7 +29,7 @@ namespace WC.Runtime.Gameplay.Services
       _assetsProvider = assetsProvider;
       _serviceManager = serviceManager;
       _staticData = staticData;
-      
+
       serviceManager.Register(this);
     }
 
@@ -37,9 +37,10 @@ namespace WC.Runtime.Gameplay.Services
     public async Task<Player> CreatePlayer(WarriorID id, Vector3 at)
     {
       GameObject playerObj = await _assetsProvider.InstantiateAsync(AssetAddress.Character.PlayerSword, at);
-      RegisterProgressWatcher(playerObj);
+      var player = playerObj.GetComponent<Player>();
       
-      Registry.Register(playerObj.GetComponent<Player>());
+      RegisterProgressWatcher(playerObj);
+      Registry.Register(player);
       return Registry.Player;
     }
 
@@ -47,8 +48,6 @@ namespace WC.Runtime.Gameplay.Services
     {
       EnemyWarriorStaticData warriorData = _staticData.EnemyWarriors[id];
       GameObject warriorObj = await _assetsProvider.InstantiateAsync(warriorData.PrefabRef, under);
-      RegisterProgressWatcher(warriorObj);
-      
       var enemy = warriorObj.GetComponent<Enemy>();
 
       enemy.Construct(
@@ -73,6 +72,7 @@ namespace WC.Runtime.Gameplay.Services
       var lootSpawner = warriorObj.GetComponentInChildren<LootSpawner>();
       lootSpawner.Init(warriorData.MinLootExp, warriorData.MaxLootExp);
 
+      RegisterProgressWatcher(warriorObj);
       Registry.Register(enemy);
       return enemy;
     }
@@ -81,7 +81,7 @@ namespace WC.Runtime.Gameplay.Services
     {
       await _assetsProvider.Load<GameObject>(AssetAddress.Character.PlayerSword);
 
-      foreach (var warriorData in _staticData.EnemyWarriors.Values)
+      foreach (EnemyWarriorStaticData warriorData in _staticData.EnemyWarriors.Values)
         await _assetsProvider.Load<GameObject>(warriorData.PrefabRef);
     }
     

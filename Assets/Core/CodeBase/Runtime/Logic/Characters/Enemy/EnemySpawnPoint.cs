@@ -13,8 +13,9 @@ namespace WC.Runtime.Logic.Characters
     
     private ICharacterFactory _characterFactory;
     private PlayerProgressData _progress;
+    private Enemy _enemy;
     private EnemyDeath _enemyDeath;
-    
+
     private string _id;
     private bool _isCleared;
 
@@ -29,13 +30,16 @@ namespace WC.Runtime.Logic.Characters
       _id = id;
     }
 
+    private void PostInit()
+    {
+      _enemyDeath = (EnemyDeath)_enemy.Death;
+      _enemyDeath.Happened += OnEnemyDead;
+    }
 
     private async void Spawn()
     {
-      Enemy enemy = await _characterFactory.CreateEnemy(_warriorType, transform);
-      
-      _enemyDeath = (EnemyDeath)enemy.Death;
-      _enemyDeath.Happened += OnEnemyDead;
+      _enemy = await _characterFactory.CreateEnemy(_warriorType, transform);
+      _enemy.Initialized += PostInit;
     }
 
     private void OnEnemyDead()

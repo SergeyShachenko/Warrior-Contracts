@@ -1,5 +1,6 @@
 ﻿using System;
 using WC.Runtime.Infrastructure.AssetManagement;
+using WC.Runtime.Infrastructure.Services;
 using WC.Runtime.UI.Services;
 using Zenject;
 
@@ -17,6 +18,11 @@ namespace WC.Runtime.Infrastructure.Installers
       Container
         .Bind(typeof(IUIFactory), typeof(IDisposable))
         .To<UIFactory>()
+        .AsSingle();
+
+      Container
+        .Bind<IUIInitService>()
+        .To<UIInitService>()
         .AsSingle();
     }
   }

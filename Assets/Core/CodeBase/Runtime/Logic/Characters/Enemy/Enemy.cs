@@ -33,20 +33,16 @@ namespace WC.Runtime.Logic.Characters
       _attackDistance = attackDistance;
       _hitRadius = hitRadius;
       _cooldown = cooldown;
-      
-      Init();
     }
 
+    
     protected override void Init()
     {
       Health = new EnemyHealth(_currentHP, _maxHP);
       Death = new EnemyDeath();
       Attack = new EnemyAttack(_player, transform, _damage, _attackDistance, _hitRadius, _cooldown);
       Animator = new EnemyAnimator(_animator);
-      
-      base.Init();
     }
-    
 
     protected override void OnDeath()
     {
@@ -54,6 +50,7 @@ namespace WC.Runtime.Logic.Characters
       StartCoroutine(DestroyBody());
     }
 
+    
     private IEnumerator DestroyBody()
     {
       yield return new WaitForSeconds(3);

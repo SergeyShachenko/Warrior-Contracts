@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using WC.Runtime.Infrastructure;
+using WC.Runtime.Infrastructure.Services;
+using Zenject;
 
 namespace WC.Runtime.UI
 {
-  public abstract class UIElementBase : MonoBehaviour
+  public abstract class UIObjectBase : MonoBehaviour,
+    IInitializing
   {
     public event Action<UIViewType> ChangeView;
 
@@ -17,23 +21,38 @@ namespace WC.Runtime.UI
     [Header("Links")] 
     [SerializeField] private Canvas[] _canvases;
     [SerializeField] private CanvasGroup _canvasGroup;
-
-    private Coroutine _transitionCoroutine;
-
     
-    private void Awake()
+    private Coroutine _transitionCoroutine;
+    private bool _wasInit;
+
+    [Inject]
+    private void Construct(IUIInitService initService)
+    {
+      initService.Register(this);
+    }
+
+
+    void IInitializing.Initialize()
     {
       Hide();
       Init();
       SubscribeUpdates();
+      Refresh();
+
+      _wasInit = true;
     }
 
-    private void OnDestroy() => UnsubscribeUpdates();
+    private void OnDestroy()
+    {
+      if (_wasInit)
+        UnsubscribeUpdates();
+    }
 
-    
-    protected abstract void Init();
-    protected abstract void SubscribeUpdates();
-    protected abstract void UnsubscribeUpdates();
+
+    protected virtual void Init(){}
+    protected virtual void SubscribeUpdates(){}
+    protected virtual void UnsubscribeUpdates(){}
+    protected virtual void Refresh(){}
 
     
     public virtual void Show(bool smoothly = false)
@@ -41,6 +60,8 @@ namespace WC.Runtime.UI
       if (CurrentView == UIViewType.Visible) return;
 
 
+      Refresh();
+      
       if (_transitionCoroutine != null)
         StopCoroutine(_transitionCoroutine);
 

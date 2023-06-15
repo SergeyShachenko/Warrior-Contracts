@@ -11,25 +11,23 @@ namespace WC.Runtime.Logic.Characters
     ISaverProgress
   {
     private IInputService _inputService;
+    private PlayerProgressData _progressData;
 
     [Inject]
     private void Construct(IInputService inputService) => _inputService = inputService;
-    
 
-    private void InitComponents(PlayerProgressData progressData)
+
+    protected override void Init()
     {
-      Health = new PlayerHealth(progressData);
+      Health = new PlayerHealth(_progressData);
       Death = new PlayerDeath();
-      Attack = new PlayerAttack(_inputService, progressData, _controller, transform);
+      Attack = new PlayerAttack(_inputService, _progressData, _controller, transform);
       Animator = new PlayerAnimator(_controller, _animator);
-      Movement = new PlayerMovement(_inputService, progressData, _controller, transform);
+      Movement = new PlayerMovement(_inputService, _progressData, _controller, transform);
     }
+
     
-    void ILoaderProgress.LoadProgress(PlayerProgressData progressData)
-    {
-      InitComponents(progressData);
-      Init();
-    }
+    void ILoaderProgress.LoadProgress(PlayerProgressData progressData) => _progressData = progressData;
 
     void ISaverProgress.SaveProgress(PlayerProgressData progressData)
     {
