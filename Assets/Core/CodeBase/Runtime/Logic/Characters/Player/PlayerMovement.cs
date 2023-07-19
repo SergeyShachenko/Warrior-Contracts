@@ -4,37 +4,34 @@ using WC.Runtime.Data;
 using WC.Runtime.Data.Characters;
 using WC.Runtime.Extensions;
 using WC.Runtime.Infrastructure.Services;
-using Zenject;
 
 namespace WC.Runtime.Logic.Characters
 {
-  public class PlayerMovement : IMovement
+  public class PlayerMovement : CharacterMovementBase
   {
-    public bool IsActive { get; set; } = true;
-
+    private readonly WorldData _worldData;
     private readonly IInputService _inputService;
-    private readonly PlayerProgressData _progressData;
     private readonly CharacterController _characterController;
     private readonly Transform _transform;
-    private readonly float _movementSpeed;
-    
+
     public PlayerMovement(
+      MovementStatsData data,
+      WorldData worldData,
       IInputService inputService,
-      PlayerProgressData progressData,
       CharacterController characterController,
       Transform transform)
+    : base(data)
     {
+      _worldData = worldData;
       _inputService = inputService;
-      _progressData = progressData;
       _characterController = characterController;
       _transform = transform;
-      _movementSpeed = _progressData.Stats.MovementSpeed;
-      
+
       WarpToSavedPos();
     }
     
 
-    public void Tick()
+    public override void Tick()
     {
       if (IsActive == false) return;
       
@@ -52,21 +49,22 @@ namespace WC.Runtime.Logic.Characters
 
       movementDirection += Physics.gravity;
 
-      _characterController.Move(movementDirection * _movementSpeed * Time.deltaTime);
+      _characterController.Move(movementDirection * p_Data.Speed * Time.deltaTime);
     }
 
-    public void Warp(Vector3Data to)
+    
+    public override void Warp(Vector3Data to)
     {
       _characterController.enabled = false;
       _transform.position = to.ToVector3().AddY(_characterController.height);
       _characterController.enabled = true;
     }
 
-    public void WarpToSavedPos()
+    public override void WarpToSavedPos()
     {
-      if (SceneManager.GetActiveScene().name == _progressData.World.LevelPos.LevelName)
+      if (SceneManager.GetActiveScene().name == _worldData.LevelPos.LevelName)
       {
-        Vector3Data savedPos = _progressData.World.LevelPos.Position;
+        Vector3Data savedPos = _worldData.LevelPos.Position;
 
         if (savedPos != null)
           Warp(to: savedPos);

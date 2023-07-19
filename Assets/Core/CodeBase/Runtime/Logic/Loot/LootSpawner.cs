@@ -15,7 +15,7 @@ namespace WC.Runtime.Logic.Loot
     private ILootFactory _lootFactory;
     private IRandomService _randomService;
     
-    private int _minGold, _maxGold;
+    private int _minMoney, _maxMoney;
 
     [Inject]
     private void Construct(ILootFactory lootFactory, IRandomService randomService)
@@ -25,10 +25,10 @@ namespace WC.Runtime.Logic.Loot
     }
 
 
-    public void Init(int minGold, int maxGold)
+    public void SetData(int loot)
     {
-      _minGold = minGold;
-      _maxGold = maxGold;
+      _minMoney = 0;
+      _maxMoney = loot;
 
       _enemy.Initialized += PostInit;
     }
@@ -43,7 +43,7 @@ namespace WC.Runtime.Logic.Loot
       LootPiece loot = await _lootFactory.CreateGold();
       
       loot.transform.position = transform.position;
-      LootData lootExp = new(value: _randomService.Next(_minGold, _maxGold));
+      LootData lootExp = new(value: _randomService.Next(_minMoney, _maxMoney));
       loot.Init(lootExp);
       
       // TODO Сделать механику сохранения лута

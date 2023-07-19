@@ -5,10 +5,16 @@ namespace WC.Runtime.Data.Characters
   [Serializable]
   public class PlayerStatsData
   {
-    public float Damage;
-    public float AttackDistance;
-    public float Cooldown;
-    public float HitRadius;
-    public float MovementSpeed;
+    public LifeStatsData Life;
+    public MovementStatsData Movement;
+    public CombatStatsData Combat;
+    
+    
+    public PlayerStatsData GetCopy() => new()
+    {
+      Life = Life.GetCopy(), 
+      Movement = Movement.GetCopy(), 
+      Combat = Combat.GetCopy()
+    };
   }
 }

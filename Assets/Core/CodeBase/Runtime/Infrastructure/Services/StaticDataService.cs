@@ -14,8 +14,8 @@ namespace WC.Runtime.Infrastructure.Services
 {
   public class StaticDataService : IStaticDataService
   {
-    public IReadOnlyDictionary<WarriorID, PlayerWarriorStaticData> PlayerWarriors => new Dictionary<WarriorID, PlayerWarriorStaticData>(_playerWarriors);
-    public IReadOnlyDictionary<WarriorID, EnemyWarriorStaticData> EnemyWarriors => new Dictionary<WarriorID, EnemyWarriorStaticData>(_enemyWarriors);
+    public IReadOnlyDictionary<PlayerID, PlayerStaticData> Players => new Dictionary<PlayerID, PlayerStaticData>(_players);
+    public IReadOnlyDictionary<EnemyWarriorID, EnemyWarriorStaticData> EnemyWarriors => new Dictionary<EnemyWarriorID, EnemyWarriorStaticData>(_enemyWarriors);
     public IReadOnlyDictionary<string, LevelStaticData> Levels => new Dictionary<string, LevelStaticData>(_levels);
 
     public IReadOnlyDictionary<UIWindowID, AssetReferenceGameObject> UIWindows => new Dictionary<UIWindowID, AssetReferenceGameObject>(_uiWindows);
@@ -28,8 +28,8 @@ namespace WC.Runtime.Infrastructure.Services
     private readonly Dictionary<HUDWindowID, AssetReferenceGameObject> _hudWindows = new();
     private readonly Dictionary<HUDScreenID, AssetReferenceGameObject> _hudScreens = new();
     
-    private Dictionary<WarriorID, PlayerWarriorStaticData> _playerWarriors;
-    private Dictionary<WarriorID, EnemyWarriorStaticData> _enemyWarriors;
+    private Dictionary<PlayerID, PlayerStaticData> _players;
+    private Dictionary<EnemyWarriorID, EnemyWarriorStaticData> _enemyWarriors;
     private Dictionary<string, LevelStaticData> _levels;
 
     public StaticDataService() => LoadData();
@@ -37,13 +37,13 @@ namespace WC.Runtime.Infrastructure.Services
 
     private void LoadData()
     {
-      _playerWarriors = Resources
-        .LoadAll<PlayerWarriorStaticData>(AssetDirectory.StaticData.Character.Player.Warrior)
-        .ToDictionary(x => x.Type, x => x);
+      _players = Resources
+        .LoadAll<PlayerStaticData>(AssetDirectory.StaticData.Character.Player.Warrior)
+        .ToDictionary(x => x.ID, x => x);
       
       _enemyWarriors = Resources
         .LoadAll<EnemyWarriorStaticData>(AssetDirectory.StaticData.Character.Enemy.Warrior)
-        .ToDictionary(x => x.Type, x => x);
+        .ToDictionary(x => x.ID, x => x);
       
       _levels = Resources
         .LoadAll<LevelStaticData>(AssetDirectory.StaticData.Levels)

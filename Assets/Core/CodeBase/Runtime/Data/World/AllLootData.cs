@@ -6,8 +6,10 @@ namespace WC.Runtime.Data
   public class AllLootData
   {
     public event Action Changed;
+    
     public int Collected;
 
+    
     public void Collect(LootData lootData)
     {
       Collected += lootData.Value;
@@ -19,5 +21,10 @@ namespace WC.Runtime.Data
       Collected += loot;
       Changed?.Invoke();
     }
+
+    public AllLootData GetCopy() => new()
+    {
+      Collected = Collected
+    };
   }
 }

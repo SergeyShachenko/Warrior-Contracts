@@ -7,6 +7,6 @@ namespace WC.Runtime.Gameplay.Services
 {
   public interface ILevelToolsFactory : IFactory<LevelToolsRegistry>
   {
-    Task<EnemySpawnPoint> CreateEnemySpawnPoint(string spawnerID, Vector3 at, WarriorID warriorType);
+    Task<EnemySpawnPoint> CreateEnemySpawnPoint(string spawnerID, Vector3 at, EnemyWarriorID warriorType);
   }
 }

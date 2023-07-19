@@ -28,14 +28,14 @@ namespace WC.Runtime.Gameplay.Services
     }
 
 
-    public async Task<EnemySpawnPoint> CreateEnemySpawnPoint(string spawnerID, Vector3 at, WarriorID warriorType)
+    public async Task<EnemySpawnPoint> CreateEnemySpawnPoint(string spawnerID, Vector3 at, EnemyWarriorID warriorType)
     {
       GameObject spawnerObj = await _assetsProvider.InstantiateAsync(AssetAddress.SpawnPoint, at);
-      RegisterProgressWatcher(spawnerObj);
-      
+
       var spawnPoint = spawnerObj.GetComponent<EnemySpawnPoint>();
       spawnPoint.Init(warriorType, spawnerID);
       
+      RegisterProgressWatcher(spawnerObj);
       Registry.Register(spawnPoint);
       return spawnPoint;
     }

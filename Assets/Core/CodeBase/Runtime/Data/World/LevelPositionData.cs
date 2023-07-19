@@ -18,5 +18,8 @@ namespace WC.Runtime.Data
     {
       LevelName = levelName;
     }
+
+
+    public LevelPositionData GetCopy() => new(LevelName, Position);
   }
 }

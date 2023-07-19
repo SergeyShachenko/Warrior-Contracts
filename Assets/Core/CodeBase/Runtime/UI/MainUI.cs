@@ -31,7 +31,7 @@ namespace WC.Runtime.UI
     public void StartGame(StartGameType type)
     {
       if (type == StartGameType.NewGame) 
-        _progressService.NewProgress();
+        _progressService.ResetProgress();
 
       _gameStateMachine.Enter<LoadSceneState, string>(_progressService.Player.World.LevelPos.LevelName);
     }

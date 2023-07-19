@@ -6,21 +6,29 @@ namespace WC.Runtime.Logic.Characters
   public class CheckAttackRange : MonoBehaviour
   {
     [Header("Links")]
-    [SerializeField] private Enemy _enemy;
+    [SerializeField] private CharacterBase _character;
     [SerializeField] private TriggerObserver _triggerObserver;
 
 
     private void Start()
     {
+      _triggerObserver.Radius = _character.Attack.AttackDistance;
+      
       _triggerObserver.TriggerEnter += OnObserverTriggerEnter;
       _triggerObserver.TriggerExit += OnObserverTriggerExit;
     }
 
-    
+    private void OnDestroy()
+    {
+      _triggerObserver.TriggerEnter -= OnObserverTriggerEnter;
+      _triggerObserver.TriggerExit -= OnObserverTriggerExit;
+    }
+
+
     private void OnObserverTriggerEnter(Collider obj) => 
-      _enemy.Attack.IsActive = true;
+      _character.Attack.IsActive = true;
 
     private void OnObserverTriggerExit(Collider obj) => 
-      _enemy.Attack.IsActive = false;
+      _character.Attack.IsActive = false;
   }
 }

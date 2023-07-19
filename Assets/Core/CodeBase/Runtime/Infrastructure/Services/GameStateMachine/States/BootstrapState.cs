@@ -29,12 +29,12 @@ namespace WC.Runtime.Infrastructure.Services
           _progressService.Player = _saveLoadService.LoadPlayerProgress();
          
           if (_progressService.Player == null) 
-            _progressService.NewProgress();
+            _progressService.ResetProgress();
         }
           break;
         case BootstrapType.Debug:
         {
-          _progressService.NewProgress();
+          _progressService.ResetProgress();
         }
           break;
       }

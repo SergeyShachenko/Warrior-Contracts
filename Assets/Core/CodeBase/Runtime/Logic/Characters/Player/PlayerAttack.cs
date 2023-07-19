@@ -1,43 +1,34 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using WC.Runtime.Data.Characters;
 using WC.Runtime.Infrastructure.Services;
-using Zenject;
 
 namespace WC.Runtime.Logic.Characters
 {
-  public class PlayerAttack : IAttack
+  public class PlayerAttack : CharacterAttackBase
   {
-    public event Action Attack;
-
-    public bool IsActive { get; set; } = true;
-    public float Damage => _progressData.Stats.Damage;
-    public float AttackDistance => _progressData.Stats.AttackDistance;
-    public float Cooldown => _progressData.Stats.Cooldown;
-    public float HitRadius => _progressData.Stats.HitRadius;
-
     private readonly IInputService _inputService;
-    private readonly PlayerProgressData _progressData;
+
     private readonly CharacterController _characterController;
-    private readonly Transform _transform;
+    private readonly Transform _parent;
     private readonly Collider[] _hits = new Collider[3];
-    private readonly int _layerMask;
     
+    private readonly int _layerMask;
+
     public PlayerAttack(
-      IInputService inputService, 
-      PlayerProgressData progressData, 
+      CombatStatsData data,
+      IInputService inputService,
       CharacterController characterController, 
-      Transform transform)
+      Transform parent)
+    : base(data)
     {
       _inputService = inputService;
-      _progressData = progressData;
       _characterController = characterController;
-      _transform = transform;
+      _parent = parent;
       _layerMask = 1 << LayerMask.NameToLayer("Hittable");
     }
 
 
-    public void Tick()
+    public override void Tick()
     {
       if (IsActive == false) return;
 
@@ -46,7 +37,8 @@ namespace WC.Runtime.Logic.Characters
         StartAttack();
     }
 
-    public void TakeDamage()
+    
+    public override void TakeDamage()
     {
       if (IsActive == false) return;
       
@@ -55,15 +47,13 @@ namespace WC.Runtime.Logic.Characters
         _hits[i].transform.parent.parent.GetComponent<Enemy>().Health.TakeDamage(Damage);
     }
 
-    private void StartAttack() => 
-      Attack?.Invoke();
-    
-    public void StopAttack() {}
+    public override void StopAttack() { }
+
 
     private int Hit() => 
-      Physics.OverlapSphereNonAlloc(StartPoint() + _transform.forward, AttackDistance, _hits, _layerMask);
+      Physics.OverlapSphereNonAlloc(StartPoint() + _parent.forward, AttackDistance, _hits, _layerMask);
 
     private Vector3 StartPoint() => 
-      new(_transform.position.x, _characterController.center.y / 2, _transform.position.z);
+      new(_parent.position.x, _characterController.center.y / 2, _parent.position.z);
   }
 }

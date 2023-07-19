@@ -1,47 +1,32 @@
 ﻿using System.Collections;
 using UnityEngine;
+using WC.Runtime.StaticData;
 
 namespace WC.Runtime.Logic.Characters
 {
   public class Enemy : CharacterBase
   {
-    public WarriorID ID { get; private set; }
+    public EnemyWarriorID ID { get; private set; }
     
     private Player _player;
 
-    private float _currentHP, _maxHP;
-    private float _damage, _attackDistance, _hitRadius, _cooldown;
+    private EnemyWarriorStaticData _data;
 
-    public void Construct(
-      Player player,
-      WarriorID id,
-      float currentHP,
-      float maxHP,
-      float damage,
-      float attackDistance,
-      float hitRadius,
-      float cooldown)
+    public void SetData(Player player, EnemyWarriorStaticData data)
     {
-      ID = id;
+      ID = data.ID;
       
       _player = player;
-      
-      _currentHP = currentHP;
-      _maxHP = maxHP;
-      
-      _damage = damage;
-      _attackDistance = attackDistance;
-      _hitRadius = hitRadius;
-      _cooldown = cooldown;
+      _data = data;
     }
 
     
     protected override void Init()
     {
-      Health = new EnemyHealth(_currentHP, _maxHP);
+      Health = new EnemyHealth(_data.Stats.Life);
       Death = new EnemyDeath();
-      Attack = new EnemyAttack(_player, transform, _damage, _attackDistance, _hitRadius, _cooldown);
-      Animator = new EnemyAnimator(_animator);
+      Attack = new EnemyAttack(_data.Stats.Combat, transform, _player);
+      Animator = new EnemyAnimator(p_Animator);
     }
 
     protected override void OnDeath()

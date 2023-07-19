@@ -7,20 +7,18 @@ using Zenject;
 namespace WC.Runtime.Logic.Characters
 {
   public abstract class CharacterBase : MonoBehaviour,
-    ICharacter,
     IInitializing
   {
     public event Action Initialized;
     
-    public IAttack Attack { get; protected set; }
-    public IHealth Health { get; protected set; }
-    public IDeath Death { get; protected set; }
-    public IMovement Movement { get; protected set; }
-    public ICharacterAnimator Animator { get; protected set; }
-    
-    [SerializeField] protected CharacterController _controller;
-    [SerializeField] protected Animator _animator;
-    [SerializeField] protected CharacterAnimationObserver _animObserver;
+    public CharacterAttackBase Attack { get; protected set; }
+    public CharacterHealthBase Health { get; protected set; }
+    public CharacterDeathBase Death { get; protected set; }
+    public CharacterMovementBase Movement { get; protected set; }
+    public CharacterAnimatorBase Animator { get; protected set; }
+
+    [SerializeField] protected Animator p_Animator;
+    [SerializeField] protected CharacterAnimationObserver p_AnimationObserver;
     
     private bool _wasInit;
 
@@ -58,8 +56,8 @@ namespace WC.Runtime.Logic.Characters
       Death.Happened += OnDeath;
       Attack.Attack += OnAttack;
       
-      _animObserver.Attack += OnAnimAttack;
-      _animObserver.AttackEnd += OnAnimAttackEnd;
+      p_AnimationObserver.Attack += OnAnimAttack;
+      p_AnimationObserver.AttackEnd += OnAnimAttackEnd;
     }
 
     protected virtual void UnsubscribeUpdates()
@@ -69,8 +67,8 @@ namespace WC.Runtime.Logic.Characters
       Death.Happened -= OnDeath;
       Attack.Attack -= OnAttack;
       
-      _animObserver.Attack -= OnAnimAttack;
-      _animObserver.AttackEnd -= OnAnimAttackEnd;
+      p_AnimationObserver.Attack -= OnAnimAttack;
+      p_AnimationObserver.AttackEnd -= OnAnimAttackEnd;
     }
 
     protected virtual void Tick()

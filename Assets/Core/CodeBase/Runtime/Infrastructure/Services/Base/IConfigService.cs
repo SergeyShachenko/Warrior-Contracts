@@ -2,6 +2,10 @@
 {
   public interface IConfigService
   {
-    TWrapper LoadConfig<TWrapper>(string name) where TWrapper : class;
+    TWrapper Load<TWrapper>() where TWrapper : class;
+    TWrapper Load<TWrapper>(string directory) where TWrapper : class;
+
+    void Save<TWrapper>(TWrapper wrapper) where TWrapper : class;
+    void Save<TWrapper>(string directory, TWrapper wrapper) where TWrapper : class;
   }
 }

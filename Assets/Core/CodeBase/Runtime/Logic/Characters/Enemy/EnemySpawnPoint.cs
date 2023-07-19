@@ -9,7 +9,7 @@ namespace WC.Runtime.Logic.Characters
   public class EnemySpawnPoint : MonoBehaviour,
     ISaverProgress
   {
-    [SerializeField] private WarriorID _warriorType;
+    [SerializeField] private EnemyWarriorID _warriorType;
     
     private ICharacterFactory _characterFactory;
     private PlayerProgressData _progress;
@@ -24,7 +24,7 @@ namespace WC.Runtime.Logic.Characters
       _characterFactory = characterFactory;
 
     
-    public void Init(WarriorID warriorType, string id)
+    public void Init(EnemyWarriorID warriorType, string id)
     {
       _warriorType = warriorType;
       _id = id;

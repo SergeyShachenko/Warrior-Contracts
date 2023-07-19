@@ -221,6 +221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46e8a36cb9c94cd3a152eca1ed3cc2b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _controller: {fileID: 7133066523359769848}
-  _animator: {fileID: 0}
-  _animObserver: {fileID: 0}
+  p_Animator: {fileID: 0}
+  p_AnimationObserver: {fileID: 0}
+  _charController: {fileID: 7133066523359769848}

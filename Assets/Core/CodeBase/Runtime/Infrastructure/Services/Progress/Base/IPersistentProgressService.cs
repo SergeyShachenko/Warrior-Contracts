@@ -6,6 +6,6 @@ namespace WC.Runtime.Infrastructure.Services
   {
     PlayerProgressData Player { get; set; }
 
-    void NewProgress();
+    void ResetProgress();
   }
 }

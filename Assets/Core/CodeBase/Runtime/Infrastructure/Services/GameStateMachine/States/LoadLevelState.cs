@@ -105,7 +105,7 @@ namespace WC.Runtime.Infrastructure.Services
     }
 
     private async Task CreatePlayer(LevelStaticData levelData) => 
-      await _characterFactory.CreatePlayer(WarriorID.Sword, levelData.StartPlayerPos);
+      await _characterFactory.CreatePlayer(PlayerID.Default, levelData.StartPlayerPos);
 
     // private async Task InitDroppedLoot()
     // {

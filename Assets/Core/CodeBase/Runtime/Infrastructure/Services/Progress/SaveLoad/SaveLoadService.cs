@@ -40,7 +40,7 @@ namespace WC.Runtime.Infrastructure.Services
 
     public void LoadProgress()
     {
-      PlayerProgressData progress = _progressService.Player.Copy();
+      PlayerProgressData progress = _progressService.Player.GetCopy();
       
       foreach (ILoaderProgress loader in Registry.Loaders)
         loader.LoadProgress(progress);

@@ -34,45 +34,38 @@ namespace WC.Runtime.Gameplay.Services
     }
 
     
-    public async Task<Player> CreatePlayer(WarriorID id, Vector3 at)
+    public async Task<Player> CreatePlayer(PlayerID id, Vector3 at)
     {
-      GameObject playerObj = await _assetsProvider.InstantiateAsync(AssetAddress.Character.PlayerSword, at);
+      GameObject playerObj = await _assetsProvider.InstantiateAsync(_staticData.Players[id].PrefabRef, at);
       var player = playerObj.GetComponent<Player>();
       
       RegisterProgressWatcher(playerObj);
       Registry.Register(player);
-      return Registry.Player;
+      return player;
     }
 
-    public async Task<Enemy> CreateEnemy(WarriorID id, Transform under)
+    public async Task<Enemy> CreateEnemy(EnemyWarriorID id, Transform under)
     {
-      EnemyWarriorStaticData warriorData = _staticData.EnemyWarriors[id];
-      GameObject warriorObj = await _assetsProvider.InstantiateAsync(warriorData.PrefabRef, under);
-      var enemy = warriorObj.GetComponent<Enemy>();
+      EnemyWarriorStaticData staticData = _staticData.EnemyWarriors[id];
+      staticData.Stats.Life.CurrentHealth = staticData.Stats.Life.MaxHealth;
+      staticData.Stats.Life.CurrentArmor = staticData.Stats.Life.MaxArmor;
 
-      enemy.Construct(
-        player: Registry.Player,
-        id: id,
-        currentHP: warriorData.HP, 
-        maxHP: warriorData.HP, 
-        damage: warriorData.Damage, 
-        attackDistance: warriorData.AttackDistance, 
-        hitRadius: warriorData.HitRadius, 
-        cooldown: warriorData.AttackCooldown);
+      GameObject enemyObj = await _assetsProvider.InstantiateAsync(staticData.PrefabRef, under);
+      var enemy = enemyObj.GetComponent<Enemy>();
 
-      if (warriorObj.TryGetComponent(out RotateToPlayerAI rotateToPlayer))
+      enemy.SetData(Registry.Player, staticData);
+
+      if (enemyObj.TryGetComponent(out RotateToPlayerAI rotateToPlayer))
       {
-        rotateToPlayer.Speed = warriorData.Speed;
+        rotateToPlayer.Speed = staticData.Stats.Movement.Speed;
       }
 
-      warriorObj
-        .GetComponent<NavMeshAgent>()
-        .speed = warriorData.Speed;
+      enemyObj.GetComponent<NavMeshAgent>().speed = staticData.Stats.Movement.Speed;
       
-      var lootSpawner = warriorObj.GetComponentInChildren<LootSpawner>();
-      lootSpawner.Init(warriorData.MinLootExp, warriorData.MaxLootExp);
+      var lootSpawner = enemyObj.GetComponentInChildren<LootSpawner>();
+      lootSpawner.SetData(staticData.Stats.Loot.Money);
 
-      RegisterProgressWatcher(warriorObj);
+      RegisterProgressWatcher(enemyObj);
       Registry.Register(enemy);
       return enemy;
     }

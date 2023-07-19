@@ -15,5 +15,12 @@ namespace WC.Runtime.Data
       Loot = new AllLootData();
       StartLevel = startLevel;
     }
+
+
+    public WorldData GetCopy() => new(StartLevel)
+    {
+      LevelPos = LevelPos.GetCopy(),
+      Loot = Loot.GetCopy()
+    };
   }
 }

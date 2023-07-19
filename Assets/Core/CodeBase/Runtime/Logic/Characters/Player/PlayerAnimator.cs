@@ -1,20 +1,10 @@
-using System;
 using UnityEngine;
-using WC.Runtime.Logic.Animation;
 using AnimationState = WC.Runtime.Logic.Animation.AnimationState;
 
 namespace WC.Runtime.Logic.Characters
 {
-  public class PlayerAnimator : ICharacterAnimator,
-    IAnimationStateReader
+  public class PlayerAnimator : CharacterAnimatorBase
   {
-    public event Action<AnimationState> StateEnter, StateExit;
-
-    public bool IsActive { get; set; } = true;
-    public Animator Animator { get; }
-    public AnimationState State { get; private set; }
-    public bool IsAttacking => State == AnimationState.Attack;
-
     private readonly CharacterController _charController;
     private readonly CharacterAnimationObserver _animObserver;
 
@@ -28,35 +18,32 @@ namespace WC.Runtime.Logic.Characters
     private readonly int _attackStateHash = Animator.StringToHash("Attack");
     private readonly int _deathStateHash = Animator.StringToHash("Death");
 
-    public PlayerAnimator(CharacterController charController, Animator animator)
-    {
+    public PlayerAnimator(CharacterController charController, Animator animator) : base(animator) => 
       _charController = charController;
-      Animator = animator;
-    }
 
-    
-    public void Tick()
+
+    public override void Tick()
     {
       if (IsActive == false) return;
       
       Animator.SetFloat(SpeedHash, _charController.velocity.magnitude, 0.1f, Time.deltaTime);
     }
 
-    public void PlayHit()
+    public override void PlayHit()
     {
       if (IsActive == false) return;
       
       Animator.SetTrigger(HitHash);
     }
 
-    public void PlayAttack()
+    public override void PlayAttack()
     {
       if (IsActive == false) return;
       
       Animator.SetTrigger(AttackHash);
     }
 
-    public void PlayDeath()
+    public override void PlayDeath()
     {
       if (IsActive == false) return;
       
@@ -70,7 +57,7 @@ namespace WC.Runtime.Logic.Characters
       Animator.Play(_idleStateHash, -1);
     }
 
-    private AnimationState StateFor(int stateHash)
+    protected override AnimationState StateFor(int stateHash)
     {
       AnimationState state;
       
@@ -86,17 +73,6 @@ namespace WC.Runtime.Logic.Characters
         state = AnimationState.Unknown;
       
       return state;
-    }
-
-    void IAnimationStateReader.EnteredState(int stateHash)
-    {
-      State = StateFor(stateHash);
-      StateEnter?.Invoke(State);
-    }
-
-    void IAnimationStateReader.ExitedState(int stateHash)
-    {
-      StateExit?.Invoke(StateFor(stateHash));
     }
   }
 }

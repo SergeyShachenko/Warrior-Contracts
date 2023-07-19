@@ -23,7 +23,7 @@ namespace WC.Runtime.Data.IAP
       Changed?.Invoke();
     }
 
-    public PurchaseData Copy()
+    public PurchaseData GetCopy()
     {
       var copy = new PurchaseData();
 

@@ -82,7 +82,7 @@ namespace WC.Runtime.Infrastructure.Services
     private void LoadConfigs()
     {
       Configs = _configService
-        .LoadConfig<ProductConfigWrapper>(AssetName.Config.IAP)
+        .Load<IAPProductsConfigWrapper>(AssetDirectory.Config.Root)
         .Configs
         .ToDictionary(x => x.ID, x => x);
     }

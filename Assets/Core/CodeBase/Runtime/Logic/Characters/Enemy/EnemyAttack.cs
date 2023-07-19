@@ -1,24 +1,16 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
+using WC.Runtime.Data.Characters;
 using WC.Runtime.DebugTools;
 
 namespace WC.Runtime.Logic.Characters
 {
-  public class EnemyAttack : IAttack
+  public class EnemyAttack : CharacterAttackBase
   {
-    public event Action Attack;
-
-    public bool IsActive { get; set; } = false;
-    public float Damage { get; }
-    public float AttackDistance { get; }
-    public float Cooldown { get; }
-    public float HitRadius { get; }
-
     private const float HitDebugDuration = 1f;
 
     private readonly Player _player;
-    private readonly Transform _transform;
+    private readonly Transform _parent;
     private readonly int _layerMask;
 
     private Collider[] _hits = new Collider[1];
@@ -27,26 +19,20 @@ namespace WC.Runtime.Logic.Characters
     private bool _isAttack;
 
     public EnemyAttack(
-      Player player, 
-      Transform transform,
-      float damage,
-      float attackDistance,
-      float hitRadius, 
-      float cooldown)
+      CombatStatsData data,
+      Transform parent,
+      Player player)
+    : base(data)
     {
+      _parent = parent;
       _player = player;
-      _transform = transform;
-      
-      Damage = damage;
-      AttackDistance = attackDistance;
-      HitRadius = hitRadius;
-      Cooldown = cooldown;
-      
       _layerMask = 1 << LayerMask.NameToLayer("Player");
+      
+      IsActive = false;
     }
 
 
-    public void Tick()
+    public override void Tick()
     {
       if (IsActive == false) return;
 
@@ -57,7 +43,7 @@ namespace WC.Runtime.Logic.Characters
         StartAttack();
     }
 
-    public void TakeDamage()
+    public override void TakeDamage()
     {
       if (IsActive == false) return;
       
@@ -69,7 +55,7 @@ namespace WC.Runtime.Logic.Characters
       }
     }
 
-    public void StopAttack()
+    public override void StopAttack()
     {
       if (IsActive == false) return;
       
@@ -78,22 +64,23 @@ namespace WC.Runtime.Logic.Characters
       _isAttack = false;
     }
 
+    protected override void StartAttack()
+    {
+      base.StartAttack();
+      
+      _parent.LookAt(_player.transform);
+      _isAttack = true;
+    }
+
     private void UpdateCooldown()
     {
       if (_attackCooldownCounter > 0)
         _attackCooldownCounter -= Time.deltaTime;
     }
 
-    private void StartAttack()
-    {
-      _transform.LookAt(_player.transform);
-      _isAttack = true;
-      Attack?.Invoke();
-    }
-
     private bool Hit(out Collider hit)
     {
-      var hitsCount = Physics.OverlapSphereNonAlloc(GetHitPoint(), HitRadius, _hits, _layerMask);
+      int hitsCount = Physics.OverlapSphereNonAlloc(GetHitPoint(), HitRadius, _hits, _layerMask);
       hit = _hits.FirstOrDefault();
       
       return hitsCount > 0;
@@ -101,10 +88,10 @@ namespace WC.Runtime.Logic.Characters
 
     private Vector3 GetHitPoint()
     {
-      Vector3 currentPos = _transform.position;
+      Vector3 currentPos = _parent.position;
       var newPos = new Vector3(currentPos.x, currentPos.y + 0.5f, currentPos.z);
       
-      return newPos + _transform.forward * AttackDistance;
+      return newPos + _parent.forward * AttackDistance;
     }
 
     private bool CanAttack() => 

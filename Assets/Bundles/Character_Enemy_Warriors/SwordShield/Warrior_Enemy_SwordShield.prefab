@@ -333,7 +333,17 @@ PrefabInstance:
       objectReference: {fileID: 4786425189637764746}
     - target: {fileID: 1226057607696263704, guid: 499d0c2532713b644a2114b89eb475f5,
         type: 3}
+      propertyPath: p_Animator
+      value: 
+      objectReference: {fileID: 4786425189637764746}
+    - target: {fileID: 1226057607696263704, guid: 499d0c2532713b644a2114b89eb475f5,
+        type: 3}
       propertyPath: _animObserver
+      value: 
+      objectReference: {fileID: 3206241373694022088}
+    - target: {fileID: 1226057607696263704, guid: 499d0c2532713b644a2114b89eb475f5,
+        type: 3}
+      propertyPath: p_AnimationObserver
       value: 
       objectReference: {fileID: 3206241373694022088}
     - target: {fileID: 2329796103190791294, guid: 499d0c2532713b644a2114b89eb475f5,

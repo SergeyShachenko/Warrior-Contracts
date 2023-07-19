@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using WC.Runtime.Extensions;
 using Zenject;
 
 namespace WC.Runtime.Infrastructure.AssetManagement
@@ -26,9 +28,7 @@ namespace WC.Runtime.Infrastructure.AssetManagement
         return completedOperation.Result as T;
       
       
-      return await RunWithCacheOnComplete(
-        Addressables.LoadAssetAsync<T>(assetRef), 
-        cacheKey: assetRef.AssetGUID);
+      return await RunWithCacheOnComplete(Addressables.LoadAssetAsync<T>(assetRef), cacheKey: assetRef.AssetGUID);
     }
 
     public async Task<TAsset> Load<TAsset>(string address) where TAsset : class
@@ -37,9 +37,7 @@ namespace WC.Runtime.Infrastructure.AssetManagement
         return completedOperation.Result as TAsset;
       
       
-      return await RunWithCacheOnComplete(
-        Addressables.LoadAssetAsync<TAsset>(address), 
-        cacheKey: address);
+      return await RunWithCacheOnComplete(Addressables.LoadAssetAsync<TAsset>(address), cacheKey: address);
     }
 
     public GameObject Instantiate(GameObject prefab) => _container.InstantiatePrefab(prefab);
