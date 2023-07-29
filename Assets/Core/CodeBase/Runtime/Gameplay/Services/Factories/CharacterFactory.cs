@@ -57,10 +57,10 @@ namespace WC.Runtime.Gameplay.Services
 
       if (enemyObj.TryGetComponent(out RotateToPlayerAI rotateToPlayer))
       {
-        rotateToPlayer.Speed = staticData.Stats.Movement.Speed;
+        rotateToPlayer.Speed = staticData.Stats.Movement.RunSpeed;
       }
 
-      enemyObj.GetComponent<NavMeshAgent>().speed = staticData.Stats.Movement.Speed;
+      enemyObj.GetComponent<NavMeshAgent>().speed = staticData.Stats.Movement.RunSpeed;
       
       var lootSpawner = enemyObj.GetComponentInChildren<LootSpawner>();
       lootSpawner.SetData(staticData.Stats.Loot.Money);
@@ -72,7 +72,7 @@ namespace WC.Runtime.Gameplay.Services
 
     async Task IWarmUp.WarmUp()
     {
-      await _assetsProvider.Load<GameObject>(AssetAddress.Character.PlayerSword);
+      await _assetsProvider.Load<GameObject>(AssetAddress.Character.PlayerExoSWAT);
 
       foreach (EnemyWarriorStaticData warriorData in _staticData.EnemyWarriors.Values)
         await _assetsProvider.Load<GameObject>(warriorData.PrefabRef);

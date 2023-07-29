@@ -2,6 +2,6 @@ namespace WC.Runtime.Infrastructure.AssetManagement
 {
   public class CharacterAddress
   {
-    public string PlayerSword => "Warrior_Player_Sword";
+    public string PlayerExoSWAT => "Warrior_Player_ExoSWAT";
   }
 }

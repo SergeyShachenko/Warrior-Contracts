@@ -73,6 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldown: 3
+  _character: {fileID: 9174288616616849945}
   _triggerObserver: {fileID: 6979062767443312144}
   _followAI: {fileID: 1335724224293745893}
 --- !u!1 &3218658322279052416

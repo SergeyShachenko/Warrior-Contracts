@@ -18,6 +18,7 @@ namespace WC.Runtime.Infrastructure.Services
     private readonly ISaveLoadService _saveLoadService;
     private readonly IStaticDataService _staticDataService;
     private readonly IServiceManager _serviceManager;
+    private readonly IUIService _uiService;
 
     private ICharacterFactory _characterFactory;
     private ILevelToolsFactory _levelToolsFactory;
@@ -31,12 +32,14 @@ namespace WC.Runtime.Infrastructure.Services
       IGameStateMachine gameStateMachine,
       ISaveLoadService saveLoadService,
       IStaticDataService staticDataService,
-      IServiceManager serviceManager)
+      IServiceManager serviceManager,
+      IUIService uiService)
     : base(gameStateMachine)
     {
       _saveLoadService = saveLoadService;
       _staticDataService = staticDataService;
       _serviceManager = serviceManager;
+      _uiService = uiService;
     }
 
 
@@ -46,9 +49,13 @@ namespace WC.Runtime.Infrastructure.Services
       ResolveSubServices(subContainer);
       
       await _serviceManager.WarmUp();
+      
       await CreateEntities();
       _saveLoadService.LoadProgress();
-      await InitEntities();
+      InitEntities();
+      InitPlayerCamera();
+      
+      _uiService.SetCursorVisible(false);
 
       p_GameStateMachine.Enter<GameLoopState, DiContainer>(subContainer);
     }
@@ -72,19 +79,20 @@ namespace WC.Runtime.Infrastructure.Services
       await CreateHUD();
     }
     
-    private async Task InitEntities()
+    private void InitEntities()
     {
       _characterInitService.DoInit();
       _uiInitService.DoInit();
+      
       // TODO Сделать механику сохранения лута
       //await InitDroppedLoot();
-      InitCamera();
     }
 
     private async Task CreateGameWorld(LevelStaticData levelData)
     {
       await CreateSpawners(levelData);
-      await CreatePlayer(levelData);
+      await _levelToolsFactory.CreatePlayerCamera();
+      await _characterFactory.CreatePlayer(PlayerID.ExoSWAT, levelData.StartPlayerPos);
     }
 
     private async Task CreateUI()
@@ -104,9 +112,15 @@ namespace WC.Runtime.Infrastructure.Services
         await _levelToolsFactory.CreateEnemySpawnPoint(spawner.ID, spawner.Position, spawner.WarriorType);
     }
 
-    private async Task CreatePlayer(LevelStaticData levelData) => 
-      await _characterFactory.CreatePlayer(PlayerID.Default, levelData.StartPlayerPos);
-
+    private void InitPlayerCamera()
+    {
+      GameObject player = _characterFactory.Registry.Player.gameObject;
+      PlayerCamera camera = _levelToolsFactory.Registry.PlayerCamera;
+      
+      camera.Follow(player);
+      camera.LookAt(player);
+    }
+    
     // private async Task InitDroppedLoot()
     // {
     //   DroppedLoot droppedLoot = _progressService.Progress.World.DroppedLoot;
@@ -118,12 +132,5 @@ namespace WC.Runtime.Infrastructure.Services
     //     loot.Init(drop.Loot);
     //   }
     // }
-
-    private void InitCamera()
-    {
-      if (Camera.main == null) return;
-      
-      Camera.main.GetComponent<CameraMover>().Follow(_characterFactory.Registry.Player.gameObject);
-    }
   }
 }

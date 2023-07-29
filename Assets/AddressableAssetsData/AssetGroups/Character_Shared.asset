@@ -29,14 +29,6 @@ MonoBehaviour:
     m_Address: Character_Enemy
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: a05f1f777d4d8304ba17370418bf9788
-    m_Address: Controller_Enemy
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 891fcc95adc3b0a48889d03132a36af8
-    m_Address: Controller_Player
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 46264aa5c4a90b24a845c27406db65df, type: 2}
   m_SchemaSet:

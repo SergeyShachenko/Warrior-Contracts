@@ -21,36 +21,12 @@ MonoBehaviour:
     m_Address: Warrior_Enemy
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 6608706d76859fb4597b5dd0e537c940
-    m_Address: Warrior_Enemy_Boss_Sword
+  - m_GUID: 3616d7984a41f5c4184c7e5e95c27feb
+    m_Address: Model_Warrior_Enemy_SWAT
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: a6ebe2425fd4446488dacee64746b664
-    m_Address: Warrior_Enemy_Boss_SwordShield
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 48c66c7874a9f414185223a38095a1ad
-    m_Address: Warrior_Enemy_Sword
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: afab53dfaa23d5145a316b30c1de1c5e
-    m_Address: Warrior_Enemy_SwordShield
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 9ade387ac11e3a74d84732767761a67a
-    m_Address: Model_Warrior_Enemy_Boss_Sword
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 8a65ee07a71f1804ab4251820debc73d
-    m_Address: Model_Warrior_Enemy_Boss_SwordShield
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: e1987c05ea69a7d479226c74034d92c5
-    m_Address: Model_Warrior_Enemy_Sword
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 65f13af3c129ea341b3c8df4be2f4348
-    m_Address: Model_Warrior_Enemy_SwordShield
+  - m_GUID: edabe4a5af062744fbad485a4e842613
+    m_Address: Warrior_Enemy_SWAT
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

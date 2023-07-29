@@ -9,8 +9,9 @@ namespace WC.Runtime.Logic.Characters
   {
     private const float HitDebugDuration = 1f;
 
+    private readonly Enemy _enemy;
+    private readonly Transform _transform;
     private readonly Player _player;
-    private readonly Transform _parent;
     private readonly int _layerMask;
 
     private Collider[] _hits = new Collider[1];
@@ -19,12 +20,13 @@ namespace WC.Runtime.Logic.Characters
     private bool _isAttack;
 
     public EnemyAttack(
+      Enemy enemy,
       CombatStatsData data,
-      Transform parent,
       Player player)
-    : base(data)
+    : base(enemy, data)
     {
-      _parent = parent;
+      _enemy = enemy;
+      _transform = enemy.transform;
       _player = player;
       _layerMask = 1 << LayerMask.NameToLayer("Player");
       
@@ -68,7 +70,7 @@ namespace WC.Runtime.Logic.Characters
     {
       base.StartAttack();
       
-      _parent.LookAt(_player.transform);
+      _transform.LookAt(_player.transform);
       _isAttack = true;
     }
 
@@ -88,10 +90,10 @@ namespace WC.Runtime.Logic.Characters
 
     private Vector3 GetHitPoint()
     {
-      Vector3 currentPos = _parent.position;
+      Vector3 currentPos = _transform.position;
       var newPos = new Vector3(currentPos.x, currentPos.y + 0.5f, currentPos.z);
       
-      return newPos + _parent.forward * AttackDistance;
+      return newPos + _transform.forward * AttackDistance;
     }
 
     private bool CanAttack() => 

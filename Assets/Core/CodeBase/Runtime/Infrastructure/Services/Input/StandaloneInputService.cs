@@ -17,5 +17,7 @@ namespace WC.Runtime.Infrastructure.Services
         return axis;
       }
     }
+
+    public override Vector2 LookDelta => UnityLookDelta();
   }
 }

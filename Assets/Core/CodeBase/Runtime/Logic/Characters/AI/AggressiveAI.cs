@@ -7,8 +7,9 @@ namespace WC.Runtime.Logic.Characters
   public class AggressiveAI : MonoBehaviour
   {
     [SerializeField] private float _cooldown = 3f;
-    
-    [Header("Links")]
+
+    [Header("Links")] 
+    [SerializeField] private CharacterBase _character;
     [SerializeField] private TriggerObserver _triggerObserver;
     [SerializeField] private FollowAIBase _followAI;
     
@@ -24,7 +25,13 @@ namespace WC.Runtime.Logic.Characters
       _followAI.enabled = false;
     }
 
-    
+    private void OnDestroy()
+    {
+      _triggerObserver.TriggerEnter -= OnObserverTriggerEnter;
+      _triggerObserver.TriggerExit -= OnObserverTriggerExit;
+    }
+
+
     private void OnObserverTriggerEnter(Collider obj)
     {
       if (_hasTargetForAggressive) return;
@@ -46,6 +53,7 @@ namespace WC.Runtime.Logic.Characters
       if (_hasTargetForAggressive == false) return;
 
       _hasTargetForAggressive = false;
+      _character.Attack.StopAttack();
       _setMoveToPlayerOperation = StartCoroutine(SetMoveToPlayerAfterCooldown(isActive: false));
     }
 

@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using WC.Runtime.Data;
 using WC.Runtime.Data.Characters;
 using WC.Runtime.Extensions;
+using WC.Runtime.Gameplay.Services;
 using WC.Runtime.Infrastructure.Services;
+using WC.Runtime.Logic.Camera;
 using Zenject;
 
 namespace WC.Runtime.Logic.Characters
@@ -13,22 +16,27 @@ namespace WC.Runtime.Logic.Characters
   {
     public PlayerID ID { get; private set; }
 
-    [SerializeField] private CharacterController _charController;
-    
+    public PlayerCamera Camera { get; private set; }
+    [field: SerializeField] public CharacterController Controller { get; private set; }
+
     private IInputService _inputService;
     private PlayerProgressData _progress;
 
     [Inject]
-    private void Construct(IInputService inputService) => _inputService = inputService;
+    private void Construct(IInputService inputService, ILevelToolsFactory levelToolsFactory)
+    {
+      _inputService = inputService;
+      Camera = levelToolsFactory.Registry.PlayerCamera;
+    }
 
 
     protected override void Init()
     {
       Health = new PlayerHealth(_progress.Stats.Life);
       Death = new PlayerDeath();
-      Attack = new PlayerAttack(_progress.Stats.Combat, _inputService, _charController, transform);
-      Animator = new PlayerAnimator(_charController, p_Animator);
-      Movement = new PlayerMovement(_progress.Stats.Movement, _progress.World, _inputService, _charController, transform);
+      Attack = new PlayerAttack(this, _progress.Stats.Combat, _inputService);
+      Animator = new PlayerAnimator(this, p_Animator, _inputService);
+      Movement = new PlayerMovement(this, _progress.Stats.Movement, _progress.World, _inputService);
     }
 
     

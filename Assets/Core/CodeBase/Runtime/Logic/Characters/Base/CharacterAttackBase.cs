@@ -15,7 +15,7 @@ namespace WC.Runtime.Logic.Characters
       get => p_Data.Damage;
       set
       {
-        if (IsActive == false || p_Data.Damage == value) return;
+        if (p_Data.Damage == value) return;
 
         p_Data.Damage = value;
         Changed?.Invoke();
@@ -27,7 +27,7 @@ namespace WC.Runtime.Logic.Characters
       get => p_Data.Cooldown;
       set
       {
-        if (IsActive == false || p_Data.Cooldown == value) return;
+        if (p_Data.Cooldown == value) return;
 
         p_Data.Cooldown = value;
         Changed?.Invoke();
@@ -39,7 +39,7 @@ namespace WC.Runtime.Logic.Characters
       get => p_Data.HitRadius;
       set
       {
-        if (IsActive == false || p_Data.HitRadius == value) return;
+        if (p_Data.HitRadius == value) return;
 
         p_Data.HitRadius = value;
         Changed?.Invoke();
@@ -51,7 +51,7 @@ namespace WC.Runtime.Logic.Characters
       get => p_Data.AttackDistance;
       set
       {
-        if (IsActive == false || p_Data.AttackDistance == value) return;
+        if (p_Data.AttackDistance == value) return;
 
         p_Data.AttackDistance = value;
         Changed?.Invoke();
@@ -59,8 +59,14 @@ namespace WC.Runtime.Logic.Characters
     }
     
     protected readonly CombatStatsData p_Data;
+    
+    private readonly CharacterBase _character;
 
-    protected CharacterAttackBase(CombatStatsData data) => p_Data = data;
+    protected CharacterAttackBase(CharacterBase character, CombatStatsData data)
+    {
+      _character = character;
+      p_Data = data;
+    }
 
 
     public virtual void Tick() {}

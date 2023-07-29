@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Animations_Humanoid
+  m_EditorClassIdentifier: 
+  m_GroupName: Animations_Humanoid
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 054595b3ae137d14682d9a4902b8cb50
+  m_SerializeEntries:
+  - m_GUID: eb1b196767b950d4d8c92f88df3a1134
+    m_Address: Animation_Humanoid_Walk_Default_TurnRight
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8d375a7d8554c704d8ce1f8cf9c9681f
+    m_Address: Animation_Humanoid_Walk_Default_TurnLeft
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 62fe18b188f991741b538d4669fb4e33
+    m_Address: Animation_Humanoid_Walk_Default
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 715643da2812a0a42af104164374f4e8
+    m_Address: Animation_Humanoid_Walk_AimHands_TurnRight
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0b701b02e75a846418c6c876d27dc5e2
+    m_Address: Animation_Humanoid_Walk_AimHands_TurnLeft
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 678ddf92bc9bd3944a93e302c65a38c3
+    m_Address: Animation_Humanoid_Walk_AimHands_Right
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2ceae091d1cf4b0448c2b3deb3918803
+    m_Address: Animation_Humanoid_Walk_AimHands_Left
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4800cac5a0346a14694f4561b03435b3
+    m_Address: Animation_Humanoid_Walk_AimHands_Default
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3c181a3e7004b3d44bfebe3c5e0f2776
+    m_Address: Animation_Humanoid_Walk_AimHands_Backwards_TurnRight
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0b6c76113c48d3a45a1fe1645b1f8d39
+    m_Address: Animation_Humanoid_Walk_AimHands_Backwards_TurnLeft
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 13202f61319b1724cae2af3254e210a0
+    m_Address: Animation_Humanoid_Walk_AimHands_Backwards
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2fa7e43deedf3f6429d15873d00fe662
+    m_Address: Animation_Humanoid_Run_Default_TurnRight
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f733ffc6e39fe194eaae408bc7aff70d
+    m_Address: Animation_Humanoid_Run_Default_TurnLeft
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a1491e181937384478c3fb29c802df72
+    m_Address: Animation_Humanoid_Run_Default
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5ed413589475cbb46860aa48fcb69fbe
+    m_Address: Animation_Humanoid_Idle_Breathing
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2c29b5bf8b9eefb49bc29606f895bb7e
+    m_Address: Animation_Humanoid_Idle_AimHands
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8e196198a590304438d8a517698958d3
+    m_Address: Animation_Humanoid_Hit_AimHands
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c5275f25604861240b99c4106fbdf478
+    m_Address: Animation_Humanoid_Death_5
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ba562a59f0991514bacc83fe484f4086
+    m_Address: Animation_Humanoid_Death_4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1a979cceb10581841a72b1ebea520f21
+    m_Address: Animation_Humanoid_Death_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d63c017a68f40f64cbefffe91b836ea4
+    m_Address: Animation_Humanoid_Death_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f3a670247f84500429c013ceae5090af
+    m_Address: Animation_Humanoid_Death_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 84d4e9b666ba5e34aada9ed9c2ff2d5a
+    m_Address: Animation_Humanoid_Attack_Hands
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 891fcc95adc3b0a48889d03132a36af8
+    m_Address: Controller_Humanoid_Warrior_Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a05f1f777d4d8304ba17370418bf9788
+    m_Address: Controller_Humanoid_Warrior_Enemy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 46264aa5c4a90b24a845c27406db65df, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 503f5b081e3de0d46a089c7149ec2e51, type: 2}
+    - {fileID: 11400000, guid: 66890b54402f33e49a551834042c9c03, type: 2}

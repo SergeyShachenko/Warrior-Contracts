@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85b6ed5dd7084305aaadfd99fa5a2d56, type: 3}
+  m_Name: Player_Warrior_ExoSwat
+  m_EditorClassIdentifier: 
+  <PrefabRef>k__BackingField:
+    m_AssetGUID: 7200537e5d858914eb141b81270a3ec5
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  <ID>k__BackingField: 1
+  <Stats>k__BackingField:
+    Life:
+      MaxHealth: 20
+      MaxArmor: 0
+      CurrentHealth: 20
+      CurrentArmor: 0
+    Movement:
+      SlowWalkSpeed: 2.5
+      WalkSpeed: 4.5
+      RunSpeed: 9
+      AccelerationTime: 0.2
+      TurnSmoothTime: 0.2
+      Stamina: 0
+    Combat:
+      Damage: 5
+      Cooldown: 1
+      HitRadius: 3
+      AttackDistance: 3

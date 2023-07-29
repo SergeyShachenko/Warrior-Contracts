@@ -2,6 +2,7 @@
 {
   public enum PlayerID
   {
-    Default = 0
+    None = 0,
+    ExoSWAT = 1
   }
 }

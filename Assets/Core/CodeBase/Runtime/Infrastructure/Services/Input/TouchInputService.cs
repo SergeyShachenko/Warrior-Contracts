@@ -6,5 +6,7 @@ namespace WC.Runtime.Infrastructure.Services
   {
     public override Vector2 AxisDirection =>
       SimpleInputAxis();
+
+    public override Vector2 LookDelta { get; }
   }
 }

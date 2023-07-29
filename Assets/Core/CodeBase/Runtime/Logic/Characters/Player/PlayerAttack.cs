@@ -6,24 +6,22 @@ namespace WC.Runtime.Logic.Characters
 {
   public class PlayerAttack : CharacterAttackBase
   {
+    private readonly Player _player;
+    private readonly Transform _transform;
     private readonly IInputService _inputService;
-
-    private readonly CharacterController _characterController;
-    private readonly Transform _parent;
     private readonly Collider[] _hits = new Collider[3];
-    
+
     private readonly int _layerMask;
 
     public PlayerAttack(
+      Player player,
       CombatStatsData data,
-      IInputService inputService,
-      CharacterController characterController, 
-      Transform parent)
-    : base(data)
+      IInputService inputService)
+    : base(player, data)
     {
+      _player = player;
+      _transform = _player.transform;
       _inputService = inputService;
-      _characterController = characterController;
-      _parent = parent;
       _layerMask = 1 << LayerMask.NameToLayer("Hittable");
     }
 
@@ -33,7 +31,7 @@ namespace WC.Runtime.Logic.Characters
       if (IsActive == false) return;
 
       
-      if (_inputService.GetAttackButtonUp()) 
+      if (_inputService.SimpleInputGetAttackButtonUp() || _inputService.UnityGetAttackButton()) 
         StartAttack();
     }
 
@@ -51,9 +49,9 @@ namespace WC.Runtime.Logic.Characters
 
 
     private int Hit() => 
-      Physics.OverlapSphereNonAlloc(StartPoint() + _parent.forward, AttackDistance, _hits, _layerMask);
+      Physics.OverlapSphereNonAlloc(StartPoint() + _transform.forward, AttackDistance, _hits, _layerMask);
 
-    private Vector3 StartPoint() => 
-      new(_parent.position.x, _characterController.center.y / 2, _parent.position.z);
+    private Vector3 StartPoint() => new
+      (_transform.position.x, _player.Controller.center.y / 2, _transform.position.z);
   }
 }

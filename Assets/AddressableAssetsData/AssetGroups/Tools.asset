@@ -18,7 +18,11 @@ MonoBehaviour:
   m_GUID: 43950f070866dec49afb01a7ca4e22af
   m_SerializeEntries:
   - m_GUID: 1d11c804063ab1c43853178293926653
-    m_Address: SpawnPoint
+    m_Address: Point_Spawn_Enemy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3e92acf181756a840b7933b4a15097bc
+    m_Address: Camera_Player
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

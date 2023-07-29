@@ -25,8 +25,8 @@ namespace WC.Runtime.Logic.Characters
     {
       Health = new EnemyHealth(_data.Stats.Life);
       Death = new EnemyDeath();
-      Attack = new EnemyAttack(_data.Stats.Combat, transform, _player);
-      Animator = new EnemyAnimator(p_Animator);
+      Attack = new EnemyAttack(this, _data.Stats.Combat, _player);
+      Animator = new EnemyAnimator(this, p_Animator);
     }
 
     protected override void OnDeath()

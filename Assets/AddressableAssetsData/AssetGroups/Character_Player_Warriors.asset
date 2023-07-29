@@ -21,20 +21,12 @@ MonoBehaviour:
     m_Address: Warrior_Player
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: a249796836309ed4387b96c09248b3b8
-    m_Address: Warrior_Player_Sword
+  - m_GUID: 6a4c8f1b3615a8b4896bfd026620732c
+    m_Address: Model_Warrior_Player_ExoSWAT
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: e35acb1d57da74349b65aa819bc05f32
-    m_Address: Warrior_Player_SwordShield
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 06b4eb2765640564aa9bc5a3dff0f374
-    m_Address: Model_Warrior_Player_Sword
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 53b88c2fb8eb4a649941170a8d601286
-    m_Address: Model_Warrior_Player_SwordShield
+  - m_GUID: 7200537e5d858914eb141b81270a3ec5
+    m_Address: Warrior_Player_ExoSWAT
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

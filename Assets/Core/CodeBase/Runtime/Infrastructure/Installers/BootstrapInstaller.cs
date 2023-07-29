@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using WC.Runtime.Infrastructure.Services;
 using WC.Runtime.UI.Screens;
+using WC.Runtime.UI.Services;
 using Zenject;
 
 namespace WC.Runtime.Infrastructure.Installers
@@ -81,7 +82,12 @@ namespace WC.Runtime.Infrastructure.Installers
       
       Container
         .Bind<IInputService>()
-        .FromInstance(Application.isEditor ? new StandaloneInputService() : new TouchInputService())
+        .To<StandaloneInputService>()
+        .AsSingle();
+      
+      Container
+        .Bind<IUIService>()
+        .To<UIService>()
         .AsSingle();
     }
 

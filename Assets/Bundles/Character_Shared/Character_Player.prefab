@@ -223,4 +223,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p_Animator: {fileID: 0}
   p_AnimationObserver: {fileID: 0}
-  _charController: {fileID: 7133066523359769848}
+  <Controller>k__BackingField: {fileID: 7133066523359769848}

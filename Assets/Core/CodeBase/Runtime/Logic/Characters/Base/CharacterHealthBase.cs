@@ -15,7 +15,7 @@ namespace WC.Runtime.Logic.Characters
       get => p_Data.CurrentHealth;
       set
       {
-        if (IsActive == false || p_Data.CurrentHealth == value) return;
+        if (p_Data.CurrentHealth == value) return;
 
         p_Data.CurrentHealth = value;
         Changed?.Invoke();
@@ -27,7 +27,7 @@ namespace WC.Runtime.Logic.Characters
       get => p_Data.MaxHealth;
       set
       {
-        if (IsActive == false || p_Data.MaxHealth == value) return;
+        if (p_Data.MaxHealth == value) return;
 
         p_Data.MaxHealth = value;
         Changed?.Invoke();

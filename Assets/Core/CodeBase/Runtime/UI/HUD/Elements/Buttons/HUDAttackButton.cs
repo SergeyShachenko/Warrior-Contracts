@@ -18,7 +18,7 @@ namespace WC.Runtime.UI.Elements
     {
       base.OnPressed();
       
-      _player.Animator.PlayAttack();
+      _player.Animator.PlayAttack(id: 1);
     }
   }
 }
