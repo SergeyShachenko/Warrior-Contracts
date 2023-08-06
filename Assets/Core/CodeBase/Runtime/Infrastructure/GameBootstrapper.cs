@@ -40,7 +40,7 @@ namespace WC.Runtime.Infrastructure
         Type = _type,
         StartScene = _type == BootstrapType.Default 
           ? AssetName.Scene.MainMenu 
-          : SceneManager.GetActiveScene().name 
+          : SceneManager.GetActiveScene().name
       };
   }
 }

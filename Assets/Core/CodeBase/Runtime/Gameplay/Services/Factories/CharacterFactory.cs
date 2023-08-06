@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
+using WC.Runtime.Data.Characters;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
 using WC.Runtime.Logic.Characters;
@@ -34,9 +35,11 @@ namespace WC.Runtime.Gameplay.Services
     }
 
     
-    public async Task<Player> CreatePlayer(PlayerID id, Vector3 at)
+    public async Task<Player> CreatePlayer(PlayerID id, PlayerSpawnData spawnData)
     {
-      GameObject playerObj = await _assetsProvider.InstantiateAsync(_staticData.Players[id].PrefabRef, at);
+      GameObject playerObj = await _assetsProvider.InstantiateAsync(_staticData.Players[id].PrefabRef, spawnData.Position);
+      playerObj.transform.rotation = spawnData.Rotation;
+      
       var player = playerObj.GetComponent<Player>();
       
       RegisterProgressWatcher(playerObj);
@@ -52,8 +55,7 @@ namespace WC.Runtime.Gameplay.Services
 
       GameObject enemyObj = await _assetsProvider.InstantiateAsync(staticData.PrefabRef, under);
       var enemy = enemyObj.GetComponent<Enemy>();
-
-      enemy.SetData(Registry.Player, staticData);
+      enemy.SetData(staticData.ID, staticData.Stats.GetCopy(), Registry.Player);
 
       if (enemyObj.TryGetComponent(out RotateToPlayerAI rotateToPlayer))
       {

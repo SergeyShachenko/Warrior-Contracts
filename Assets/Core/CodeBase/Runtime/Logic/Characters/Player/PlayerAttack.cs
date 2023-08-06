@@ -32,21 +32,23 @@ namespace WC.Runtime.Logic.Characters
 
       
       if (_inputService.SimpleInputGetAttackButtonUp() || _inputService.UnityGetAttackButton()) 
-        StartAttack();
+        Start();
+
+      IsAiming = _inputService.UnityGetAimButton();
     }
 
     
-    public override void TakeDamage()
+    public override void DoDamage()
     {
       if (IsActive == false) return;
       
       
       for (var i = 0; i < Hit(); ++i) 
         _hits[i].transform.parent.parent.GetComponent<Enemy>().Health.TakeDamage(Damage);
+      
+      Stop();
     }
-
-    public override void StopAttack() { }
-
+    
 
     private int Hit() => 
       Physics.OverlapSphereNonAlloc(StartPoint() + _transform.forward, AttackDistance, _hits, _layerMask);

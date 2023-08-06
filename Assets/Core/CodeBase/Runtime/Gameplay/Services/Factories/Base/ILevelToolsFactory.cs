@@ -9,6 +9,6 @@ namespace WC.Runtime.Gameplay.Services
   public interface ILevelToolsFactory : IFactory<LevelToolsRegistry>
   {
     Task<PlayerCamera> CreatePlayerCamera();
-    Task<EnemySpawnPoint> CreateEnemySpawnPoint(string spawnerID, Vector3 at, EnemyWarriorID warriorType);
+    Task<EnemySpawnPoint> CreateEnemySpawnPoint(string spawnerID, EnemyWarriorID warriorType, Vector3 position, Quaternion rotation);
   }
 }

@@ -20,9 +20,9 @@ MonoBehaviour:
   <ID>k__BackingField: 1
   <Stats>k__BackingField:
     Life:
-      MaxHealth: 10
+      MaxHealth: 20
       MaxArmor: 0
-      CurrentHealth: 10
+      CurrentHealth: 20
       CurrentArmor: 0
     Movement:
       SlowWalkSpeed: 2.5

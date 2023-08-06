@@ -3,6 +3,7 @@ using UnityEngine;
 using WC.Runtime.Infrastructure;
 using WC.Runtime.Infrastructure.Services;
 using Zenject;
+using AnimationState = WC.Runtime.Logic.Animation.AnimationState;
 using Random = UnityEngine.Random;
 
 namespace WC.Runtime.Logic.Characters
@@ -35,7 +36,7 @@ namespace WC.Runtime.Logic.Characters
       Initialized?.Invoke();
     }
     
-    protected virtual void FixedUpdate()
+    protected virtual void Update()
     {
       if (_wasInit && Death.IsDead == false)
         Tick();
@@ -56,9 +57,8 @@ namespace WC.Runtime.Logic.Characters
       Health.Changed += OnHealthChanged;
       Death.Happened += OnDeath;
       Attack.Attack += OnAttack;
-      
+
       p_AnimationObserver.Attack += OnAnimAttack;
-      p_AnimationObserver.AttackEnd += OnAnimAttackEnd;
     }
 
     protected virtual void UnsubscribeUpdates()
@@ -67,25 +67,32 @@ namespace WC.Runtime.Logic.Characters
       Health.Changed -= OnHealthChanged;
       Death.Happened -= OnDeath;
       Attack.Attack -= OnAttack;
-      
+
       p_AnimationObserver.Attack -= OnAnimAttack;
-      p_AnimationObserver.AttackEnd -= OnAnimAttackEnd;
     }
 
     protected virtual void Tick()
     {
-      if (Animator is { IsAttacking: false }) 
-        Attack?.Tick();
+      Movement.Tick();
       
-      Animator?.Tick();
-      Movement?.Tick();
+      if (Animator.CurrentState != AnimationState.Attack) 
+        Attack.Tick();
+      
+      Animator.Tick();
+      Animator.PlayAim(Attack.IsAiming);
+      Animator.PlayMove(Movement.LocalDirection, Movement.CurrentState);
+    }
+    
+    
+    protected virtual void OnTakeDamage()
+    {
+      Attack.Stop();
+      Animator.PlayHit(id: 1);
     }
 
-    protected virtual void OnTakeDamage() => Animator.PlayHit(id: 1);
     protected virtual void OnHealthChanged() => Death.CheckDeath(Health.Current);
     protected virtual void OnDeath() => Animator.PlayDeath(id: Random.Range(1, 6));
     protected virtual void OnAttack() => Animator.PlayAttack(id: 1);
-    protected virtual void OnAnimAttack() => Attack.TakeDamage();
-    protected virtual void OnAnimAttackEnd() => Attack.StopAttack();
+    protected virtual void OnAnimAttack() => Attack.DoDamage();
   }
 }

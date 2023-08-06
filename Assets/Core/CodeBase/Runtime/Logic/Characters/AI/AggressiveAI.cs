@@ -8,8 +8,7 @@ namespace WC.Runtime.Logic.Characters
   {
     [SerializeField] private float _cooldown = 3f;
 
-    [Header("Links")] 
-    [SerializeField] private CharacterBase _character;
+    [Header("Links")]
     [SerializeField] private TriggerObserver _triggerObserver;
     [SerializeField] private FollowAIBase _followAI;
     
@@ -53,7 +52,6 @@ namespace WC.Runtime.Logic.Characters
       if (_hasTargetForAggressive == false) return;
 
       _hasTargetForAggressive = false;
-      _character.Attack.StopAttack();
       _setMoveToPlayerOperation = StartCoroutine(SetMoveToPlayerAfterCooldown(isActive: false));
     }
 

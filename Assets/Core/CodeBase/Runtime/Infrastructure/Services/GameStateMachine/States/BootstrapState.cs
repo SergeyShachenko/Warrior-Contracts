@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace WC.Runtime.Infrastructure.Services
 {
@@ -38,6 +39,8 @@ namespace WC.Runtime.Infrastructure.Services
         }
           break;
       }
+
+      Application.targetFrameRate = BootstrapMode.FPS;
 
       p_GameStateMachine.Enter<LoadSceneState, string>(bootstrapConfig.StartScene);
     }

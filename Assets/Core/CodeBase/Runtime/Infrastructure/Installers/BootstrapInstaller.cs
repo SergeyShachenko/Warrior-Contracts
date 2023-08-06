@@ -12,8 +12,6 @@ namespace WC.Runtime.Infrastructure.Installers
     
     public override void InstallBindings()
     {
-      Application.targetFrameRate = 60;
-
       BindMonoServices();
       BindBaseServices();
       BindBusinessServices();

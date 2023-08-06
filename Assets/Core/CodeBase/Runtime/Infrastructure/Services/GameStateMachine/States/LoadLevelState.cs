@@ -92,7 +92,7 @@ namespace WC.Runtime.Infrastructure.Services
     {
       await CreateSpawners(levelData);
       await _levelToolsFactory.CreatePlayerCamera();
-      await _characterFactory.CreatePlayer(PlayerID.ExoSWAT, levelData.StartPlayerPos);
+      await _characterFactory.CreatePlayer(PlayerID.ExoSWAT, levelData.PlayerSpawner);
     }
 
     private async Task CreateUI()
@@ -108,8 +108,8 @@ namespace WC.Runtime.Infrastructure.Services
 
     private async Task CreateSpawners(LevelStaticData levelData)
     {
-      foreach (EnemySpawnerData spawner in levelData.EnemySpawners)
-        await _levelToolsFactory.CreateEnemySpawnPoint(spawner.ID, spawner.Position, spawner.WarriorType);
+      foreach (EnemySpawnData spawner in levelData.EnemySpawners)
+        await _levelToolsFactory.CreateEnemySpawnPoint(spawner.ID, spawner.WarriorType, spawner.Position, spawner.Rotation);
     }
 
     private void InitPlayerCamera()

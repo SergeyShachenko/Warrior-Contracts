@@ -8,6 +8,7 @@ namespace WC.Runtime.Infrastructure
   public static class BootstrapMode
   {
     public static BootstrapType Type => _config.BootstrapMode;
+    public static int FPS => _config.FPS;
     
     private static BootstrapConfigWrapper _config;
     

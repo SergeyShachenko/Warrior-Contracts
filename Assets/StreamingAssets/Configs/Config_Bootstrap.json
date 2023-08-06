@@ -1,3 +1,4 @@
 {
-  "BootstrapMode": 0
+  "BootstrapMode": 0,
+  "FPS": 60
 }

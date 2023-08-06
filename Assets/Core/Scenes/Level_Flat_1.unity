@@ -384,16 +384,6 @@ PrefabInstance:
       propertyPath: ID
       value: Level_Flat_1-0f889107-0640-4a8e-aab1-e7806736bc96
       objectReference: {fileID: 0}
-    - target: {fileID: -2506572544485495664, guid: 89c535188d4879043b4f31228eb9bd00,
-        type: 3}
-      propertyPath: WarriorType
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: -2506572544485495664, guid: 89c535188d4879043b4f31228eb9bd00,
-        type: 3}
-      propertyPath: _warriorType
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 2024888411993743513, guid: 89c535188d4879043b4f31228eb9bd00,
         type: 3}
       propertyPath: m_Name
@@ -666,11 +656,6 @@ PrefabInstance:
         type: 3}
       propertyPath: ID
       value: Level_Flat_1-e781b34a-7418-45f8-84ab-2cf991975cd6
-      objectReference: {fileID: 0}
-    - target: {fileID: -2506572544485495664, guid: 89c535188d4879043b4f31228eb9bd00,
-        type: 3}
-      propertyPath: WarriorType
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -2506572544485495664, guid: 89c535188d4879043b4f31228eb9bd00,
         type: 3}
@@ -983,16 +968,6 @@ PrefabInstance:
       propertyPath: ID
       value: Level_Flat_1-e489f8c8-1c21-4717-9d48-8fd8c76d9173
       objectReference: {fileID: 0}
-    - target: {fileID: -2506572544485495664, guid: 89c535188d4879043b4f31228eb9bd00,
-        type: 3}
-      propertyPath: WarriorType
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: -2506572544485495664, guid: 89c535188d4879043b4f31228eb9bd00,
-        type: 3}
-      propertyPath: _warriorType
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 2024888411993743513, guid: 89c535188d4879043b4f31228eb9bd00,
         type: 3}
       propertyPath: m_Name
@@ -1072,16 +1047,6 @@ PrefabInstance:
         type: 3}
       propertyPath: ID
       value: Level_Flat_1-071cadb3-066b-4e7e-bf5d-d134e81e42af
-      objectReference: {fileID: 0}
-    - target: {fileID: -2506572544485495664, guid: 89c535188d4879043b4f31228eb9bd00,
-        type: 3}
-      propertyPath: WarriorType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -2506572544485495664, guid: 89c535188d4879043b4f31228eb9bd00,
-        type: 3}
-      propertyPath: _warriorType
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2024888411993743513, guid: 89c535188d4879043b4f31228eb9bd00,
         type: 3}

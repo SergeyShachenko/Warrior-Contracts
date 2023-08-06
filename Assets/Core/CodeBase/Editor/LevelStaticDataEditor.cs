@@ -19,15 +19,18 @@ namespace WC.Editor
 
       var levelData = (LevelStaticData)target;
 
-      if (GUILayout.Button("Collect"))
+      if (GUILayout.Button("Collect active scene data"))
       {
+        levelData.Name = SceneManager.GetActiveScene().name;
+        
+        Transform playerSpawn = GameObject.FindWithTag(AssetTag.PlayerSpawnMarker).transform;
+        levelData.PlayerSpawner.Position = playerSpawn.position;
+        levelData.PlayerSpawner.Rotation = playerSpawn.rotation;
+        
         levelData.EnemySpawners =
           FindObjectsOfType<EnemySpawnMarker>()
-            .Select(x => new EnemySpawnerData(x.GetComponent<UniqueID>().ID, x.WarriorType, x.transform.position))
+            .Select(x => new EnemySpawnData(x.GetComponent<UniqueID>().ID, x.WarriorType, x.transform.position, x.transform.rotation))
             .ToList();
-
-        levelData.Name = SceneManager.GetActiveScene().name;
-        levelData.StartPlayerPos = GameObject.FindWithTag(AssetTag.PlayerSpawnMarker).transform.position;
       }
       
       EditorUtility.SetDirty(target);

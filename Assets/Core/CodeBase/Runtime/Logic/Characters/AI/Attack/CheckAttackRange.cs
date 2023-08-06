@@ -12,23 +12,21 @@ namespace WC.Runtime.Logic.Characters
 
     private void Start()
     {
-      _triggerObserver.Radius = _character.Attack.AttackDistance;
-      
+      _character.Initialized += OnInitCharacter;
       _triggerObserver.TriggerEnter += OnObserverTriggerEnter;
       _triggerObserver.TriggerExit += OnObserverTriggerExit;
     }
 
     private void OnDestroy()
     {
+      _character.Initialized -= OnInitCharacter;
       _triggerObserver.TriggerEnter -= OnObserverTriggerEnter;
       _triggerObserver.TriggerExit -= OnObserverTriggerExit;
     }
 
 
-    private void OnObserverTriggerEnter(Collider obj) => 
-      _character.Attack.IsActive = true;
-
-    private void OnObserverTriggerExit(Collider obj) => 
-      _character.Attack.IsActive = false;
+    private void OnInitCharacter() => _triggerObserver.Radius = _character.Attack.AttackDistance;
+    private void OnObserverTriggerEnter(Collider obj) => _character.Attack.IsActive = true;
+    private void OnObserverTriggerExit(Collider obj) => _character.Attack.IsActive = false;
   }
 }

@@ -42,36 +42,36 @@ namespace WC.Runtime.Logic.Characters
       UpdateCooldown();
 
       if (CanAttack())
-        StartAttack();
+        Start();
     }
 
-    public override void TakeDamage()
+    
+    public override void DoDamage()
     {
-      if (IsActive == false) return;
-      
-      
       if (Hit(out Collider hit))
       {
         PhysicsDebug.DrawSphere(GetHitPoint(), HitRadius, HitDebugDuration);
         hit.transform.GetComponent<Player>().Health.TakeDamage(Damage);
       }
+      
+      Stop();
     }
 
-    public override void StopAttack()
+    
+    protected override void Start()
     {
-      if (IsActive == false) return;
-      
-      
-      _attackCooldownCounter = Cooldown;
-      _isAttack = false;
-    }
-
-    protected override void StartAttack()
-    {
-      base.StartAttack();
+      base.Start();
       
       _transform.LookAt(_player.transform);
       _isAttack = true;
+    }
+
+    public override void Stop()
+    {
+      base.Stop();
+      
+      _attackCooldownCounter = Cooldown;
+      _isAttack = false;
     }
 
     private void UpdateCooldown()

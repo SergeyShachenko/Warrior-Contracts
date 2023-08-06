@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using WC.Runtime.Data;
 using WC.Runtime.Data.Characters;
 
 namespace WC.Runtime.Logic.Characters
@@ -8,8 +7,11 @@ namespace WC.Runtime.Logic.Characters
   public abstract class CharacterMovementBase : ILogicComponent
   {
     public event Action Changed;
-    
+    public event Action<MovementState> StateEnter, StateExit;
+
     public bool IsActive { get; set; } = true;
+
+    public MovementState CurrentState { get; private set; } = MovementState.None;
     
     public float CurrentSpeed { get; protected set; }
     public Vector3 Direction { get; protected set; }
@@ -31,9 +33,36 @@ namespace WC.Runtime.Logic.Characters
     public virtual void Tick() { }
     
     
-    public abstract void Move(Vector3 direction);
-    public abstract void Rotate(Vector3 direction);
-    public abstract void Warp(Vector3Data to);
+    public abstract void MoveToTarget(Vector3 position, MovementState state);
+    public abstract void Warp(Vector3 to);
     public abstract void WarpToSavedPos();
+
+
+    protected void EnterToState(MovementState state)
+    {
+      StateExit?.Invoke(CurrentState);
+      
+      CurrentState = state;
+      RefreshSpeed();
+      
+      StateEnter?.Invoke(state);
+    }
+
+    private void RefreshSpeed()
+    {
+      switch (CurrentState)
+      {
+        case MovementState.Idle: CurrentSpeed = LerpSpeed(to: 0);
+          break;
+        case MovementState.SlowWalk: CurrentSpeed = LerpSpeed(to: p_Data.SlowWalkSpeed);
+          break;
+        case MovementState.Walk: CurrentSpeed = LerpSpeed(to: p_Data.WalkSpeed);
+          break;
+        case MovementState.Run: CurrentSpeed = LerpSpeed(to: p_Data.RunSpeed);
+          break;
+      }
+    }
+
+    private float LerpSpeed(float to) => Mathf.Lerp(CurrentSpeed, to, Time.deltaTime / p_Data.AccelerationTime);
   }
 }

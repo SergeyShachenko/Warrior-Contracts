@@ -7,5 +7,6 @@ namespace WC.Runtime.Data
   public class BootstrapConfigWrapper
   {
     public BootstrapType BootstrapMode;
+    public int FPS;
   }
 }

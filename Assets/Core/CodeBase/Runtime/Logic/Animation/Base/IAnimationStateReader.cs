@@ -6,7 +6,7 @@ namespace WC.Runtime.Logic.Animation
   {
     event Action<AnimationState> StateEnter, StateExit;
     
-    AnimationState State { get; }
+    AnimationState CurrentState { get; }
     
     void EnteredState(int stateHash);
     void ExitedState(int stateHash);

@@ -8,7 +8,7 @@ namespace WC.Runtime.StaticData
   public class LevelStaticData : ScriptableObject
   {
     public string Name;
-    public List<EnemySpawnerData> EnemySpawners;
-    public Vector3 StartPlayerPos;
+    public PlayerSpawnData PlayerSpawner;
+    public List<EnemySpawnData> EnemySpawners;
   }
 }

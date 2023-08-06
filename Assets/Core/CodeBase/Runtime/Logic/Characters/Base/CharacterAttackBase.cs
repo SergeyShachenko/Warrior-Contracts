@@ -6,10 +6,12 @@ namespace WC.Runtime.Logic.Characters
   public abstract class CharacterAttackBase : ILogicComponent
   {
     public event Action Changed;
-    public event Action Attack;
+    public event Action Attack, AttackEnd;
     
     public bool IsActive { get; set; } = true;
 
+    public bool IsAiming { get; protected set; } = false;
+    
     public float Damage
     {
       get => p_Data.Damage;
@@ -72,9 +74,10 @@ namespace WC.Runtime.Logic.Characters
     public virtual void Tick() {}
 
     
-    public abstract void TakeDamage();
-    public abstract void StopAttack();
+    public abstract void DoDamage();
 
-    protected virtual void StartAttack() => Attack?.Invoke();
+    public virtual void Stop() => AttackEnd?.Invoke();
+    
+    protected virtual void Start() => Attack?.Invoke();
   }
 }
