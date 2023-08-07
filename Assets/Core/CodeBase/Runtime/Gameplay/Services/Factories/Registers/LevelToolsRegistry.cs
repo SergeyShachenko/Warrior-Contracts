@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using WC.Runtime.Infrastructure.Services;
-using WC.Runtime.Logic.Camera;
-using WC.Runtime.Logic.Characters;
+using WC.Runtime.Gameplay.Logic;
 
 namespace WC.Runtime.Gameplay.Services
 {

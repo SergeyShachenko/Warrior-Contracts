@@ -2,11 +2,10 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using WC.Runtime.Logic.Characters;
-using WC.Runtime.Logic.Tools;
-using WC.Runtime.Data.Characters;
+using WC.Runtime.Gameplay.Data;
+using WC.Runtime.Gameplay.Logic;
+using WC.Runtime.Gameplay.Tools;
 using WC.Runtime.Infrastructure.AssetManagement;
-using WC.Runtime.StaticData;
 
 namespace WC.Editor
 {

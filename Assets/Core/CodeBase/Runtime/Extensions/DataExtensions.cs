@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using WC.Runtime.Data;
+using WC.Runtime.Infrastructure.Data;
 
 namespace WC.Runtime.Extensions
 {

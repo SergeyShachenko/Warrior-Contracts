@@ -2,12 +2,10 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
-using WC.Runtime.Data.Characters;
+using WC.Runtime.Gameplay.Data;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
-using WC.Runtime.Logic.Characters;
-using WC.Runtime.Logic.Loot;
-using WC.Runtime.StaticData;
+using WC.Runtime.Gameplay.Logic;
 
 namespace WC.Runtime.Gameplay.Services
 {

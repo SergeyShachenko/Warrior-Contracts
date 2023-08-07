@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using WC.Runtime.Data.Characters;
+using WC.Runtime.Gameplay.Data;
 using WC.Runtime.Extensions;
 using WC.Runtime.Gameplay.Services;
 using WC.Runtime.UI.Services;

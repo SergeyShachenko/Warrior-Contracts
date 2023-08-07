@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using UnityEngine;
-using WC.Runtime.Logic.Characters;
+using WC.Runtime.Gameplay.Logic;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
-using WC.Runtime.Logic.Camera;
 
 namespace WC.Runtime.Gameplay.Services
 {

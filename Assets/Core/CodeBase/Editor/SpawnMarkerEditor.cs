@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using WC.Runtime.Logic.Characters;
+using WC.Runtime.Gameplay.Logic;
 
 namespace WC.Editor
 {

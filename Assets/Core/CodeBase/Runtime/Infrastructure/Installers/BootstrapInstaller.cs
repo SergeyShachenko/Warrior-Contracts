@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using WC.Runtime.Infrastructure.Services;
-using WC.Runtime.UI.Screens;
+using WC.Runtime.UI.Elements;
 using WC.Runtime.UI.Services;
 using Zenject;
 

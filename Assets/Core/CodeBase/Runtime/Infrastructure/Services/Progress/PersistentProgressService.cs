@@ -1,6 +1,5 @@
-﻿using WC.Runtime.Data;
-using WC.Runtime.Data.Characters;
-using WC.Runtime.StaticData;
+﻿using WC.Runtime.Infrastructure.Data;
+using WC.Runtime.Gameplay.Data;
 using Zenject;
 
 namespace WC.Runtime.Infrastructure.Services

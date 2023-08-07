@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using WC.Runtime.Infrastructure.Services;
-using WC.Runtime.UI.Screens;
+using WC.Runtime.UI.Elements;
 
 namespace WC.Runtime.Infrastructure
 {

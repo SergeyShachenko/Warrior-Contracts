@@ -2,13 +2,11 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using WC.Runtime.Gameplay.Data;
 using WC.Runtime.UI.Services;
-using WC.Runtime.Logic.Camera;
-using WC.Runtime.Logic.Characters;
-using WC.Runtime.Data.Characters;
+using WC.Runtime.Gameplay.Logic;
 using WC.Runtime.Gameplay.Services;
-using WC.Runtime.StaticData;
-using WC.Runtime.UI.Screens;
+using WC.Runtime.UI.Elements;
 using Zenject;
 
 namespace WC.Runtime.Infrastructure.Services

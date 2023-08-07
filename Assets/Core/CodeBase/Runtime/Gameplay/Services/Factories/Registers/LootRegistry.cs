@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using WC.Runtime.Infrastructure.Services;
-using WC.Runtime.Logic.Loot;
+using WC.Runtime.Gameplay.Logic;
 
 namespace WC.Runtime.Gameplay.Services
 {

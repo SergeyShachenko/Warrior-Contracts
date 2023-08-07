@@ -1,5 +1,5 @@
 ﻿using WC.Runtime.Gameplay.Services;
-using WC.Runtime.Logic.Characters;
+using WC.Runtime.Gameplay.Logic;
 using WC.Runtime.UI.Elements;
 using Zenject;
 

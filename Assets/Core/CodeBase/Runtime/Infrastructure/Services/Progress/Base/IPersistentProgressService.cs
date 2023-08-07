@@ -1,4 +1,4 @@
-﻿using WC.Runtime.Data.Characters;
+﻿using WC.Runtime.Gameplay.Data;
 
 namespace WC.Runtime.Infrastructure.Services
 {

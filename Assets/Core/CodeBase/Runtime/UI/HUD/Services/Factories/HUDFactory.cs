@@ -4,8 +4,6 @@ using UnityEngine;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
 using WC.Runtime.UI.Elements;
-using WC.Runtime.UI.Screens;
-using WC.Runtime.UI.Windows;
 
 namespace WC.Runtime.UI.Services
 {
@@ -70,9 +68,7 @@ namespace WC.Runtime.UI.Services
       return screen;
     }
 
-    async Task IWarmUp.WarmUp() => 
-      await _assetsProvider.Load<GameObject>(AssetAddress.UI.HUD.GameplayHUD);
-
+    async Task IWarmUp.WarmUp() => await _assetsProvider.Load<GameObject>(AssetAddress.UI.HUD.GameplayHUD);
     void IDisposable.Dispose() => _serviceManager.Unregister(this);
   }
 }

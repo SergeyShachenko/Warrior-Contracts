@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using WC.Runtime.UI.Screens;
+using WC.Runtime.UI.Elements;
 
 namespace WC.Runtime.UI.Elements
 {

@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using WC.Runtime.Logic.Tools;
+using WC.Runtime.Gameplay.Tools;
 
 namespace WC.Editor
 {

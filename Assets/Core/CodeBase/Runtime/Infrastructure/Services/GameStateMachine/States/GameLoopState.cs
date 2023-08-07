@@ -1,5 +1,5 @@
 ﻿using System;
-using WC.Runtime.UI.Screens;
+using WC.Runtime.UI.Elements;
 using Zenject;
 
 namespace WC.Runtime.Infrastructure.Services
