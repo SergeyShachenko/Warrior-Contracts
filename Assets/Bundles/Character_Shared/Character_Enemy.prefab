@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 3645606706103011827}
   - component: {fileID: 427645022669505711}
   - component: {fileID: 6979062767443312144}
-  - component: {fileID: 7727471606816370365}
   m_Layer: 30
-  m_Name: Aggressive
+  m_Name: Vision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,23 +58,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8cfbc6a571e4049934963fd1bf3b938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: 1
   _collider: {fileID: 427645022669505711}
---- !u!114 &7727471606816370365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 281213086556693914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 768cdab864ad4f9b843fdacc26340ca7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cooldown: 3
-  _character: {fileID: 9174288616616849945}
-  _triggerObserver: {fileID: 6979062767443312144}
-  _followAI: {fileID: 1335724224293745893}
 --- !u!1 &3218658322279052416
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,9 +162,8 @@ GameObject:
   - component: {fileID: 6082176374991295024}
   - component: {fileID: 1844536858845152916}
   - component: {fileID: 265869392351083545}
-  - component: {fileID: 5584230646085573549}
   m_Layer: 29
-  m_Name: Attack
+  m_Name: CloseCombat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -212,8 +195,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.5
-  m_Center: {x: 0, y: 1.5, z: 0}
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 1.5, z: 0.5}
 --- !u!114 &265869392351083545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,21 +209,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8cfbc6a571e4049934963fd1bf3b938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: 3
   _collider: {fileID: 1844536858845152916}
---- !u!114 &5584230646085573549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5457471293364337596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 987f25ccbf4f433d911146aad9e49cba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _character: {fileID: 9174288616616849945}
-  _triggerObserver: {fileID: 265869392351083545}
 --- !u!1001 &6977644832867663444
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -330,6 +300,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 720c02cef404a384682abf5b81113c28, type: 3}
+--- !u!114 &2568867395777151657 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4860475025516133629, guid: 720c02cef404a384682abf5b81113c28,
+    type: 3}
+  m_PrefabInstance: {fileID: 6977644832867663444}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6823da65c1534306b36aec51a1dcd617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4314791563571281885 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6572065847444898185, guid: 720c02cef404a384682abf5b81113c28,
@@ -348,21 +330,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6977644832867663444}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1335724224293745893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7301921890016143688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bd4d27d8ef94366bfa32a6cb2887527, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  p_Enemy: {fileID: 9174288616616849945}
-  _minDistanceToPlayer: 2
-  _agent: {fileID: 7943332399470105259}
 --- !u!195 &7943332399470105259
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -377,7 +344,7 @@ NavMeshAgent:
   m_Acceleration: 15
   avoidancePriority: 50
   m_AngularSpeed: 1600
-  m_StoppingDistance: 2.8
+  m_StoppingDistance: 1.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -397,6 +364,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9aacb29e690413c94e558d8acaf7487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <HUD>k__BackingField: {fileID: 2568867395777151657}
   p_Animator: {fileID: 0}
   p_AnimationObserver: {fileID: 0}
   _agent: {fileID: 7943332399470105259}
+  _triggers:
+  - {fileID: 6979062767443312144}
+  - {fileID: 265869392351083545}

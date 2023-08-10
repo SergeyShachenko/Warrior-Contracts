@@ -7,15 +7,15 @@ namespace WC.Runtime.Gameplay.Data
   [Serializable]
   public class EnemySpawnData
   {
-    public string ID;
-    public EnemyWarriorID WarriorType;
+    public string SpawnerID;
+    public EnemyID EnemyID;
     public Vector3 Position;
     public Quaternion Rotation;
 
-    public EnemySpawnData(string id, EnemyWarriorID warriorType, Vector3 position, Quaternion rotation)
+    public EnemySpawnData(string spawnerID, EnemyID enemyID, Vector3 position, Quaternion rotation)
     {
-      ID = id;
-      WarriorType = warriorType;
+      SpawnerID = spawnerID;
+      EnemyID = enemyID;
       Position = position;
       Rotation = rotation;
     }

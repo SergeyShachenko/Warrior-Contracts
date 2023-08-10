@@ -107,7 +107,7 @@ namespace WC.Runtime.Infrastructure.Services
     private async Task CreateSpawners(LevelStaticData levelData)
     {
       foreach (EnemySpawnData spawner in levelData.EnemySpawners)
-        await _levelToolsFactory.CreateEnemySpawnPoint(spawner.ID, spawner.WarriorType, spawner.Position, spawner.Rotation);
+        await _levelToolsFactory.CreateEnemySpawnPoint(spawner.SpawnerID, spawner.EnemyID, spawner.Position, spawner.Rotation);
     }
 
     private void InitPlayerCamera()

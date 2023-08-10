@@ -9,6 +9,6 @@ namespace WC.Runtime.Gameplay.Services
   public interface ICharacterFactory : IFactory<CharacterRegistry>
   {
     Task<Player> CreatePlayer(PlayerID id, PlayerSpawnData spawnData);
-    Task<Enemy> CreateEnemy(EnemyWarriorID id, Transform under);
+    Task<Enemy> CreateEnemy(EnemyID id, Transform under);
   }
 }

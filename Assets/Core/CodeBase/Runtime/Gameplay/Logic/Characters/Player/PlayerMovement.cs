@@ -4,7 +4,6 @@ using WC.Runtime.Infrastructure.Data;
 using WC.Runtime.Extensions;
 using WC.Runtime.Gameplay.Data;
 using WC.Runtime.Infrastructure.Services;
-using WC.Runtime.Gameplay.Logic;
 
 namespace WC.Runtime.Gameplay.Logic
 {
@@ -50,14 +49,14 @@ namespace WC.Runtime.Gameplay.Logic
     }
 
     
-    public override void MoveToTarget(Vector3 position, MovementState state)
+    public override void Move(Vector3 at, MovementState state)
     {
       if (IsActive == false) return;
 
 
       EnterToState(state);
       
-      _autoMoveTargetPos = position;
+      _autoMoveTargetPos = at;
       _isAutoMoving = true;
     }
 
@@ -84,8 +83,8 @@ namespace WC.Runtime.Gameplay.Logic
           Warp(to: savedPos.ToVector3());
       }
     }
-
     
+
     private void AutoMove()
     {
       Direction = (_autoMoveTargetPos - _transform.position).normalized;
@@ -135,14 +134,6 @@ namespace WC.Runtime.Gameplay.Logic
       LocalDirection = Vector3.Lerp(LocalDirection, _targetLocalDirection, Time.deltaTime / p_Data.AccelerationTime);
       
       _player.Controller.Move(Direction * CurrentSpeed * Time.deltaTime);
-    }
-
-    private void Rotate(Vector3 direction)
-    {
-      float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-      Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
-
-      _transform.rotation = Quaternion.Slerp(_transform.rotation, targetRotation, p_Data.TurnSmoothTime);
     }
 
     private void RotateTowardsCamera()

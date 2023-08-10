@@ -9,7 +9,7 @@ namespace WC.Runtime.Infrastructure.Services
   public interface IStaticDataService
   {
     IReadOnlyDictionary<PlayerID, PlayerStaticData> Players { get; }
-    IReadOnlyDictionary<EnemyWarriorID, EnemyWarriorStaticData> EnemyWarriors { get; }
+    IReadOnlyDictionary<EnemyID, EnemyStaticData> Enemies { get; }
     IReadOnlyDictionary<string, LevelStaticData> Levels { get; }
     
     IReadOnlyDictionary<UIWindowID, AssetReferenceGameObject> UIWindows { get; }

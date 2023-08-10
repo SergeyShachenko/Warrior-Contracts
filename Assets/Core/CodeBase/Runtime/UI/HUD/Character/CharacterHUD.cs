@@ -10,11 +10,11 @@ namespace WC.Runtime.UI.Character
 
 
     protected override void Init() => Show();
-    protected override void SubscribeUpdates() => _character.Health.Changed += RefreshHP;
-    protected override void UnsubscribeUpdates() => _character.Health.Changed -= RefreshHP;
-    protected override void Refresh() => RefreshHP();
+    protected override void SubscribeUpdates() => _character.Health.Changed += RefreshHealthBar;
+    protected override void UnsubscribeUpdates() => _character.Health.Changed -= RefreshHealthBar;
+    protected override void Refresh() => RefreshHealthBar();
 
-    
-    private void RefreshHP() => _hpBar.SetProgress(_character.Health.Current, _character.Health.Max);
+
+    private void RefreshHealthBar() => _hpBar.SetProgress(_character.Health.Current, _character.Health.Max);
   }
 }

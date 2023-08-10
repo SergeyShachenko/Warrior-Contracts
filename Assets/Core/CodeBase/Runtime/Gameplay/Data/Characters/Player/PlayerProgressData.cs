@@ -9,12 +9,12 @@ namespace WC.Runtime.Gameplay.Data
   public class PlayerProgressData
   {
     public PlayerID ID;
-    public PlayerStatsData Stats;
+    public PlayerData Stats;
     public WorldData World;
     public KillData Kill;
     public PurchaseData Purchase;
 
-    public PlayerProgressData(PlayerID id, PlayerStatsData stats, string startLevel)
+    public PlayerProgressData(PlayerID id, PlayerData stats, string startLevel)
     {
       ID = id;
       Stats = stats;

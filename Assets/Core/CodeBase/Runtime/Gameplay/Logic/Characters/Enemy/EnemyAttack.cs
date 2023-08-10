@@ -11,7 +11,6 @@ namespace WC.Runtime.Gameplay.Logic
 
     private readonly Enemy _enemy;
     private readonly Transform _transform;
-    private readonly Player _player;
     private readonly int _layerMask;
 
     private Collider[] _hits = new Collider[1];
@@ -19,15 +18,10 @@ namespace WC.Runtime.Gameplay.Logic
     private float _attackCooldownCounter;
     private bool _isAttack;
 
-    public EnemyAttack(
-      Enemy enemy,
-      CombatStatsData data,
-      Player player)
-    : base(enemy, data)
+    public EnemyAttack(Enemy enemy, CombatStatsData data) : base(enemy, data)
     {
       _enemy = enemy;
       _transform = enemy.transform;
-      _player = player;
       _layerMask = 1 << LayerMask.NameToLayer("Player");
       
       IsActive = false;
@@ -61,8 +55,6 @@ namespace WC.Runtime.Gameplay.Logic
     protected override void Start()
     {
       base.Start();
-      
-      _transform.LookAt(_player.transform);
       _isAttack = true;
     }
 
@@ -97,6 +89,6 @@ namespace WC.Runtime.Gameplay.Logic
     }
 
     private bool CanAttack() => 
-      _isAttack == false && _player.Death.IsDead == false && _attackCooldownCounter <= 0;
+      _isAttack == false && _attackCooldownCounter <= 0;
   }
 }

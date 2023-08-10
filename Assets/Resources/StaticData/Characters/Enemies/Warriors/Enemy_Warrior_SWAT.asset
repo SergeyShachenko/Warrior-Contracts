@@ -33,8 +33,9 @@ MonoBehaviour:
       Stamina: 0
     Combat:
       Damage: 2
-      Cooldown: 1
+      Cooldown: 0.5
       HitRadius: 3
-      AttackDistance: 3
+      AttackDistance: 1
     Loot:
       Money: 5
+    Actions: 0200000003000000

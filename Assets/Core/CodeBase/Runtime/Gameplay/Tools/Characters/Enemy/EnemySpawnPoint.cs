@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using WC.Runtime.Gameplay.Data;
 using WC.Runtime.Gameplay.Services;
 using WC.Runtime.Infrastructure.Services;
@@ -9,7 +10,7 @@ namespace WC.Runtime.Gameplay.Logic
   public class EnemySpawnPoint : MonoBehaviour,
     ISaverProgress
   {
-    [SerializeField] private EnemyWarriorID _warriorType;
+    [FormerlySerializedAs("_warriorType")] [SerializeField] private EnemyID _type;
     
     private ICharacterFactory _characterFactory;
     private PlayerProgressData _progress;
@@ -24,9 +25,9 @@ namespace WC.Runtime.Gameplay.Logic
       _characterFactory = characterFactory;
 
     
-    public void Init(EnemyWarriorID warriorType, string id)
+    public void Init(EnemyID type, string id)
     {
-      _warriorType = warriorType;
+      _type = type;
       _id = id;
     }
 
@@ -38,7 +39,7 @@ namespace WC.Runtime.Gameplay.Logic
 
     private async void Spawn()
     {
-      _enemy = await _characterFactory.CreateEnemy(_warriorType, transform);
+      _enemy = await _characterFactory.CreateEnemy(_type, transform);
       _enemy.Initialized += PostInit;
     }
 

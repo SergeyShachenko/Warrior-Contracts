@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AI;
 using WC.Runtime.Gameplay.Data;
 using WC.Runtime.Infrastructure.AssetManagement;
 using WC.Runtime.Infrastructure.Services;
@@ -45,25 +44,18 @@ namespace WC.Runtime.Gameplay.Services
       return player;
     }
 
-    public async Task<Enemy> CreateEnemy(EnemyWarriorID id, Transform under)
+    public async Task<Enemy> CreateEnemy(EnemyID id, Transform under)
     {
-      EnemyWarriorStaticData staticData = _staticData.EnemyWarriors[id];
-      staticData.Stats.Life.CurrentHealth = staticData.Stats.Life.MaxHealth;
-      staticData.Stats.Life.CurrentArmor = staticData.Stats.Life.MaxArmor;
+      EnemyStaticData data = _staticData.Enemies[id];
+      data.Stats.Life.CurrentHealth = data.Stats.Life.MaxHealth;
+      data.Stats.Life.CurrentArmor = data.Stats.Life.MaxArmor;
 
-      GameObject enemyObj = await _assetsProvider.InstantiateAsync(staticData.PrefabRef, under);
+      GameObject enemyObj = await _assetsProvider.InstantiateAsync(data.PrefabRef, under);
       var enemy = enemyObj.GetComponent<Enemy>();
-      enemy.SetData(staticData.ID, staticData.Stats.GetCopy(), Registry.Player);
-
-      if (enemyObj.TryGetComponent(out RotateToPlayerAI rotateToPlayer))
-      {
-        rotateToPlayer.Speed = staticData.Stats.Movement.RunSpeed;
-      }
-
-      enemyObj.GetComponent<NavMeshAgent>().speed = staticData.Stats.Movement.RunSpeed;
+      enemy.SetData(data.ID, data.Stats.GetCopy());
       
       var lootSpawner = enemyObj.GetComponentInChildren<LootSpawner>();
-      lootSpawner.SetData(staticData.Stats.Loot.Money);
+      lootSpawner.SetData(data.Stats.Loot.Money);
 
       RegisterProgressWatcher(enemyObj);
       Registry.Register(enemy);
@@ -74,7 +66,7 @@ namespace WC.Runtime.Gameplay.Services
     {
       await _assetsProvider.Load<GameObject>(AssetAddress.Character.PlayerExoSWAT);
 
-      foreach (EnemyWarriorStaticData warriorData in _staticData.EnemyWarriors.Values)
+      foreach (EnemyStaticData warriorData in _staticData.Enemies.Values)
         await _assetsProvider.Load<GameObject>(warriorData.PrefabRef);
     }
     

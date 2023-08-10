@@ -8,6 +8,6 @@ namespace WC.Runtime.Gameplay.Data
   public class PlayerStaticData : CharacterStaticDataBase
   {
     [field: SerializeField] public PlayerID ID { get; private set; }
-    [field: SerializeField] public PlayerStatsData Stats { get; private set; }
+    [field: SerializeField] public PlayerData Stats { get; private set; }
   }
 }

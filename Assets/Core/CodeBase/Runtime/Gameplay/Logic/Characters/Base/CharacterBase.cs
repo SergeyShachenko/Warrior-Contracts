@@ -2,8 +2,8 @@
 using UnityEngine;
 using WC.Runtime.Infrastructure;
 using WC.Runtime.Infrastructure.Services;
+using WC.Runtime.UI.Character;
 using Zenject;
-using AnimationState = WC.Runtime.Gameplay.Logic.AnimationState;
 using Random = UnityEngine.Random;
 
 namespace WC.Runtime.Gameplay.Logic
@@ -19,6 +19,8 @@ namespace WC.Runtime.Gameplay.Logic
     public CharacterMovementBase Movement { get; protected set; }
     public CharacterAnimatorBase Animator { get; protected set; }
 
+    [field: SerializeField] public CharacterHUD HUD { get; private set; }
+    
     [SerializeField] protected Animator p_Animator;
     [SerializeField] protected CharacterAnimationObserver p_AnimationObserver;
     
@@ -73,6 +75,9 @@ namespace WC.Runtime.Gameplay.Logic
 
     protected virtual void Tick()
     {
+      if (Death.IsDead) return;
+
+      
       Movement.Tick();
       
       if (Animator.CurrentState != AnimationState.Attack) 
@@ -90,8 +95,13 @@ namespace WC.Runtime.Gameplay.Logic
       Animator.PlayHit(id: 1);
     }
 
+    protected virtual void OnDeath()
+    {
+      HUD.Hide(smoothly: true);
+      Animator.PlayDeath(id: Random.Range(1, 6));
+    }
+
     protected virtual void OnHealthChanged() => Death.CheckDeath(Health.Current);
-    protected virtual void OnDeath() => Animator.PlayDeath(id: Random.Range(1, 6));
     protected virtual void OnAttack() => Animator.PlayAttack(id: 1);
     protected virtual void OnAnimAttack() => Attack.DoDamage();
   }

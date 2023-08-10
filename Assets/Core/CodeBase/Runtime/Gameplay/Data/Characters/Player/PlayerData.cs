@@ -3,14 +3,14 @@
 namespace WC.Runtime.Gameplay.Data
 {
   [Serializable]
-  public class PlayerStatsData
+  public class PlayerData
   {
     public LifeStatsData Life;
     public MovementStatsData Movement;
     public CombatStatsData Combat;
     
     
-    public PlayerStatsData GetCopy() => new()
+    public PlayerData GetCopy() => new()
     {
       Life = Life.GetCopy(), 
       Movement = Movement.GetCopy(), 
