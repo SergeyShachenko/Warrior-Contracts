@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WC.Runtime.Infrastructure.Data.IAP
+namespace WC.Runtime.Infrastructure.Data
 {
   [Serializable]
   public class PurchaseData

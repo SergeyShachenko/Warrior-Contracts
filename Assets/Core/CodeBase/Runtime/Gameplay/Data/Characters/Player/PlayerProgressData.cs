@@ -1,6 +1,5 @@
 ﻿using System;
 using WC.Runtime.Infrastructure.Data;
-using WC.Runtime.Infrastructure.Data.IAP;
 using WC.Runtime.Gameplay.Logic;
 
 namespace WC.Runtime.Gameplay.Data

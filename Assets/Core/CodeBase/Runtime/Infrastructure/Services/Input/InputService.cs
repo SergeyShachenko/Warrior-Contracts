@@ -19,7 +19,7 @@ namespace WC.Runtime.Infrastructure.Services
       Input.GetKeyDown(KeyCode.Mouse0);
 
     public bool UnityGetSlowWalkButton() => 
-      Input.GetKey(KeyCode.LeftControl);
+      Input.GetKey(KeyCode.LeftAlt);
 
     public bool UnityGetRunButton() => 
       Input.GetKey(KeyCode.LeftShift);

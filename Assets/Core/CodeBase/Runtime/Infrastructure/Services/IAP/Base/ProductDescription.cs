@@ -1,5 +1,5 @@
 using UnityEngine.Purchasing;
-using WC.Runtime.Infrastructure.Data.IAP;
+using WC.Runtime.Infrastructure.Data;
 
 namespace WC.Runtime.Infrastructure.Services
 {

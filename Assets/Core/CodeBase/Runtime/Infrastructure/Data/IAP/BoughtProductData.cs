@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WC.Runtime.Infrastructure.Data.IAP
+namespace WC.Runtime.Infrastructure.Data
 {
   [Serializable]
   public class BoughtProductData
